@@ -1,0 +1,413 @@
+export const collectionUrl = "https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0";
+export const reviewedDate = "2026-10-18";
+export const bilingual = (en, te) => ({ en, te });
+const b = bilingual;
+const rules = "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0";
+const meal = "1VMi8_mG7ehZlnUJQXcs68ViHEPiD6a4e";
+const puja = "181vQYoHQXTWv-cQ0_V-3WNF9JWEeSW63";
+const cite = (id, pages, label) => ({ id, pages, label });
+const r = (pages) => cite(rules, pages, "Ayyappa-Pooja-Niyamavali");
+const workbook = (sheet = "Maladharana and Peetham setup") => ({
+  id: "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx",
+  pages: [],
+  label: "ABP · Simplified process guide",
+  sheet,
+});
+
+export const topics = [
+  {
+    id: "daily",
+    title: b("Your daily practice", "నిత్య ఆచరణ"),
+    short: b("Daily practice", "నిత్య ఆచరణ"),
+    description: b("A simple rhythm for your Ayyappa deeksha. Find what you need, without searching through a book.", "అయ్యప్ప దీక్షలో నిత్య ఆచరణకు సులభమైన మార్గదర్శి. పుస్తకంలో వెతకకుండా కావలసిన విషయాన్ని చదవండి."),
+    keywords: "routine morning evening bath mala mandala 41 days బ్రహ్మముహూర్తం మాల స్నానం",
+    sections: [
+      {
+        id: "daily-sequence",
+        title: b("The daily puja, at a glance", "నిత్యపూజా క్రమం సంక్షిప్తంగా"),
+        body: b("The permanent collection includes an ABP simplified process workbook. Its Pooja Sequence sheet can be read in these stages; conditional steps remain conditional, not extra requirements for every household.", "శాశ్వత సేకరణలో ABP సంక్షిప్త ప్రక్రియ పట్టిక ఉంది. అందులోని Pooja Sequence షీట్‌ను ఈ దశలుగా చూడవచ్చు. సందర్భానుసార దశలు ప్రతి ఇంటికీ అదనపు తప్పనిసరి నియమాలు కావు."),
+        items: [
+          b("Prepare: bathe, apply the sacred marks, clean the puja space, decorate, and light the lamp.", "సిద్ధత: స్నానం, తిలకధారణ, పూజా స్థలం శుభ్రత, అలంకరణ, దీప ప్రజ్వలన."),
+          b("Begin worship: the introductory upacharas, Ganapati puja, Guru prayer, and invocations. Kalasha puja is included only if being performed.", "పూజ ప్రారంభం: ప్రారంభ ఉపచారాలు, గణపతి పూజ, గురు ప్రార్థన, దేవతా ఆవాహనాలు. కలశపూజ చేస్తుంటేనే ఆ దశ ఉంటుంది."),
+          b("Archana: anga puja, abhishekam if an idol is installed, and namavali with flowers or akshata. Sahasranamam is included if part of that day’s puja.", "అర్చన: అంగపూజ, విగ్రహం ఉంటే అభిషేకం, పుష్పాలు లేదా అక్షతలతో నామావళి. ఆ రోజు పూజలో భాగమైతే సహస్రనామం."),
+          b("Offer and conclude: naivedya, camphor arati, mantra pushpam, pradakshina, prostration, stotram, sharanaghosha, forgiveness prayer, then tirtha and prasada.", "సమర్పణ, ముగింపు: నైవేద్యం, కర్పూర హారతి, మంత్రపుష్పం, ప్రదక్షిణం, నమస్కారం, స్తోత్రం, శరణుఘోష, క్షమాపణ ప్రార్థన, తీర్థప్రసాదాలు."),
+        ],
+        sources: [workbook("Pooja Sequence")],
+      },
+      {
+        id: "morning",
+        title: b("Begin with the morning puja", "ఉదయం పూజతో ప్రారంభించండి"),
+        body: b("The niyamavali describes rising in Brahma muhurta, bathing, and completing morning worship before sunrise. It calls for another bath and sandhya puja in the evening. These are the booklet’s observance instructions, not medical advice.", "నియమావళి ప్రకారం బ్రహ్మముహూర్తంలో నిద్రలేచి, స్నానం చేసి, సూర్యోదయానికి ముందు పూజ ముగించాలి. సాయంత్రం తిరిగి స్నానం చేసి సంధ్యాపూజ చేయాలని చెబుతుంది. ఇవి గ్రంథంలోని ఆచార సూచనలు; వైద్య సలహా కాదు."),
+        items: [
+          b("Prepare for worship; the source mentions vibhuti, sandal paste, and kumkum after bathing.", "స్నానం తర్వాత విభూతి, గంధం, కుంకుమ ధరించాలని మూలగ్రంథం చెబుతుంది."),
+          b("Worship Ganapati, Shanmukha, and your family deity, followed by Ayyappa sharanaghosha.", "గణపతి, షణ్ముఖుడు, కులదైవం పూజ తర్వాత అయ్యప్ప శరణుఘోష చేయాలి."),
+          b("The booklet specifies 108 sharanam repetitions, fruit offerings, and camphor arati.", "గ్రంథం 108 సార్లు శరణుఘోష, ఫల నైవేద్యం, కర్పూర హారతిని సూచిస్తుంది."),
+        ],
+        sources: [r([17])],
+      },
+      {
+        id: "through-the-day",
+        title: b("Carry the practice into the day", "రోజంతా దీక్షా భావనతో"),
+        body: b("The collection presents deeksha as more than a prayer session: follow your Guruswamy’s guidance, observe self-restraint, avoid intoxicants, and take part in bhajan and service. The niyamavali describes a 41-day mandala observance; confirm your own initiation and completion with your Guruswamy.", "దీక్షను కేవలం పూజా సమయానికి పరిమితం చేయవద్దని గ్రంథం సూచిస్తుంది. గురుస్వామి మార్గదర్శకత్వం, సంయమనం, మత్తుపదార్థాలకు దూరంగా ఉండటం, భజన, సేవ దీక్షలో భాగాలు. నియమావళి 41 రోజుల మండల దీక్షను వివరిస్తుంది. మీ మాలధారణ, దీక్ష ముగింపు గురించి గురుస్వామిని సంప్రదించండి."),
+        sources: [r([17, 18])],
+      },
+      {
+        id: "evening",
+        title: b("Return to worship in the evening", "సాయంత్రం సంధ్యాపూజ"),
+        body: b("The booklet pairs evening worship with a light meal afterward. Keep the puja and food sections close at hand, then read the rest section for the sleeping customs described in this particular source.", "సాయంత్రపు పూజ తర్వాత అల్పాహారం తీసుకోవాలని గ్రంథం చెబుతుంది. పూజ, ఆహార విభాగాలను ఉపయోగించండి. ఈ గ్రంథంలో చెప్పిన నిద్ర నియమాల కోసం విశ్రాంతి విభాగం చదవండి."),
+        sources: [r([17])],
+      },
+    ],
+    related: ["puja", "food", "sleep"],
+  },
+  {
+    id: "puja",
+    title: b("Puja vidhanam", "పూజా విధానం"),
+    short: b("Puja vidhanam", "పూజా విధానం"),
+    description: b("Understand the flow of worship before you begin. This is a condensed reading guide, not a replacement for learning the ritual with your Guruswamy.", "పూజ ప్రారంభించే ముందు క్రమాన్ని అర్థం చేసుకోండి. ఇది సంక్షిప్త మార్గదర్శి మాత్రమే; గురుస్వామి దగ్గర నేర్చుకునే విధానానికి ప్రత్యామ్నాయం కాదు."),
+    keywords: "pooja worship vidhanam vidanam sankalpam abhishekam arati aarti దీపం పూజ అభిషేకం హారతి",
+    sections: [
+      {
+        id: "prepare-and-invoke",
+        title: b("Prepare, remember, and make sankalpa", "సిద్ధత, స్మరణ, సంకల్పం"),
+        body: b("The fuller niyamavali begins with Vighneshwara worship and preliminary invocations. Its Ayyappa section includes achamana, remembrance of the deity, and a sankalpa using the worshipper’s location, current calendar details, and gotra/name. Do not copy the printed place or date unchanged; ask for help with the correct wording for your situation.", "విస్తృత నియమావళిలో విఘ్నేశ్వర పూజ, ప్రారంభ ప్రార్థనలు ఉంటాయి. అయ్యప్ప పూజలో ఆచమనం, దేవతా స్మరణ, స్థలం, ప్రస్తుత కాల వివరాలు, గోత్రం, పేరుతో సంకల్పం ఉంటుంది. పుస్తకంలో ఉన్న స్థలాన్ని లేదా తేదీని యథాతథంగా చెప్పకుండా, మీకు వర్తించే సంకల్పాన్ని గురుస్వామి దగ్గర తెలుసుకోండి."),
+        sources: [r([25, 26, 27, 41])],
+      },
+      {
+        id: "welcome",
+        title: b("Welcome Ayyappa with the upacharas", "ఉపచారాలతో స్వామిని ఆహ్వానించండి"),
+        body: b("The sequence proceeds through avahana (invocation), asana (offering a seat), padya, arghya, and achamaniya. Flowers and akshata accompany the invocation and seat offering; water is used for the following symbolic offerings.", "తర్వాత ఆవాహనం, ఆసనం, పాద్యం, అర్ఘ్యం, ఆచమనీయం వస్తాయి. ఆవాహనం, ఆసన సమర్పణలో పుష్పాలు, అక్షతలు; తదుపరి ఉపచారాల్లో నీటిని ఉపయోగించాలని గ్రంథం వివరిస్తుంది."),
+        sources: [r([42])],
+      },
+      {
+        id: "abhishekam",
+        title: b("Abhishekam and alankaram", "అభిషేకం, అలంకారం"),
+        body: b("The detailed procedure lists milk, curd, ghee, honey, sugar, coconut water, and clean water for the bathing offerings. It then moves to clothing, the sacred thread, sandal paste, kumkum, akshata, and flowers. This is the fuller procedure, not a claim that every daily home puja must use every item. Confirm which steps suit your worship and idol; do not pour liquids over a photograph or electrical decoration.", "విస్తృత విధానంలో పాలు, పెరుగు, నెయ్యి, తేనె, పంచదార, కొబ్బరినీళ్లు, శుద్ధజలంతో స్నాన ఉపచారాలు ఉన్నాయి. తర్వాత వస్త్రం, యజ్ఞోపవీతం, గంధం, కుంకుమ, అక్షతలు, పుష్పాలు సమర్పిస్తారు. ప్రతి నిత్యపూజలో అన్నీ తప్పనిసరి అని దీని అర్థం కాదు. మీ పూజకు, విగ్రహానికి తగిన విధానాన్ని నిర్ధారించుకోండి. చిత్రం లేదా విద్యుత్ అలంకరణలపై ద్రవాలు పోయవద్దు."),
+        note: b("The last sentence is an editorial safety reminder, not a ritual rule from the booklet.", "చివరి వాక్యం భద్రత కోసం సంపాదకీయ సూచన; గ్రంథంలోని ఆచార నియమం కాదు."),
+        sources: [r([42, 43, 44])],
+      },
+      {
+        id: "archana",
+        title: b("Archana, offering, and arati", "అర్చన, నైవేద్యం, హారతి"),
+        body: b("Anga puja and the ashtottara namavali follow the offerings. The closing portion includes naivedya, water, tambulam, and camphor nirajanam, followed by sharanaghosha. Read this as the order of the detailed source, while following the particular daily method taught by your Guruswamy.", "ఉపచారాల తర్వాత అంగపూజ, అష్టోత్తర శతనామావళి వస్తాయి. ముగింపు భాగంలో నైవేద్యం, పానీయం, తాంబూలం, కర్పూర నీరాజనం, తర్వాత శరణుఘోష ఉన్నాయి. ఇది విస్తృత గ్రంథంలోని క్రమం. మీ గురుస్వామి నేర్పిన నిత్యపూజా విధానాన్ని అనుసరించండి."),
+        sources: [r([44, 45, 46, 47]), cite(puja, [2], "శ్రీ అయ్యప్ప స్వామి పూజ విధానం")],
+      },
+    ],
+    related: ["peetam", "prayers", "daily"],
+  },
+  {
+    id: "peetam",
+    title: b("Peetam setup", "పీఠం ఏర్పాటు"),
+    short: b("Peetam setup", "పీఠం ఏర్పాటు"),
+    description: b("Set up a dedicated home sannidhanam using the ABP process guide in your permanent collection. Confirm your household’s tradition with your Guruswamy.", "మీ శాశ్వత సేకరణలోని ABP ప్రక్రియ మార్గదర్శి ఆధారంగా ఇంటి సన్నిధానం ఏర్పాటు చేసుకోండి. మీ ఇంటి సంప్రదాయాన్ని గురుస్వామితో నిర్ధారించండి."),
+    keywords: "altar setup peetham pitham sannidhanam materials shopping దీపం సామగ్రి పీఠం సన్నిధానం",
+    sections: [
+      {
+        id: "materials",
+        title: b("Gather the materials for your chosen puja", "మీ పూజకు అవసరమైన సామగ్రి"),
+        body: b("This checklist is assembled from the detailed puja’s offerings. It is a preparation aid, not a mandatory shopping list or a prescribed peetam design.", "విస్తృత పూజలోని ఉపచారాలను ఆధారంగా తీసుకుని ఈ జాబితాను రూపొందించాం. ఇది సిద్ధతకు సహాయం మాత్రమే; తప్పనిసరి కొనుగోలు జాబితా లేదా నిర్ణీత పీఠం నమూనా కాదు."),
+        checklist: [
+          b("Clean water, a water vessel, and an offering spoon", "శుద్ధజలం, నీటి పాత్ర, ఉద్ధరిణి"),
+          b("Flowers, akshata, sandal paste, and kumkum", "పుష్పాలు, అక్షతలు, గంధం, కుంకుమ"),
+          b("Lamp, incense, and arati materials used in your method", "మీ విధానానికి తగిన దీపం, ధూపం, హారతి సామగ్రి"),
+          b("Fruit or the naivedya agreed for your puja", "ఫలాలు లేదా మీ పూజకు నిర్ణయించిన నైవేద్యం"),
+          b("For the fuller abhishekam only: the liquids and cloth confirmed with your Guruswamy", "విస్తృత అభిషేకం చేస్తే మాత్రమే: గురుస్వామితో నిర్ధారించిన ద్రవ్యాలు, వస్త్రం"),
+        ],
+        sources: [r([42, 43, 44, 47])],
+      },
+      {
+        id: "layout",
+        title: b("Arrange the platform and deities", "పీఠం, దేవతల అమరిక"),
+        body: b("ABP recommends a quiet, clean corner, preferably north- or east-facing, with a raised platform rather than idols on the bare floor. It describes a rangoli at the base, a clean unused cloth and rice on the platform, with Ayyappa centered. Its recommended three-deity frame places Ganapati on the left and Subrahmanya on the right. Because left/right and facing can be interpreted differently, confirm the arrangement with your Guruswamy rather than infer a compass diagram.", "ABP మార్గదర్శి ప్రశాంతమైన, శుభ్రమైన మూలను, వీలైతే ఉత్తర లేదా తూర్పు ముఖ అమరికను సూచిస్తుంది. విగ్రహాలను నేలపై కాకుండా ఎత్తైన పీఠంపై ఉంచాలని చెబుతుంది. పీఠం కింద ముగ్గు, పైన వాడని శుభ్రమైన వస్త్రం, బియ్యం; మధ్యలో అయ్యప్పను ఉంచడం వివరిస్తుంది. మూడు దేవతల చిత్రంలో గణపతి ఎడమ, సుబ్రహ్మణ్యుడు కుడి వైపు ఉండాలని సూచిస్తుంది. ఎడమ, కుడి, ముఖదిశ అర్థంలో భేదాలు ఉండవచ్చు కాబట్టి గురుస్వామితో అమరికను నిర్ధారించండి."),
+        sources: [workbook()],
+      },
+      {
+        id: "lamps-and-care",
+        title: b("Lamps, decoration, and daily care", "దీపాలు, అలంకరణ, నిత్య శుభ్రత"),
+        body: b("The ABP guide places brass lamps on either side, using sesame oil or ghee and cotton wicks. Keep incense, an arati plate, and a bell ready, along with flowers or garlands, drinking water, and fruit or prasada. It calls for cleaning the space before each puja, a simple puja mat in front, and leaving the established peetam and frames undisturbed until the vow is completed. A dedicated stool may be inside an existing puja mandir or in a separate space.", "ABP మార్గదర్శి రెండు వైపులా ఇత్తడి దీపాలు, నువ్వుల నూనె లేదా నెయ్యి, పత్తి వత్తులను సూచిస్తుంది. ధూపం, హారతి పళ్లెం, గంట, పూలు లేదా మాలలు, తాగునీరు, ఫలాలు లేదా ప్రసాదం సిద్ధంగా ఉంచాలి. ప్రతి పూజకు ముందు స్థలం శుభ్రం చేయడం, ముందు సాధారణ పూజా చాప ఉంచడం, దీక్ష ముగిసే వరకు స్థాపించిన పీఠం, చిత్రాలను కదపకుండా ఉంచడం చెబుతుంది. ప్రత్యేక పీఠాన్ని ఉన్న పూజా మందిరంలో లేదా వేరే ప్రదేశంలో ఏర్పాటు చేయవచ్చు."),
+        sources: [workbook()],
+      },
+      {
+        id: "mudupu",
+        title: b("Mudupu / mokku at the start", "ప్రారంభంలో ముడుపు / మొక్కు"),
+        body: b("The workbook describes a first-day offering made with betel leaves, coins, betel nut, rice, turmeric, and kumkum, tied with sacred thread and placed at Ayyappa’s feet during sankalpa. It says to carry and surrender this offering on the irumudi day. Ask your Guruswamy for the exact coin amount and local practice; this guide does not convert that custom into a universal fee or requirement.", "వర్క్‌బుక్ మొదటి రోజు సంకల్పంలో తమలపాకులు, నాణేలు, వక్కలు, బియ్యం, పసుపు, కుంకుమను పవిత్ర దారంతో కట్టి స్వామి పాదాల వద్ద ఉంచే ముడుపును వివరిస్తుంది. ఇరుముడి రోజున దానిని తీసుకెళ్లి సమర్పించాలని చెబుతుంది. నాణేల మొత్తం, స్థానిక విధానం గురుస్వామిని అడగండి. దీన్ని అందరికీ వర్తించే రుసుము లేదా తప్పనిసరి నియమంగా ఈ మార్గదర్శి నిర్ణయించదు."),
+        sources: [workbook()],
+      },
+      {
+        id: "safe-space",
+        title: b("Make the space safe to use", "పూజా స్థలంలో భద్రత"),
+        body: b("Editorial safety guidance: use a stable, clean surface. Keep flames away from fabric, flowers, children, and pets; protect electrical fittings from water. Never leave a lit lamp or burning camphor unattended.", "సంపాదకీయ భద్రతా సూచన: స్థిరమైన, శుభ్రమైన ప్రదేశాన్ని ఉపయోగించండి. దీపాన్ని వస్త్రాలు, పూలు, పిల్లలు, పెంపుడు జంతువులకు దూరంగా ఉంచండి. విద్యుత్ పరికరాలకు నీరు తగలనివ్వవద్దు. వెలిగించిన దీపం లేదా కర్పూరాన్ని పర్యవేక్షణ లేకుండా వదలవద్దు."),
+        status: "editorial",
+        sources: [],
+      },
+    ],
+    related: ["puja", "prayers"],
+  },
+  {
+    id: "food",
+    title: b("What to eat & avoid", "తినవలసినవి, మానవలసినవి"),
+    short: b("Food & restrictions", "ఆహార నియమాలు"),
+    description: b("The food guidance in your collection, including details that should not be mistaken for universal rules.", "మీ గ్రంథంలోని ఆహార సూచనలు. ప్రత్యేక సంప్రదాయ సూచనలను అందరికీ ఒకే నియమంగా భావించవద్దు."),
+    keywords: "allowed prohibited diet vegetarian sattvic satvik onion garlic ginger alcohol egg meat what to eat not eat భిక్ష అల్లం వెల్లుల్లి మాంసం ఆహారం",
+    sections: [
+      {
+        id: "sattvic",
+        title: b("The source calls for sattvic food", "సాత్విక ఆహారం"),
+        body: b("The niyamavali calls for a sattvic diet during deeksha and says to avoid meat and alcohol even in the days preceding mala dharana. It also says bhiksha may be prepared by anyone who prepares it cleanly. Food sharing and annadana are encouraged.", "నియమావళి దీక్షలో సాత్విక ఆహారాన్ని సూచిస్తుంది. మాలధారణకు ముందు రోజుల నుంచే మాంసం, మద్యం మానాలని చెబుతుంది. భిక్షను ఎవరైనా శుభ్రంగా తయారు చేసి పెట్టవచ్చని కూడా పేర్కొంటుంది. భిక్ష పెట్టడం, అన్నదానం ప్రోత్సహిస్తుంది."),
+        sources: [r([17, 18])],
+      },
+      {
+        id: "ingredients",
+        title: b("What to avoid—and where the guides differ", "మానవలసినవి, గ్రంథాల మధ్య భేదాలు"),
+        body: b("The ABP process guide lists meat, eggs, alcohol, tobacco, onion, and garlic as exclusions. The niyamavali also prohibits meat and alcohol, but its food passage specifically names ginger and garlic. These are not identical ingredient lists. Both are shown rather than silently merging them into a stricter universal rule. Ask your Guruswamy which list your group follows; tea, coffee, and packaged-food questions are not settled by these passages.", "ABP ప్రక్రియ మార్గదర్శి మాంసం, గుడ్లు, మద్యం, పొగాకు, ఉల్లిపాయ, వెల్లుల్లిని మానాలని చెబుతుంది. నియమావళి కూడా మాంసం, మద్యాన్ని నిషేధిస్తుంది; అయితే ఆహార భాగంలో ప్రత్యేకంగా అల్లం, వెల్లుల్లిని పేర్కొంటుంది. ఇవి ఒకే పదార్థాల జాబితాలు కావు. రెండింటినీ కలిపి అందరికీ మరింత కఠిన నియమం చేయకుండా, భేదాన్ని చూపించాం. మీ బృందం ఏ జాబితా పాటిస్తుందో గురుస్వామిని అడగండి. టీ, కాఫీ, ప్యాకేజ్డ్ ఆహారం గురించి ఈ భాగాలు పూర్తి నిర్ణయం ఇవ్వవు."),
+        sources: [workbook(), r([17])],
+      },
+      {
+        id: "meal-times",
+        title: b("Meal timing in this tradition", "ఈ సంప్రదాయంలో భిక్ష సమయం"),
+        body: b("The booklet says to complete the midday bhiksha before 3 pm and take a light meal after evening worship. This records its practice; it is not a fasting prescription for everyone. If you have diabetes, take medicines, or have another health need, discuss a safe schedule with your clinician and Guruswamy. Do not skip prescribed medicines or necessary food.", "మధ్యాహ్న భిక్షను మూడు గంటలలోపు ముగించి, సాయంత్రపు పూజ తర్వాత అల్పాహారం తీసుకోవాలని గ్రంథం చెబుతుంది. ఇది ఆ సంప్రదాయ సూచన మాత్రమే; అందరికీ ఉపవాస నియమం కాదు. మధుమేహం, మందుల వాడకం లేదా ఇతర ఆరోగ్య అవసరాలు ఉంటే వైద్యుడు, గురుస్వామితో సురక్షిత సమయాన్ని నిర్ణయించుకోండి. సూచించిన మందులు లేదా అవసరమైన ఆహారాన్ని మానవద్దు."),
+        note: b("Health precautions are editorial guidance, separate from the religious source.", "ఆరోగ్య జాగ్రత్తలు సంపాదకీయ సూచనలు; గ్రంథంలోని ఆచారాలకు వేరుగా ఇచ్చాం."),
+        sources: [r([17])],
+      },
+    ],
+    related: ["eating", "daily"],
+  },
+  {
+    id: "eating",
+    title: b("How to eat", "భిక్ష తీసుకునే విధానం"),
+    short: b("How to eat", "భిక్ష విధానం"),
+    description: b("Approach bhiksha with remembrance, cleanliness, and gratitude. Keep documented prayers separate from customs still to confirm.", "భిక్షను దైవస్మరణ, శుభ్రత, కృతజ్ఞతతో తీసుకోండి. గ్రంథంలో ఉన్న ప్రార్థనలు, నిర్ధారించాల్సిన ఆచారాలను వేరుగా చూడండి."),
+    keywords: "meal prayer bhojana brahmarpanam sit plate right hand how eat before after భోజనం శ్లోకం భోజన పూర్వ",
+    sections: [
+      {
+        id: "before-food",
+        title: b("Remember the offering before your meal", "భోజనానికి ముందు సమర్పణ భావన"),
+        body: b("The collection’s Bhojana Purva Shlokah document gathers prayers before eating, including Brahmarpanam, Aham Vaishvanaro Bhutva, an Annapurna prayer, and a prayer offering what belongs to Govinda back to him. Together they frame food and digestion as part of a sacred offering, rather than just a meal.", "సేకరణలోని భోజన పూర్వ శ్లోకాల పత్రంలో బ్రహ్మార్పణం, అహం వైశ్వానరో భూత్వా, అన్నపూర్ణా ప్రార్థన, గోవిందునికి సమర్పణ శ్లోకం ఉన్నాయి. ఆహారం, జీర్ణక్రియను భగవంతునికి అర్పణ భావంతో చూడటాన్ని ఇవి సూచిస్తాయి."),
+        verse: b("Brahmarpanam brahma havir\nBrahmagnau brahmana hutam\nBrahmaiva tena gantavyam\nBrahma-karma-samadhina", "బ్రహ్మార్పణం బ్రహ్మ హవిః\nబ్రహ్మాగ్నౌ బ్రహ్మణా హుతమ్ ।\nబ్రహ్మైవ తేన గంతవ్యం\nబ్రహ్మకర్మసమాధినా ॥"),
+        verseLabel: b("Bhagavad Gita 4.24 · before-meal prayer", "భగవద్గీత 4.24 · భోజన పూర్వ ప్రార్థన"),
+        sources: [cite(meal, [], "భోజన పూర్వ శ్లోకాః.docx")],
+      },
+      {
+        id: "clean-and-shared",
+        title: b("Clean preparation and shared bhiksha", "శుభ్రంగా తయారీ, భిక్ష పంచుకోవడం"),
+        body: b("The niyamavali permits cleanly prepared bhiksha from others and recommends feeding others or sharing grain when a meal is not possible. It also describes receiving bhiksha in other homes as part of its practice. Confirm how your group observes this, rather than treating eating alone as the only acceptable way.", "ఇతరులు శుభ్రంగా తయారు చేసిన భిక్షను గ్రంథం అనుమతిస్తుంది. ఇతరులకు భిక్ష పెట్టడం, అది సాధ్యం కాకపోతే ధాన్యం పంచడం సూచిస్తుంది. ఇతర ఇళ్లలో భిక్ష స్వీకరించడం కూడా ఈ ఆచరణలో భాగంగా చెబుతుంది. ఒంటరిగా తినడమే సరైన పద్ధతి అని భావించకుండా మీ బృందం ఆచారాన్ని నిర్ధారించుకోండి."),
+        sources: [r([18])],
+      },
+      {
+        id: "posture",
+        title: b("Posture, utensils, and other details", "కూర్చునే విధానం, పాత్రలు, ఇతర వివరాలు"),
+        body: b("The reviewed meal document contains prayers, not a complete manual for seating, hand use, leaf or plate choice, or drinking water. Those details have not been verified from the readable material. Ask your Guruswamy, and do not infer a compulsory rule from a photograph or a generic internet list.", "పరిశీలించిన భోజన పత్రంలో ప్రార్థనలు ఉన్నాయి; కూర్చునే భంగిమ, ఏ చేతితో తినాలి, ఆకు లేదా పాత్ర, నీరు తాగే పద్ధతి గురించి పూర్తి విధానం లేదు. చదవగలిగిన మూలాల్లో ఇవి నిర్ధారణ కాలేదు. చిత్రం లేదా సాధారణ ఇంటర్నెట్ జాబితా ఆధారంగా తప్పనిసరి నియమాన్ని నిర్ణయించకుండా గురుస్వామిని అడగండి."),
+        status: "confirm",
+        sources: [],
+      },
+    ],
+    related: ["food", "prayers"],
+  },
+  {
+    id: "sleep",
+    title: b("Rest & sleeping", "విశ్రాంతి, నిద్ర"),
+    short: b("Rest & sleeping", "నిద్ర నియమాలు"),
+    description: b("The sleeping customs described in the niyamavali, with health and accessibility kept in view.", "నియమావళిలో చెప్పిన నిద్ర ఆచారాలు. ఆరోగ్యం, శారీరక అవసరాలను కూడా దృష్టిలో ఉంచుకోండి."),
+    keywords: "sleep sleeping bed pillow mat floor rest night direction mala నిద్ర చాప మంచం దిండు",
+    sections: [
+      {
+        id: "sleeping-custom",
+        title: b("A simple sleeping arrangement", "సాధారణ నిద్ర ఏర్పాటు"),
+        body: b("The booklet’s rule 9 says not to sleep during the day, not to use a bed at night, and to spread a mat or cloth without a pillow. It specifically asks that the mala not touch the ground while sleeping or prostrating. This is a description of this source’s observance, not a medical recommendation or a reason to deny yourself needed rest.", "గ్రంథంలోని తొమ్మిదవ నియమం పగటి నిద్ర, రాత్రి మంచంపై నిద్రను మానాలని; చాప లేదా తుండుగుడ్డ పరుచుకుని, తలదిండు లేకుండా పడుకోవాలని చెబుతుంది. నిద్రలో, పాదనమస్కారంలో మాల నేలకు తగలకుండా జాగ్రత్త పడాలని ప్రత్యేకంగా పేర్కొంటుంది. ఇది ఈ గ్రంథంలోని ఆచారం; వైద్య సలహా లేదా అవసరమైన విశ్రాంతిని నిరాకరించడానికి కారణం కాదు."),
+        sources: [r([17])],
+      },
+      {
+        id: "where-to-sleep",
+        title: b("Where to sleep", "ఎక్కడ నిద్రించాలి"),
+        body: b("The ABP workbook asks the devotee to sleep in the room or space where the peetam is established. It recommends the ground with a clean mat or new bedding and blankets, avoiding pillows. This is a source-specific practice, not proof that a separate dedicated room is required in every home. Confirm a workable arrangement with your Guruswamy.", "ABP వర్క్‌బుక్ పీఠం ఉన్న గది లేదా ప్రదేశంలో భక్తుడు నిద్రించాలని చెబుతుంది. నేలపై శుభ్రమైన చాప లేదా కొత్త పరుపు వస్త్రాలు, దుప్పట్లతో విశ్రాంతి, దిండు నివారణను సూచిస్తుంది. ఇది ఆ మూలానికి సంబంధించిన ఆచారం; ప్రతి ఇంటిలో ప్రత్యేక గది తప్పనిసరి అని అర్థం కాదు. మీకు సాధ్యమైన అమరికను గురుస్వామితో నిర్ధారించుకోండి."),
+        sources: [workbook()],
+      },
+      {
+        id: "adapt-rest",
+        title: b("Health needs come first", "ఆరోగ్య అవసరాలకు ప్రాధాన్యం"),
+        body: b("Editorial health guidance: pain, disability, pregnancy, illness, or sleep-related conditions may make floor sleeping or avoiding daytime rest unsafe. Use a safe sleeping arrangement and discuss adaptations with your clinician and Guruswamy. These reviewed passages do not specify which direction your head should face.", "సంపాదకీయ ఆరోగ్య సూచన: నొప్పి, వైకల్యం, గర్భధారణ, అనారోగ్యం, నిద్ర సంబంధిత సమస్యలలో నేలపై పడుకోవడం లేదా పగటి విశ్రాంతి మానడం సురక్షితం కాకపోవచ్చు. సురక్షితంగా విశ్రాంతి తీసుకుని వైద్యుడు, గురుస్వామితో అవసరమైన మార్పులు మాట్లాడండి. పరిశీలించిన ఈ భాగాలు తల ఏ దిక్కున పెట్టాలో నిర్దేశించలేదు."),
+        status: "editorial",
+        sources: [],
+      },
+      {
+        id: "night-prayer",
+        title: b("Harivarasanam in the collection", "సేకరణలో హరివరాసనం"),
+        body: b("The final page of the niyamavali places Harivarasanam under the heading for the night resting service. It can help you locate the evening devotional material, but it does not by itself establish that every household must perform the temple’s closing service.", "నియమావళి చివరి పేజీలో రాత్రి పవళింపు సేవ కింద హరివరాసనం ఉంది. సాయంత్రపు భక్తి పాఠ్యాన్ని గుర్తించడానికి ఇది ఉపయోగపడుతుంది. అయితే ప్రతి ఇంటిలో ఆలయ ముగింపు సేవను తప్పనిసరిగా చేయాలని దీని ద్వారా నిర్ణయించలేం."),
+        sources: [r([68])],
+      },
+    ],
+    related: ["daily", "prayers"],
+  },
+  {
+    id: "prayers",
+    title: b("Prayers & sharanaghosha", "ప్రార్థనలు, శరణుఘోష"),
+    short: b("Prayers", "ప్రార్థనలు"),
+    description: b("Know which devotional material to use and where it belongs, without opening every file in the collection.", "ప్రతి ఫైలు తెరవకుండానే ఏ ప్రార్థనా పాఠ్యం ఎక్కడ ఉపయోగపడుతుందో తెలుసుకోండి."),
+    keywords: "namavali 108 1000 ashtottara bhajan stotram slokam saranam sharanu ghosha శరణం నామావళి భజన",
+    sections: [
+      {
+        id: "sharanam",
+        title: b("Sharanam: the recurring refrain", "శరణం: నిరంతర స్మరణ"),
+        body: b("The daily discipline section asks for 108 Ayyappa sharanam repetitions. The fuller puja also provides sharanaghosha after the offerings. The refrain expresses taking refuge in Ayyappa; use the pronunciation and sequence taught in your group.", "నిత్య ఆచరణలో 108 సార్లు అయ్యప్ప శరణుఘోష చేయాలని గ్రంథం సూచిస్తుంది. విస్తృత పూజలో కూడా ఉపచారాల తర్వాత శరణుఘోష ఉంది. ఈ పలుకులు అయ్యప్పను శరణు కోరే భావాన్ని వ్యక్తం చేస్తాయి. మీ బృందంలో నేర్పిన ఉచ్చారణ, క్రమాన్ని అనుసరించండి."),
+        verse: b("Swamiye sharanam Ayyappa", "స్వామియే శరణం అయ్యప్ప"),
+        verseLabel: b("Ayyappa sharanam refrain", "అయ్యప్ప శరణు పలుకు"),
+        sources: [r([17, 47, 48, 49])],
+      },
+      {
+        id: "which-prayer",
+        title: b("Choose the material for the occasion", "సందర్భానికి తగిన పాఠ్యం"),
+        body: b("For archana, the niyamavali supplies an Ayyappa ashtottara namavali. For shared singing, it includes a substantial bhajan section. For meals, use the dedicated Bhojana Purva Shlokah document; for night devotion, the booklet places Harivarasanam at its end. These serve different purposes and need not be treated as one enormous daily reading.", "అర్చన కోసం నియమావళిలో అయ్యప్ప అష్టోత్తర శతనామావళి ఉంది. సమూహ గానం కోసం భజనల భాగం ఉంది. భోజనానికి ప్రత్యేక భోజన పూర్వ శ్లోకాల పత్రం; రాత్రి భక్తి కోసం చివర్లో హరివరాసనం ఉంది. వీటి ప్రయోజనాలు వేరు; అన్నింటినీ ఒకే భారీ నిత్య పారాయణంగా భావించాల్సిన అవసరం లేదు."),
+        sources: [r([45, 46, 50, 68]), cite(meal, [], "భోజన పూర్వ శ్లోకాః.docx")],
+      },
+      {
+        id: "transcription",
+        title: b("Why not all prayers are transcribed here", "అన్ని ప్రార్థనలు ఇక్కడ ఎందుకు లేవు"),
+        body: b("Several PDFs have scanned pages or legacy font encodings, and one large file requires Drive download confirmation. Raw extraction can corrupt Telugu syllables. Rather than publish unreliable sacred text, this edition summarizes verified sections and leaves the affected documents visibly marked in the source library. The English and Telugu summaries are editorial renderings; a Guruswamy should review them before they are used as formal instruction.", "కొన్ని పీడీఎఫ్‌లు స్కాన్ రూపంలో లేదా పాత ఫాంట్ ఎన్‌కోడింగ్‌తో ఉన్నాయి. ఒక పెద్ద ఫైలుకు డ్రైవ్ డౌన్‌లోడ్ నిర్ధారణ అవసరం. నేరుగా వెలికితీసిన పాఠ్యంలో తెలుగు అక్షరాలు చెడిపోవచ్చు. తప్పు ప్రార్థనా పాఠ్యం ప్రచురించకుండా, నిర్ధారించిన భాగాలను సంక్షిప్తీకరించి, మిగిలిన పత్రాల స్థితిని మూలాల జాబితాలో చూపించాం. తెలుగు, ఆంగ్ల సారాంశాలు సంపాదకీయ రూపాంతరాలు; అధికారిక బోధనకు ముందు గురుస్వామి సమీక్ష అవసరం."),
+        status: "editorial",
+        sources: [],
+      },
+    ],
+    related: ["puja", "eating", "sources"],
+  },
+  {
+    id: "guidance",
+    title: b("Deeksha & Guruswamy", "దీక్ష, గురుస్వామి మార్గదర్శనం"),
+    short: b("Deeksha guidance", "దీక్ష మార్గదర్శనం"),
+    description: b("The larger context for the daily rules—and the decisions a reading app should not make for you.", "నిత్య నియమాల నేపథ్యం, ఒక యాప్ మీకు బదులుగా నిర్ణయించకూడని విషయాలు."),
+    keywords: "mala initiation removal irumudi sabarimala journey kanneswami guru vow celibacy 41 days దీక్ష మాలధారణ ఇరుముడి గురుస్వామి",
+    sections: [
+      {
+        id: "guru",
+        title: b("Begin and complete with guidance", "మార్గదర్శకత్వంతో ప్రారంభం, ముగింపు"),
+        body: b("The niyamavali places mala dharana and observance under a Guruswamy’s direction. It describes a 41-day mandala, restraint, devotional practice, and concluding the deeksha after the pilgrimage with the prescribed mala removal. Do not use this app to decide initiation dates, shorten a vow, or remove your mala on your own.", "నియమావళి మాలధారణ, దీక్షా నియమాలను గురుస్వామి మార్గదర్శకత్వంలో ఉంచుతుంది. 41 రోజుల మండల దీక్ష, సంయమనం, భక్తి ఆచరణ, యాత్ర తర్వాత నిర్ణీత విధంగా మాల విసర్జనతో ముగింపును వివరిస్తుంది. దీక్ష ప్రారంభ తేదీలు, వ్యవధి తగ్గింపు లేదా మీరే మాల తీసివేయడం వంటి నిర్ణయాలకు ఈ యాప్‌ను ఆధారంగా చేసుకోవద్దు."),
+        sources: [r([17, 18, 22])],
+      },
+      {
+        id: "conduct",
+        title: b("Restraint, respect, and service", "సంయమనం, గౌరవం, సేవ"),
+        body: b("Alongside worship, the source emphasizes brahmacharya, avoiding intoxicants and gambling, participation in bhajan, respect among devotees regardless of wealth or status, and sharing bhiksha. Keep the ethical and service aspects in view rather than reducing deeksha to a food checklist.", "పూజతో పాటు బ్రహ్మచర్యం, మత్తుపదార్థాలు, జూదానికి దూరంగా ఉండటం, భజనల్లో పాల్గొనడం, సంపద లేదా హోదా తేడా లేకుండా భక్తులను గౌరవించడం, భిక్ష పంచుకోవడాన్ని గ్రంథం ప్రస్తావిస్తుంది. దీక్షను కేవలం ఆహార జాబితాగా కాకుండా నైతిక ఆచరణ, సేవతో చూడండి."),
+        sources: [r([17, 18])],
+      },
+      {
+        id: "ask-guru",
+        title: b("Questions to take to your Guruswamy", "గురుస్వామిని అడగవలసిన ప్రశ్నలు"),
+        items: [
+          b("Which daily puja and peetam arrangement should our household follow?", "మా ఇంటిలో ఏ నిత్యపూజ, పీఠం అమరిక అనుసరించాలి?"),
+          b("Which ingredients, meal timing, and work-day adjustments apply to our group?", "మా బృందానికి ఏ పదార్థాలు, భిక్ష సమయాలు, పని వేళల మార్పులు వర్తిస్తాయి?"),
+          b("How should health, disability, travel, or a family bereavement be handled?", "ఆరోగ్యం, వైకల్యం, ప్రయాణం లేదా కుటుంబంలో మరణం వచ్చినప్పుడు ఎలా వ్యవహరించాలి?"),
+          b("How should mala dharana, irumudi preparation, and completion be arranged?", "మాలధారణ, ఇరుముడి సిద్ధత, దీక్ష ముగింపు ఎలా ఏర్పాటు చేయాలి?"),
+        ],
+        body: b("This is an editorial discussion checklist, not an additional set of religious rules. Temple access rules and travel requirements are not verified by this collection; consult current official information before travelling.", "ఇది చర్చకు సహాయకమైన సంపాదకీయ జాబితా మాత్రమే; అదనపు ఆచార నియమాలు కావు. ఆలయ ప్రవేశం, యాత్ర నిబంధనల ప్రస్తుత స్థితిని ఈ సేకరణ నిర్ధారించదు. ప్రయాణానికి ముందు అధికారిక సమాచారాన్ని చూడండి."),
+        status: "editorial",
+        sources: [],
+      },
+    ],
+    related: ["daily", "food", "sources"],
+  },
+  {
+    id: "rules",
+    title: b("The 18 holy rules · daily reminders", "18 పవిత్ర నియమాలు · నిత్య స్మరణ"),
+    short: b("18 daily disciplines", "18 నిత్య నియమాలు"),
+    description: b("Eighteen practical reminders consolidated from the supplied guides. This is an editorial grouping, not a claim that every tradition has one identical canonical list.", "అందించిన మార్గదర్శుల నుంచి 18 ఆచరణీయ స్మరణలు. ఇది సంపాదకీయ విభజన మాత్రమే; ప్రతి సంప్రదాయానికీ ఒకే ప్రామాణిక జాబితా ఉందనే వాదన కాదు."),
+    keywords: "18 holy rules discipline reminder conduct truth daily vow పద్దెనిమిది నియమాలు ఆచరణ",
+    sections: [{
+      id: "eighteen-reminders",
+      title: b("Keep the whole deeksha in view", "దీక్షను సమగ్రంగా గుర్తుంచుకోండి"),
+      body: b("Use these alongside your Guruswamy’s instructions. Health adaptations and exceptional circumstances need individual guidance, not a rigid checklist.", "వీటిని గురుస్వామి సూచనలతో కలిపి చూడండి. ఆరోగ్యానికి తగిన మార్పులు, ప్రత్యేక పరిస్థితులకు వ్యక్తిగత మార్గదర్శనం అవసరం; కఠినమైన జాబితా మాత్రమే సరిపోదు."),
+      ordered: true,
+      items: [
+        b("Begin and complete the vow with your Guruswamy’s guidance.", "గురుస్వామి మార్గదర్శకత్వంలో దీక్ష ప్రారంభించి ముగించండి."),
+        b("Prepare yourself before mala dharana; avoid meat and alcohol.", "మాలధారణకు ముందు నుంచే సిద్ధమై, మాంసం, మద్యానికి దూరంగా ఉండండి."),
+        b("Keep the mala on during the vow; protect it from touching the ground.", "దీక్షలో మాలను ధరించి, నేలకు తగలకుండా కాపాడండి."),
+        b("Speak truthfully and avoid angry or hurtful speech.", "నిజం పలికి, కోపపు లేదా బాధపెట్టే మాటలకు దూరంగా ఉండండి."),
+        b("Follow the sattvic food list agreed with your Guruswamy.", "గురుస్వామితో నిర్ధారించిన సాత్విక ఆహార నియమాలు పాటించండి."),
+        b("Avoid intoxicants, tobacco, and other substances prohibited by your vow.", "దీక్షలో నిషేధించిన మత్తుపదార్థాలు, పొగాకు మొదలైన వాటికి దూరంగా ఉండండి."),
+        b("Observe brahmacharya and self-restraint.", "బ్రహ్మచర్యం, ఆత్మసంయమనం పాటించండి."),
+        b("Maintain personal cleanliness and prepare for morning worship.", "వ్యక్తిగత శుభ్రతతో ఉదయపు పూజకు సిద్ధం కండి."),
+        b("Return to the evening puja as taught by your group.", "మీ బృందం నేర్పిన విధంగా సాయంత్రపు పూజ చేయండి."),
+        b("Keep the peetam and puja space clean and undisturbed.", "పీఠం, పూజా ప్రదేశాన్ని శుభ్రంగా, స్థిరంగా ఉంచండి."),
+        b("Use the dress and grooming practices taught for your deeksha.", "మీ దీక్షకు నేర్పిన వస్త్రధారణ, క్షౌర సంబంధిత ఆచారాలను అనుసరించండి."),
+        b("Keep meal preparation clean and follow a safe, agreed schedule.", "భిక్షను శుభ్రంగా సిద్ధం చేసి, సురక్షితంగా నిర్ణయించిన సమయాలు పాటించండి."),
+        b("Remember Ayyappa through sharanam, namavali, and bhajan.", "శరణం, నామావళి, భజన ద్వారా అయ్యప్పను స్మరించండి."),
+        b("Respect fellow devotees without differences of wealth or status.", "సంపద, హోదా తేడా లేకుండా తోటి భక్తులను గౌరవించండి."),
+        b("Share bhiksha or support annadana as you are able.", "మీ శక్తి మేరకు భిక్ష పంచండి లేదా అన్నదానానికి తోడ్పడండి."),
+        b("Keep sleeping arrangements simple, with health needs protected.", "ఆరోగ్య అవసరాలను కాపాడుకుంటూ సాధారణ నిద్ర ఏర్పాటు చేసుకోండి."),
+        b("Ask for guidance about illness, travel, or family bereavement.", "అనారోగ్యం, ప్రయాణం, కుటుంబంలో మరణం వంటి సందర్భాల్లో మార్గదర్శనం పొందండి."),
+        b("Learn irumudi and mala removal properly; do not improvise the conclusion.", "ఇరుముడి, మాల విసర్జన సరిగా నేర్చుకోండి; ముగింపును మీరే ఊహించి చేయవద్దు."),
+      ],
+      sources: [workbook(), r([17, 18])],
+    }],
+    related: ["guidance", "daily", "food"],
+  },
+  {
+    id: "pilgrimage",
+    title: b("Pilgrimage & ritual guides", "యాత్ర, ఆచార మార్గదర్శులు"),
+    short: b("Pilgrimage guides", "యాత్ర మార్గదర్శులు"),
+    description: b("Prepare for the rituals with your Guruswamy. Keep source traditions separate from current transport, temple-access, and booking information.", "గురుస్వామితో కలిసి ఆచారాలకు సిద్ధం కండి. మూలాల్లోని సంప్రదాయాలను ప్రస్తుత రవాణా, ఆలయ ప్రవేశం, బుకింగ్ సమాచారంతో కలపవద్దు."),
+    keywords: "maladharanam day 1 irumudi packing 18 holy steps pathinettam padi map route Pamba Erumeli Sabarimala మాలధారణ ఇరుముడి పదునెట్టాంబడి",
+    sections: [
+      {
+        id: "maladharanam",
+        title: b("Maladharanam · Day 1", "మాలధారణ · మొదటి రోజు"),
+        body: b("The ABP guide describes bathing and preparing, wearing the traditional deeksha dress, and taking a Tulsi or Rudraksha mala to the Guruswamy or priest. The guide conducts the sankalpa, puja, purification and mala-dharana mantra; the devotee recites and receives the mala, seeks blessings, and begins the vow. A second thodu mala is recommended in that guide, not declared universal here.", "ABP మార్గదర్శిలో స్నానం, సిద్ధత, దీక్షా వస్త్రధారణ, తులసి లేదా రుద్రాక్ష మాలతో గురుస్వామి లేదా అర్చకుని వద్దకు వెళ్లడం ఉంది. గురువు సంకల్పం, పూజ, మాల శుద్ధి, మాలధారణ మంత్రం నిర్వహిస్తారు; భక్తుడు మంత్రం పలికి మాల స్వీకరించి ఆశీర్వాదాలతో దీక్ష ప్రారంభిస్తాడు. ఆ మార్గదర్శి తోడు మాలను సూచిస్తుంది; ఇక్కడ దానిని అందరికీ తప్పనిసరి చేయలేదు."),
+        sources: [workbook(), r([17])],
+      },
+      {
+        id: "irumudi",
+        title: b("Irumudi kattu · preparation checkpoint", "ఇరుముడి కట్టు · సిద్ధత నిర్ధారణ"),
+        body: b("Arrange the irumudi ritual with your Guruswamy rather than treating a generic packing list as sufficient. The ABP workbook specifically says the first-day mudupu/mokku offering is brought and surrendered on the irumudi day. A complete item-by-item packing quantity list has not been verified from the reviewed passages, so quantities and substitutes are intentionally not invented.", "ఇరుముడిని సాధారణ ప్యాకింగ్ జాబితాతో సరిపెట్టకుండా గురుస్వామితో ఏర్పాటు చేసుకోండి. మొదటి రోజు ముడుపు / మొక్కును ఇరుముడి రోజున తీసుకెళ్లి సమర్పించాలని ABP వర్క్‌బుక్ స్పష్టంగా చెబుతుంది. పరిశీలించిన భాగాల్లో పూర్తి సామగ్రి, పరిమాణాల జాబితా నిర్ధారణ కాలేదు; కాబట్టి పరిమాణాలు, ప్రత్యామ్నాయాలను కల్పించలేదు."),
+        checklist: [
+          b("Confirm date, place, and the supervising Guruswamy.", "తేదీ, ప్రదేశం, పర్యవేక్షించే గురుస్వామిని నిర్ధారించండి."),
+          b("Obtain your group’s exact materials and quantities list.", "మీ బృందానికి తగిన ఖచ్చిత సామగ్రి, పరిమాణాల జాబితా పొందండి."),
+          b("Confirm how to bring the first-day mokku offering.", "మొదటి రోజు మొక్కును ఎలా తీసుకురావాలో నిర్ధారించండి."),
+          b("Discuss medicines, mobility, and safe travel needs.", "మందులు, కదలిక సౌకర్యం, సురక్షిత యాత్ర అవసరాలు మాట్లాడండి."),
+        ],
+        note: b("The checkpoints are editorial preparation prompts, not a complete ritual packing list.", "ఇవి సంపాదకీయ సిద్ధత సూచనలు మాత్రమే; పూర్తి ఆచార సామగ్రి జాబితా కాదు."),
+        sources: [workbook()],
+      },
+      {
+        id: "holy-steps",
+        title: b("The 18 holy steps · Pathinettam Padi", "18 పవిత్ర మెట్లు · పదునెట్టాంబడి"),
+        body: b("The niyamavali explains the steps in four groups, as a teaching about sense-discipline, leaving harmful passions, and seeking knowledge. This is the interpretation in this source, not a claim that all traditions explain the steps identically.", "నియమావళి మెట్లను నాలుగు వర్గాలుగా వివరిస్తుంది: ఇంద్రియ సంయమనం, దుర్గుణాలను విడిచిపెట్టడం, జ్ఞానం పొందడం అనే బోధగా చూపిస్తుంది. ఇది ఈ మూలంలోని వివరణ; అన్ని సంప్రదాయాలూ ఒకేలా వివరిస్తాయనే వాదన కాదు."),
+        items: [
+          b("Steps 1–5: the five senses—sight, hearing, taste/speech, smell, and touch—directed toward good.", "1–5 మెట్లు: చూపు, వినికిడి, రుచి / మాట, వాసన, స్పర్శ అనే పంచేంద్రియాలను మంచి వైపు నడిపించడం."),
+          b("Steps 6–13: leaving eight harmful passions, including desire, anger, delusion, greed, pride, jealousy, envy, and hatred.", "6–13 మెట్లు: కామం, క్రోధం, మోహం, లోభం, మదం, మాత్సర్యం, ఈర్ష్య, ద్వేషం అనే ఎనిమిది దుర్గుణాలను విడవడం."),
+          b("Steps 14–16: the three gunas—sattva, rajas, and tamas.", "14–16 మెట్లు: సత్త్వ, రజో, తమో గుణాలు."),
+          b("Steps 17–18: vidya and avidya—seeking knowledge and leaving ignorance.", "17–18 మెట్లు: విద్య, అవిద్య—అజ్ఞానాన్ని విడిచి జ్ఞానాన్ని పొందడం."),
+        ],
+        sources: [r([23])],
+      },
+      {
+        id: "route-map",
+        title: b("Route, map, and current travel information", "మార్గం, మ్యాప్, ప్రస్తుత యాత్ర సమాచారం"),
+        body: b("Pamba, Erumeli, and Sabarimala appear in the devotional collection, but the collection is not a live transport or booking service. Road access, walking routes, crowd controls, temple entry, and booking requirements can change. Use the map only to locate places; do not treat it as permission or a safe trekking itinerary. Verify current official information and travel with appropriate local guidance.", "పంబా, ఎరుమేలి, శబరిమల పేర్లు భక్తి సేకరణలో ఉన్నాయి. అయితే ఇది ప్రత్యక్ష రవాణా లేదా బుకింగ్ సేవ కాదు. రహదారులు, నడక మార్గాలు, రద్దీ నియంత్రణ, ఆలయ ప్రవేశం, బుకింగ్ అవసరాలు మారవచ్చు. మ్యాప్‌ను ప్రదేశాల గుర్తింపుకే ఉపయోగించండి; అనుమతి లేదా సురక్షిత ట్రెక్కింగ్ ప్రణాళికగా భావించవద్దు. ప్రస్తుత అధికారిక సమాచారం నిర్ధారించి స్థానిక మార్గదర్శకత్వంతో ప్రయాణించండి."),
+        status: "editorial", sources: [],
+        externalLinks: [
+          { url: "https://www.google.com/maps/search/?api=1&query=Sabarimala+Sannidhanam", title: b("Locate Sabarimala on a map", "మ్యాప్‌లో శబరిమల చూడండి") },
+          { url: "https://www.google.com/maps/search/?api=1&query=Pamba+Kerala", title: b("Locate Pamba on a map", "మ్యాప్‌లో పంబా చూడండి") },
+        ],
+      },
+    ],
+    related: ["peetam", "guidance", "rules"],
+  },
+];
+
+export const topicById = (id) => topics.find((topic) => topic.id === id);
+export const searchableText = (topic) => [
+  topic.title.en, topic.title.te, topic.keywords,
+  ...topic.sections.flatMap((section) => [
+    section.title.en, section.title.te, section.body?.en, section.body?.te,
+    ...(section.items || []).flatMap((item) => [item.en, item.te]),
+    ...(section.checklist || []).flatMap((item) => [item.en, item.te]),
+  ]),
+].filter(Boolean).join(" ").toLocaleLowerCase();
+
+export function searchTopics(query) {
+  const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  return topics.filter((topic) => words.every((word) => searchableText(topic).includes(word)));
+}
+
+export function sourceUrl(source) {
+  const page = source.pages?.[0];
+  return `https://drive.google.com/file/d/${encodeURIComponent(source.id)}/view${page ? `#page=${page}` : ""}`;
+}

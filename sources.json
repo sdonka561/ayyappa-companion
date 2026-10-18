@@ -1,0 +1,477 @@
+[
+  {
+    "id": "1QfhqqnSmqFHZbMkaAJWsxiziE4Ahq7Pa",
+    "name": "Bhajans",
+    "folder": "Ayyappa",
+    "kind": "folder"
+  },
+  {
+    "id": "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_",
+    "name": "Ayyappa_bhajans3.pdf",
+    "folder": "Ayyappa/Bhajans",
+    "kind": "file",
+    "pages": 451,
+    "textCharacters": 1096999,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1HI2h4qhQ-5l4a6M-AbsBayYW4GgieKq1",
+    "name": "Bhajanas_reference_Guide.xlsx",
+    "folder": "Ayyappa/Bhajans",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 4502,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1dvPV2cGy7z28ogjydzfptEuiBo_FBdrv",
+    "name": "PandiyanBalane",
+    "folder": "Ayyappa/Bhajans",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1MaBR-dJo6Masg7TcIfdA0qNYyTZ284LQ",
+    "name": "Books",
+    "folder": "Ayyappa",
+    "kind": "folder"
+  },
+  {
+    "id": "1wTmFQhLyMmXcuA97viUw9nxCUAJgRXun",
+    "name": "108 Deepalakshmi Sthothram with Title (1).pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 210,
+    "textCharacters": 362946,
+    "status": "needs-font-decoding"
+  },
+  {
+    "id": "1m2Nj9aMShMb_FhkOHUOk-zwmyvCQiWhb",
+    "name": "Ayyappa Gurinchi Emi telusukunnamu.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 272,
+    "textCharacters": 546603,
+    "status": "needs-font-decoding"
+  },
+  {
+    "id": "1W07ZVHOpyV-U2JKHjBByBczqvVRoAepJ",
+    "name": "Ayyappa-Pooja-Niyamavali.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 68,
+    "textCharacters": 106723,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1dus4IogrTnMOGcSGQ_vxMy3qyR7PRUXR",
+    "name": "KalaNijamayega_Chandramouli_Guruswamy.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 36,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "1q2HGDsNEC65r4Muye1OmE61kwX6rV5g5",
+    "name": "Poorna Pushkala Vivaham.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 19,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "1imPDYZnio_Z_0psLZ8YGSHg7H2UfmTmW",
+    "name": "Sabari ki Podam.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 19,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "1rdK54Iwn3BV6jRQmBGcWsmPmLsY5WfPE",
+    "name": "Sahasra Saranalu.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 19,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "1FMk7xSuibCZzaWq1amjYX-sQ9oU9OVEn",
+    "name": "Uttara Nakshtra Pooja.pdf",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": 18,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "1dmFbVKqIFHhOwQqwDJGOM0QjPtKx2vJv",
+    "name": "అయ్యప్ప హారతి.docx",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 725,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1VMi8_mG7ehZlnUJQXcs68ViHEPiD6a4e",
+    "name": "భోజన పూర్వ శ్లోకాః.docx",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 449,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1tFg-kasEhsAmn8IRYi8sHFrF_2bL2gXy",
+    "name": "శాస్తా దశకం.docx",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 1213,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1Xptm-DtCY5VRZ7OQKMDxfTjhcenyCL8b",
+    "name": "శ్రీ మహాశాస్తా స్తుతి.docx",
+    "folder": "Ayyappa/Books",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 1459,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1VjRyuzQbq0fdf59QUhdxWJ2ev7YO__KA",
+    "name": "Namavali",
+    "folder": "Ayyappa",
+    "kind": "folder"
+  },
+  {
+    "id": "1-G_Kq-QKZlVl8z0EXzWBagleDaq6vbqi",
+    "name": "DharmaSastha_Ayyappa_Astottara_Namavali.xlsx",
+    "folder": "Ayyappa/Namavali",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 5912,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1BIRAcVmUK0xYyWbpC7R4ZLPDguqUHhs7",
+    "name": "HariHaraPutra_SahasraNamavali.xlsx",
+    "folder": "Ayyappa/Namavali",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 51852,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1Zpx6eZhijOJpCJqHgWXS2wZ4KFDayiEr",
+    "name": "PujaGuides",
+    "folder": "Ayyappa",
+    "kind": "folder"
+  },
+  {
+    "id": "1FZjborZQBGq3O0jhmgO6s4EKhKQHXNMb",
+    "name": "Ayyappa house pooja doc.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "pages": 53,
+    "textCharacters": 40341,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1EDanwSJyooDryISf5TedJcoKyl_VjJ5Q",
+    "name": "Ayyappa_Nitya_Puja_vidanam_warangal.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "pages": 61,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0",
+    "name": "Ayyappa-Pooja-Niyamavali.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "pages": 68,
+    "textCharacters": 106723,
+    "status": "text-extracted"
+  },
+  {
+    "id": "167cDSXoqs1eLTiePPnIsQlHla480kK9g",
+    "name": "chandramouli-ayyappa pooja.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "status": "download-confirmation",
+    "error": "Drive returned a confirmation page, not a PDF."
+  },
+  {
+    "id": "1NvHozHAoHauX-TwfoB0aIDm-V1Hn6twB",
+    "name": "Lagupuja.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "pages": 12,
+    "textCharacters": 66546,
+    "status": "needs-font-decoding"
+  },
+  {
+    "id": "1jjveM7KyjcWa03N_FK0j8dAep_QKqd9V",
+    "name": "nanduri - pooja - practice.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "pages": 11,
+    "textCharacters": 1051,
+    "status": "text-extracted"
+  },
+  {
+    "id": "181vQYoHQXTWv-cQ0_V-3WNF9JWEeSW63",
+    "name": "శ్రీ అయ్యప్ప స్వామి పూజ విధానం.pdf",
+    "folder": "Ayyappa/PujaGuides",
+    "kind": "file",
+    "pages": 20,
+    "textCharacters": 14312,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1lC3px_T_ObLRXPr8VWN2-gwI-xO4a33f",
+    "name": "SharanuGhosha",
+    "folder": "Ayyappa",
+    "kind": "folder"
+  },
+  {
+    "id": "1L8nj9PQfw3wXyoeE_QkW5Jb9b7Ff8zk_",
+    "name": "108_sharanu_ghosha.jpg",
+    "folder": "Ayyappa/SharanuGhosha",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1mgmo6u8yRL8B3Njw64BdezucH3LBVid_",
+    "name": "Sahasra Saranalu.pdf",
+    "folder": "Ayyappa/SharanuGhosha",
+    "kind": "file",
+    "pages": 19,
+    "textCharacters": 0,
+    "status": "needs-ocr"
+  },
+  {
+    "id": "16RDrqw0u3xWZocd2YN1p0t90mel4O_wi",
+    "name": "SwamyAlankarams",
+    "folder": "Ayyappa",
+    "kind": "folder"
+  },
+  {
+    "id": "1dlNLTB9Idfqkvy-m9ApICxai3qfjxGS1",
+    "name": "2022",
+    "folder": "Ayyappa/SwamyAlankarams",
+    "kind": "folder"
+  },
+  {
+    "id": "1gYxXw5NPZsKylnJ7PPxIXc6PQMioAP0s",
+    "name": "2023",
+    "folder": "Ayyappa/SwamyAlankarams",
+    "kind": "folder"
+  },
+  {
+    "id": "1mMoOG2U7bn-UBtfmR-YsdSgraNqPT4Xp",
+    "name": "2024",
+    "folder": "Ayyappa/SwamyAlankarams",
+    "kind": "folder"
+  },
+  {
+    "id": "18wIc7zwk06ckEP9YwotuwGckurKTkxqf",
+    "name": "PXL_20240906_011811420.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1zm6QYQ-CSuuWK54OQppJhbjkM1TYnhgA",
+    "name": "PXL_20240907_005813504.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "10i_aRNE3WVVxAnQxGZCQ77NwLPT3ozEt",
+    "name": "PXL_20240910_160848475.PORTRAIT.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1T1fMaxIQDYAKbPiKIdgRqkEC_lq8QgA-",
+    "name": "PXL_20240912_153206221.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1X3SBbbyoHwjlK9XMGE6QCeDsoSuNHivL",
+    "name": "PXL_20240914_001309918.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1LWJOzPMxhwKQdCIphy-r1io9NYkEY5li",
+    "name": "PXL_20240914_001410132.MP.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1h7t8478WnZwakF6-cbWKK8ik_QX_qrjx",
+    "name": "PXL_20240914_182157094.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1m3vXs-ttBzXD138dZLMpoAaYJb-8A-nR",
+    "name": "PXL_20240914_182444892~2.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1AWqmsBxkcTOG-gcyebYexCORpl2vN4zv",
+    "name": "PXL_20240917_022201961.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1YbTQTFI4C2OSFXwGRJl0DI5okchZkD9I",
+    "name": "PXL_20240918_000948067.MP.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1qcRcVuJN8MRReJWaugU2SVzW0b46hEh0",
+    "name": "PXL_20240918_001535927.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1P2onJu10IK8tSbvJVBl_wTw4k-MpzCdp",
+    "name": "PXL_20240918_175610103.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1Q65NIKBwg7sodimXStd3d64z48WCJPcQ",
+    "name": "PXL_20240919_131518125.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1iEygucqu4_S_1313bvD7z7CsqOyxPVG9",
+    "name": "PXL_20240921_133313104.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1XNFRuqaIRd5tvGfHA7wwD_T2yF0lnDJ_",
+    "name": "PXL_20240922_174541902.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1LYC6u11KwdiB9wC7_vw7goFQsCE7UnxY",
+    "name": "PXL_20240923_233154716.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1JwFHCaArygS6A6WOA_Irmms2un6TFQDu",
+    "name": "PXL_20240925_031549455.MP.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1wETS4MSE-FB_KtmxxXz6HUSX_pSGjTdb",
+    "name": "PXL_20240926_183915824.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1prMOMxFVFqXoP0MHKHwj2R_B0D-38f5b",
+    "name": "PXL_20241002_185932781.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1EtrKPSLl4xC-kxN0LFVipcnt-v3Kqy-R",
+    "name": "PXL_20241007_200808147.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1Ufh107XRsgen3jIuNMXXfH7FQnFmOJ5G",
+    "name": "PXL_20241011_052336907.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1c2C3K-Ys0uV6FWcgYVevifiYMDithSjA",
+    "name": "PXL_20241012_050326028.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "12OFlhT_WaMn_fBqtMW6UQSDwaNowvOCD",
+    "name": "PXL_20250622_172716023.jpg",
+    "folder": "Ayyappa/SwamyAlankarams/2024",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1VQvy5bVkApW_XeKreZhIlu6xWOh2y0dI",
+    "name": "2025",
+    "folder": "Ayyappa/SwamyAlankarams",
+    "kind": "folder"
+  },
+  {
+    "id": "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx",
+    "name": "ABP - Simplified version of process guide.xlsx",
+    "folder": "Ayyappa",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 87807,
+    "status": "text-extracted"
+  },
+  {
+    "id": "1CFcFvlNkCMRqhRfcovEh9Jv4BATRDX7c",
+    "name": "Ayyappa_photo.jpg",
+    "folder": "Ayyappa",
+    "kind": "file",
+    "status": "reference-only"
+  },
+  {
+    "id": "1Jl0_kRF-1vbyhwweo61vrrp6CkIBQQPP",
+    "name": "SwamyAyyappa & AyyappaStotram Books.docx",
+    "folder": "Ayyappa",
+    "kind": "file",
+    "pages": null,
+    "textCharacters": 83,
+    "status": "needs-ocr"
+  }
+]
