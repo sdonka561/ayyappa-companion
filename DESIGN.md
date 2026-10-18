@@ -2,17 +2,17 @@
 
 ## Direction
 
-User-approved devotional reading style: forest-green navigation, white/light reading pages, brass accents, and a real photograph from the supplied collection. The surface is a reading guide, not a promotional landing page or a grid of PDF cards.
+User-directed Ayyappa black-and-white theme: black navigation, white reading pages, neutral gray states and rules, and the real photograph from the supplied collection preserved in natural color, as requested. Preserve the existing layout and reading behavior. The surface is a reading guide, not a promotional landing page or a grid of PDF cards.
 
 ## Tokens
 
-`--forest: #173e35`; `--forest-dark: #102f28`; `--brass: #e8c476`; `--ink: #23362f`; `--muted: #5c6a63`; `--line: #dce3dd`; `--canvas: #f4f6f2`.
+`--black: #111111`; `--heading: #000000`; `--white: #ffffff`; `--ink: #202020`; `--muted: #595959`; `--line: #dedede`; `--canvas: #ffffff`. All interface colors, including focus, status, hover, checked, dialog, and mobile states, are achromatic. Status is also expressed through visible text, not color alone.
 
 System typography: Segoe UI, Nirmala UI, system sans. The body reading size is adjustable from 16 to 24px; default 18px. Telugu has additional line height and more restrained heading scale.
 
 ## Composition and behavior
 
-Desktop: sticky forest topic rail, search/language/share toolbar, reading column with a narrow anchored contents spine. Tablet collapses the contents spine above the article. Below 760px, the topic rail becomes a horizontally scrollable navigation strip, with the selected topic kept in view.
+Desktop: sticky black topic rail, search/language/share toolbar, reading column with a narrow anchored contents spine. Tablet collapses the contents spine above the article. Below 760px, the topic rail becomes a horizontally scrollable navigation strip, with the selected topic kept in view.
 
 Only the introductory daily topic uses the arch-cropped devotional photograph. Content sections are separated by whitespace and rules, not nested cards. Editorial/confirmation labels are visibly distinct from source citations. Source-library groups use native disclosure elements.
 

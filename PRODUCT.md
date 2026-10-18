@@ -28,7 +28,9 @@ Permanent public Google Drive folder, replaced by the user: https://drive.google
 
 ## Brand Commitments
 
-User-approved devotional reading style: deep green navigation, white reading pages, brass accents, and the supplied Ayyappa photographs.
+User-directed black-and-white Ayyappa theme, replacing the earlier green/brass palette. Black navigation, white reading pages, neutral gray states, and the supplied Ayyappa photograph preserved in natural color.
+
+Requested URL identity: `santoshdonka.github.io`. The user chose to rename their GitHub account themselves in Settings; verify that rename before changing deployment links or repository remotes.
 
 ## Product Principles
 
