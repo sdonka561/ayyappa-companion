@@ -59,6 +59,25 @@ test("morning and evening essentials use local time", () => {
   assert.equal(ritualDay(new Date(2026, 0, 2, 23)), "2026-01-02");
 });
 
+test("padayatra reader uses printed page 42, not PDF page 42", async () => {
+  const definition = chantDefinitions.find((entry) => entry.id === "padayatra");
+  assert.equal(definition.source.id, "1EDanwSJyooDryISf5TedJcoKyl_VjJ5Q");
+  assert.deepEqual(definition.source.pages, [40]);
+  assert.match(definition.source.label, /printed p\. 42/);
+  assert.equal(chantTexts.padayatra.length, 19);
+  assert.equal(chantTexts.padayatra[0].te, "స్వామి శరణం\nఅయ్యప్ప శరణం");
+  assert.equal(chantTexts.padayatra[18].te, "స్వామిమారే\nఅయ్యప్పమారే");
+  for (const entry of chantTexts.padayatra) {
+    assert.equal(entry.te.split("\n").length, 2);
+    assert.match(entry.reference, /Printed p\. 42 · PDF p\. 40/);
+  }
+  const image = await readFile(new URL(`../public/${definition.sourceImage}`, import.meta.url));
+  assert.equal(image.readUInt16BE(0), 0xffd8);
+  const html = await readFile(new URL("../public/ayyappa-companion.html", import.meta.url), "utf8");
+  assert.ok(html.includes(image.toString("base64")));
+  assert.doesNotMatch(html, /sourceImage: "padayatra-page-42.jpg"/);
+});
+
 test("daily routine and eighteen reminders have complete bilingual content", () => {
   assert.equal(pujaRoutine.length, 12);
   for (const step of pujaRoutine) assert.ok(step.en && step.te);
