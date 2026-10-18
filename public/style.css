@@ -169,7 +169,6 @@ select:focus-visible { outline: 3px solid #777777; outline-offset: 3px; }
 .chant-line.current-verse { background: #e7e7e7; }
 .verse-number { font-size: 12px; min-width: 24px; color: #626262; }
 .verse-copy { display: grid; gap: 10px; font-size: calc(var(--reading-size) + 5px); line-height: 2; overflow-wrap: anywhere; min-width: 0; }
-.verse-copy .roman-secondary { font-size: calc(var(--reading-size) - 1px); color: #606060; line-height: 1.8; }
 .single-verse { min-height: 240px; display: flex; align-items: center; border: 0; padding: 25px 0; }
 .single-verse .chant-line { border: 1px solid #cdcdcd; border-radius: 4px; padding: 30px; }
 .single-verse .verse-copy { font-size: calc(var(--reading-size) + 12px); }

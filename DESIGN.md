@@ -18,7 +18,7 @@ Only the introductory daily topic uses the arch-cropped devotional photograph. C
 
 Language, topic, section, and search are reflected in the URL. Topic changes move keyboard focus to the reading area. The skip link preserves the current route. Controls have visible keyboard focus, minimum touch sizes, reduced-motion handling, and print styles. Materials-preparation checkmarks last for the current visit and do not claim religious completion.
 
-Chant & Sing adds large Telugu/Roman text, numbered reading positions, full-list and single-entry modes, and a focus view without navigation distractions. Controls advance text and must never suggest audio playback where no recording exists. Morning/evening quick access uses local time with a manual override. The daily puja checklist saves per local date on the device, separately from the visit-only materials checklists.
+Chant & Sing adds large Telugu prayer text, numbered reading positions, full-list and single-entry modes, and a focus view without navigation distractions. The guide language switch does not change prayer script. No Roman-script reader is offered. Available English meanings are separate, clearly labeled editorial translations, never substitute chanting text; unavailable translations are stated explicitly. Tamil material remains in the linked originals until verified transcription is available. Controls advance text and must never suggest audio playback where no recording exists. Morning/evening quick access uses local time with a manual override. The daily puja checklist saves per local date on the device, separately from the visit-only materials checklists.
 
 ## Content integrity
 

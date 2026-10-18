@@ -5,14 +5,14 @@ import { chantDefinitions, pujaRoutine, ritualPhase, ritualDay } from "../public
 import { topicById } from "../public/content.mjs";
 import { readFile } from "node:fs/promises";
 
-test("the ashtottaram contains exactly 108 source-numbered Telugu/Roman entries", () => {
+test("the ashtottaram contains exactly 108 source-numbered Telugu entries", () => {
   assert.equal(chantTexts.ashtottaram.length, 108);
   for (const [index, entry] of chantTexts.ashtottaram.entries()) {
     assert.equal(entry.reference, `C${index + 3}`);
     assert.match(entry.te, /[\u0c00-\u0c7f]/);
-    assert.ok(entry.roman.trim());
+    assert.equal("roman" in entry, false);
   }
-  assert.match(chantTexts.ashtottaram[107].roman, /bhaktavatsal/);
+  assert.match(chantTexts.ashtottaram[107].te, /భక్తవత్సల/);
 });
 
 test("the incomplete source litany is preserved without being padded", () => {
@@ -29,13 +29,27 @@ test("each available reader has nonempty text; references are not fake playable 
       assert.ok(chantTexts[definition.id].length);
       for (const line of chantTexts[definition.id]) {
         assert.match(line.te, /[\u0c00-\u0c7f]/);
-        assert.ok(line.roman.trim());
+        assert.equal("roman" in line, false);
         assert.ok(line.reference);
       }
     }
   }
   assert.equal(chantTexts.pancharatna.length, 5);
   assert.ok(chantTexts.responses.length > 20);
+});
+
+test("English meanings are separate editorial translations, not transliterations", async () => {
+  const translated = chantDefinitions.filter((entry) => entry.englishMeaning);
+  assert.deepEqual(translated.map((entry) => entry.id), ["ganesha", "guru", "sharanam-108", "gayatri"]);
+  for (const entry of translated) {
+    assert.ok(chantTexts[entry.id]);
+    assert.ok(entry.englishMeaning.length > 25);
+  }
+  const app = await readFile(new URL("../public/app.mjs", import.meta.url), "utf8");
+  assert.doesNotMatch(app, /readerScript|reader-script|item\.roman/);
+  assert.match(app, /English meaning · editorial translation/);
+  assert.match(app, /English translation is not yet available/);
+  assert.match(app, /<span lang="te">/);
 });
 
 test("morning and evening essentials use local time", () => {

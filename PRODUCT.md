@@ -22,6 +22,8 @@ The user additionally requested phone-readable chanting, a 108-name reader, shar
 
 Readable traditional chants must not be confused with modern song references or missing recordings. Preserve the supplied sharanaghosha's actual 107-entry count rather than fabricating a 108th invocation; the dedicated ashtottaram has all 108 source-numbered names.
 
+Keep prayer text in its supplied script: Telugu for current readers, and Tamil where present in linked books. The user does not want a Roman-script option. Add English translations where reliable, label editorial meanings separately, and retain Telugu without claiming a translation when none is available.
+
 ## Evidence on Hand
 
 Permanent public Google Drive folder, replaced by the user: https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0. Contains PujaGuides, Books, Bhajans, Namavali, SharanuGhosha, SwamyAlankarams, Word documents, and a simplified process spreadsheet. Inventory and extraction must precede content publication.

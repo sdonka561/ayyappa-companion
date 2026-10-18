@@ -27,23 +27,8 @@ def read_cells(path, sheet):
         return result
 
 
-def romanize(value):
-    vowels = dict(zip("అఆఇఈఉఊఋౠఌఎఏఐఒఓఔ", ["a", "ā", "i", "ī", "u", "ū", "ṛ", "ṝ", "ḷ", "e", "ē", "ai", "o", "ō", "au"]))
-    consonants = dict(zip("కఖగఘఙచఛజఝఞటఠడఢణతథదధనపఫబభమయరఱలళవశషసహ", ["k", "kh", "g", "gh", "ṅ", "c", "ch", "j", "jh", "ñ", "ṭ", "ṭh", "ḍ", "ḍh", "ṇ", "t", "th", "d", "dh", "n", "p", "ph", "b", "bh", "m", "y", "r", "ṟ", "l", "ḷ", "v", "ś", "ṣ", "s", "h"]))
-    marks = dict(zip("ాిీుూృౄౢెేైొోౌ", ["ā", "i", "ī", "u", "ū", "ṛ", "ṝ", "ḷ", "e", "ē", "ai", "o", "ō", "au"]))
-    signs = {"ం": "ṁ", "ః": "ḥ", "ఁ": "m̐", "్": "", "\u200c": "", "\u200d": ""}
-    out = []
-    for index, char in enumerate(value):
-        if char in consonants:
-            next_char = value[index + 1] if index + 1 < len(value) else ""
-            out.append(consonants[char] + ("" if next_char in marks or next_char == "్" else "a"))
-        else:
-            out.append(vowels.get(char, marks.get(char, signs.get(char, char))))
-    return "".join(out)
-
-
-def line(value, reference, roman=None):
-    return {"te": value, "roman": roman if roman is not None else romanize(value), "reference": reference}
+def line(value, reference):
+    return {"te": value, "reference": reference}
 
 
 def main():
@@ -61,9 +46,9 @@ def main():
     for row in range(3, 111):
         if names.get(f"A{row}") != str(row - 2):
             raise ValueError(f"Namavali numbering missing at row {row}")
-        ashtottaram.append(line(names[f"C{row}"], f"C{row}", names[f"B{row}"]))
-    if len(ashtottaram) != 108 or any(not item["te"] or not item["roman"] for item in ashtottaram):
-        raise ValueError("A full 108-entry Telugu/Roman namavali is required.")
+        ashtottaram.append(line(names[f"C{row}"], f"C{row}"))
+    if len(ashtottaram) != 108 or any(not item["te"] for item in ashtottaram):
+        raise ValueError("A full 108-entry Telugu namavali is required.")
     prayers = read_cells(workbook, 6)
     pancharatna = []
     for row in [2, 5, 8, 11, 14]:
@@ -75,7 +60,7 @@ def main():
     texts = {
         "ashtottaram": ashtottaram,
         "sharanaghosha": invocations,
-        "sharanam-108": [line("స్వామియే శరణం అయ్యప్ప", f"Repetition {i}", "Swamiye sharanam Ayyappa") for i in range(1, 109)],
+        "sharanam-108": [line("స్వామియే శరణం అయ్యప్ప", f"Repetition {i}") for i in range(1, 109)],
         "pancharatna": pancharatna,
         "kshamapana": forgiveness,
         "responses": responses,
