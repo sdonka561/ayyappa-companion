@@ -16,7 +16,7 @@ Consolidate the supplied Google Drive collection into readable, navigable topics
 
 ## Capabilities and Constraints
 
-English and Telugu reading; sections for puja vidhanam, peetam setup, food, eating practices, sleeping, and related Ayyappa observances. Preserve links and page references to the supplied sources. Distinguish source-backed summaries from gaps and customs requiring a Guruswamy's confirmation. A shareable web app is the intended deliverable; hosting destination is undecided.
+English and Telugu reading; sections for puja vidhanam, peetam setup, food, eating practices, sleeping, and related Ayyappa observances. Preserve links and page references to the supplied sources. Distinguish source-backed summaries from gaps and customs requiring a Guruswamy's confirmation. Share the app as a public, mobile-friendly website.
 
 The user additionally requested phone-readable chanting, a 108-name reader, sharanaghosha, morning/evening essentials, an interactive daily routine, eighteen discipline reminders, categorized bhajans, and pilgrimage preparation. Publish a mobile-friendly public website. GitHub Pages was selected using the connected account; source repository is `sdonka561/ayyappa-companion`.
 

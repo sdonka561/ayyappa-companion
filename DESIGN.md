@@ -16,7 +16,7 @@ Desktop: sticky forest topic rail, search/language/share toolbar, reading column
 
 Only the introductory daily topic uses the arch-cropped devotional photograph. Content sections are separated by whitespace and rules, not nested cards. Editorial/confirmation labels are visibly distinct from source citations. Source-library groups use native disclosure elements.
 
-Language, topic, section, and search are reflected in the URL. Topic changes move keyboard focus to the reading area. The skip link preserves the current route. Controls have visible keyboard focus, minimum touch sizes, reduced-motion handling, and print styles. Checkmarks are local to the current visit, not a claim of religious completion.
+Language, topic, section, and search are reflected in the URL. Topic changes move keyboard focus to the reading area. The skip link preserves the current route. Controls have visible keyboard focus, minimum touch sizes, reduced-motion handling, and print styles. Materials-preparation checkmarks last for the current visit and do not claim religious completion.
 
 Chant & Sing adds large Telugu/Roman text, numbered reading positions, full-list and single-entry modes, and a focus view without navigation distractions. Controls advance text and must never suggest audio playback where no recording exists. Morning/evening quick access uses local time with a manual override. The daily puja checklist saves per local date on the device, separately from the visit-only materials checklists.
 
