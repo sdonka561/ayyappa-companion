@@ -1468,6 +1468,84 @@ export const chantTexts = {
       "te": "భూతనాథాయ విద్మహే భవపుత్రాయ ధీమహి ।\nతన్నో శాస్తా ప్రచోదయాత్ ॥",
       "reference": "Niyamavali PDF p. 41"
     }
+  ],
+  "padayatra": [
+    {
+      "te": "స్వామి శరణం\nఅయ్యప్ప శరణం",
+      "reference": "Printed p. 42 · PDF p. 40 · row 1"
+    },
+    {
+      "te": "భగవాన్ శరణం\nభగవతి శరణం",
+      "reference": "Printed p. 42 · PDF p. 40 · row 2"
+    },
+    {
+      "te": "దేవన్ శరణం\nదేవీ శరణం",
+      "reference": "Printed p. 42 · PDF p. 40 · row 3"
+    },
+    {
+      "te": "దేవన్ పాదం\nదేవీ పాదం",
+      "reference": "Printed p. 42 · PDF p. 40 · row 4"
+    },
+    {
+      "te": "స్వామి పాదం\nఅయ్యప్ప పాదం",
+      "reference": "Printed p. 42 · PDF p. 40 · row 5"
+    },
+    {
+      "te": "భగవానే\nభగవతియే",
+      "reference": "Printed p. 42 · PDF p. 40 · row 6"
+    },
+    {
+      "te": "ఈశ్వరనే\nఈశ్వరియే",
+      "reference": "Printed p. 42 · PDF p. 40 · row 7"
+    },
+    {
+      "te": "దేవనే\nదేవియే",
+      "reference": "Printed p. 42 · PDF p. 40 · row 8"
+    },
+    {
+      "te": "శక్తినే\nశక్తియే",
+      "reference": "Printed p. 42 · PDF p. 40 · row 9"
+    },
+    {
+      "te": "స్వామియే\nఅయ్యప్పో",
+      "reference": "Printed p. 42 · PDF p. 40 · row 10"
+    },
+    {
+      "te": "పల్లికట్టు\nశబరిమలక్కు",
+      "reference": "Printed p. 42 · PDF p. 40 · row 11"
+    },
+    {
+      "te": "ఇరుముడికట్టు\nశబరిమలక్కు",
+      "reference": "Printed p. 42 · PDF p. 40 · row 12"
+    },
+    {
+      "te": "కత్తుంకట్టు\nశబరిమలక్కు",
+      "reference": "Printed p. 42 · PDF p. 40 · row 13"
+    },
+    {
+      "te": "కల్లుంముల్లుం\nకాలికిమెత్తై",
+      "reference": "Printed p. 42 · PDF p. 40 · row 14"
+    },
+    {
+      "te": "ఏత్తివిడయ్యా\nతూక్కివిడయ్యా",
+      "reference": "Printed p. 42 · PDF p. 40 · row 15"
+    },
+    {
+      "te": "దేహబలందా\nపాదబలందా",
+      "reference": "Printed p. 42 · PDF p. 40 · row 16"
+    },
+    {
+      "te": "యారైకానన\nస్వామియైకానన",
+      "reference": "Printed p. 42 · PDF p. 40 · row 17"
+    },
+    {
+      "te": "స్వామియైకండాల్\nమోక్షంకిట్టుం",
+      "reference": "Printed p. 42 · PDF p. 40 · row 18"
+    },
+    {
+      "te": "స్వామిమారే\nఅయ్యప్పమారే",
+      "reference": "Printed p. 42 · PDF p. 40 · row 19"
+    }
   ]
 };
 export const songCatalogue = [

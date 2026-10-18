@@ -74,6 +74,13 @@ export const chantDefinitions = [
     source: { id: "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_", pages: [29, 32], label: "Ayyappa bhajans collection" }, referenceOnly: true,
   },
   {
+    id: "padayatra", title: bilingual("Sabarimala padayatra bhajans", "శబరిమల పాదయాత్ర నినాదాలు"), category: "bhajan",
+    purpose: bilingual("The pilgrimage call-and-response chants on printed page 42 of your Nitya Puja book (PDF page 40). Read the first line as the call and the second as the group response.", "మీ నిత్యపూజ పుస్తకంలో ముద్రిత పేజీ 42లోని పాదయాత్ర నినాదాలు (PDF పేజీ 40). మొదటి పంక్తిని పిలుపుగా, రెండో పంక్తిని సమూహ ప్రతిస్పందనగా చదవండి."),
+    source: { id: "1EDanwSJyooDryISf5TedJcoKyl_VjJ5Q", pages: [40], label: "Nitya Puja · printed p. 42 / ముద్రిత పేజీ 42" },
+    sourceImage: "padayatra-page-42.jpg",
+    notice: bilingual("Telugu-script transcription from the scan; some phrases represent Tamil sounds. Source spellings are retained, not standardized. Compare with the original page below and confirm pronunciation with your Guruswamy.", "స్కాన్ నుంచి తెలుగు లిపిలోకి తీసుకున్న పాఠ్యం; కొన్ని పలుకులు తమిళ ఉచ్చారణను సూచిస్తాయి. మూలంలోని వ్రాతను ప్రామాణీకరించకుండా ఉంచాం. కింద ఇచ్చిన అసలు పేజీతో పోల్చి, గురుస్వామితో ఉచ్చారణ నిర్ధారించుకోండి."),
+  },
+  {
     id: "padi-puja", title: bilingual("Padi puja melodies & hills bhajans", "పడిపూజ గీతాలు, శబరిగిరి భజనలు"), category: "padi",
     purpose: bilingual("The book indexes Padi Pooja Kazhinju and Padi Pattu, plus pilgrimage-themed songs. No verified “18 hills” playlist or authorized recording is supplied. The 18 holy steps and pilgrimage hills are not treated as the same thing.", "పుస్తక సూచికలో Padi Pooja Kazhinju, Padi Pattu, యాత్ర గీతాలు ఉన్నాయి. నిర్ధారించిన “18 కొండలు” ప్లేలిస్ట్ లేదా అనుమతించిన రికార్డింగ్ లేదు. 18 పవిత్ర మెట్లు, యాత్రలోని కొండలను ఒకటిగా చూపించలేదు."),
     source: { id: "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_", pages: [69, 76], label: "Ayyappa bhajans collection" }, referenceOnly: true,

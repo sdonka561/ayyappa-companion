@@ -176,6 +176,10 @@ select:focus-visible { outline: 3px solid #777777; outline-offset: 3px; }
 .reader-stepper p { font-size: 15px; text-align: center; }
 .reader-stepper span { display: block; font-size: 10px; color: var(--muted); margin-top: 5px; line-height: 1.6; }
 .audio-note { margin: 20px 0 38px; color: var(--muted); font-size: 12px; line-height: 1.85; max-width: 85ch; }
+.source-page { margin: 24px 0; border-block: 1px solid var(--line); padding: 16px 0; }
+.source-page summary { cursor: pointer; min-height: 44px; line-height: 1.8; }
+.source-page img { display: block; width: 100%; max-width: 780px; height: auto; margin-top: 16px; }
+.source-page p { font-size: 13px; line-height: 1.8; color: var(--muted); margin-top: 12px; }
 .reference-notice { background: #ececec; padding: 23px; margin: 20px 0 25px; }
 .reference-notice h2 { font-size: 19px; line-height: 1.6; }
 .reference-notice p { font-size: 14px; line-height: 1.9; margin-top: 12px; }
