@@ -2,6 +2,10 @@
 
 A mobile-friendly English/Telugu reading guide consolidated from the permanent [Ayyappa collection](https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0). It is a reading app, not a PDF viewer.
 
+**Live website:** https://sdonka561.github.io/ayyappa-companion/
+
+**Source repository:** https://github.com/sdonka561/ayyappa-companion
+
 ## Run
 
 Requires Node.js 20 or later. No npm dependencies or installation step.
@@ -19,7 +23,21 @@ Open http://127.0.0.1:4173. Topic, language, search, and section links are addre
 
 **Website:** upload **only the contents of `public`** to a static hosting provider such as Netlify Drop, Cloudflare Pages, or GitHub Pages. `index.html` must be at the published root. There is no server-side application or secret configuration. For a host that requires a build command, use `npm run build` and set the publish directory to `public`. Use the resulting HTTPS address, not the localhost preview address. The app's Share button copies the current topic/language link once hosted.
 
-Publishing has not been performed automatically: it requires your hosting account and permission to distribute the source photograph and summaries. Do not upload the extraction artifacts or original books.
+This app is published on GitHub Pages from the `gh-pages` branch, containing only the website files. The `main` branch contains the source and tools. Do not upload the extraction artifacts or original books. Confirm permission before adding third-party recordings, song lyrics, or other new assets.
+
+To update the published site after editing and committing `main`:
+
+```powershell
+npm run build
+npm test
+git add public
+git commit -m "Update Ayyappa companion"
+git push origin main
+git subtree split --prefix public -b pages-update
+git push origin pages-update:gh-pages
+```
+
+Use a new local split branch name for subsequent publications, or split directly to a commit and push that commit. GitHub Pages rebuilds the site after the `gh-pages` push.
 
 The portable file embeds scripts/styles. Open it as a downloaded local file; the development server intentionally blocks inline scripts on HTTP pages. The normal hosted website uses external script/style files instead.
 
