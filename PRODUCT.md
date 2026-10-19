@@ -12,7 +12,7 @@ The owner's friends, reading Ayyappa devotional and observance guidance.
 
 ## Product Purpose
 
-Consolidate the supplied Google Drive collection into readable, navigable topics rather than embedding PDFs.
+Make the user-selected Nitya Puja book the site's main guide, organized by its own content and printed sequence. Keep the earlier mixed-source guides, chants, and preparation checklists available in a separate Companion area, as the user explicitly chose during the rebuild.
 
 ## Capabilities and Constraints
 
@@ -30,6 +30,8 @@ The user-shared Sahasranamam puja-items spreadsheet (`1DWuu49bo5aVFMjJHkKpSlo1Wj
 
 Permanent public Google Drive folder, replaced by the user: https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0. Contains PujaGuides, Books, Bhajans, Namavali, SharanuGhosha, SwamyAlankarams, Word documents, and a simplified process spreadsheet. Inventory and extraction must precede content publication.
 
+Primary book selected for the rebuild: https://drive.google.com/file/d/1EDanwSJyooDryISf5TedJcoKyl_VjJ5Q/view. It has 61 image-only physical PDF pages. The book's original Telugu is the reference; local OCR has demonstrated spelling and reading-order errors, so it is available only as an explicitly unreviewed draft alongside original scans, never as verified chanting text. The UI is bilingual but the whole book is not translated. All 61 pages and original numbering are preserved.
+
 ## Brand Commitments
 
 User-directed black-and-white Ayyappa theme, replacing the earlier green/brass palette. Black navigation, white reading pages, neutral gray states, and the supplied Ayyappa photograph preserved in natural color.
@@ -38,7 +40,7 @@ Requested URL identity: `santoshdonka.github.io`. The user chose to rename their
 
 ## Product Principles
 
-- Answer the reader's topic directly, without requiring a PDF.
+- Lead with the chosen book and its real chapter sequence; do not mix other sources into its reader.
 - Preserve source traceability and make uncertainty visible.
 - Respect differing observance traditions.
 - Keep sharing simple and reading usable on phones.
