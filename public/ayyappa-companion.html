@@ -123,6 +123,15 @@ main { padding: 28px 5.5% 0; max-width: 1380px; margin: 0 auto; outline: none; }
 .checklist input { width: 19px; height: 19px; accent-color: var(--black); flex-shrink: 0; }
 .checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
 .checklist label span { white-space: pre-line; overflow-wrap: anywhere; min-width: 0; }
+.supplies-table { width: 100%; table-layout: fixed; border-collapse: collapse; font-size: var(--reading-size); line-height: 1.8; margin-top: 22px; }
+.supplies-table caption { text-align: left; color: var(--muted); font-size: 12px; margin-bottom: 14px; }
+.supplies-table th, .supplies-table td { text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); padding: 14px 10px; overflow-wrap: anywhere; white-space: pre-line; }
+.supplies-table th { background: var(--black); color: white; font-size: 14px; font-weight: 600; }
+.supplies-table th:first-child { width: 53%; }
+.supplies-table td + td { border-left: 1px solid var(--line); }
+.supplies-table label { display: flex; align-items: baseline; gap: 10px; min-height: 44px; cursor: pointer; }
+.supplies-table input { width: 19px; height: 19px; accent-color: var(--black); flex-shrink: 0; }
+.supplies-table input:checked + span { text-decoration: line-through; color: var(--muted); }
 .prayer { margin: 25px 0 0; padding: 25px 0 0; border-top: 1px solid #b7b7b7; }
 .prayer blockquote { margin: 0; font-size: calc(var(--reading-size) + 3px); line-height: 2; color: var(--black); }
 .prayer figcaption { margin-top: 12px; font-size: 11px; color: var(--muted); }
@@ -975,10 +984,7 @@ const topics = [
       {
         id: "items-checklist",
         title: b("Prepare the 49 items", "49 వస్తువులను సిద్ధం చేయండి"),
-        checklist: poojaItems.map(({ item, telugu, quantity, row }) => b(
-          `${item}\nQuantity / arrangement: ${quantity || "Not specified in the source"}\nSource row ${row}`,
-          `${telugu}\nమూల పరిమాణం / ఏర్పాటు (English): ${quantity || "మూలంలో పరిమాణం ఇవ్వలేదు"}\nమూల వరుస ${row}`,
-        )),
+        table: poojaItems,
         sources: [{ id: "1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk", pages: [], label: "Sahasranamam · Pooja Items", sheet: "Sahasranamam (ONLY) Pooja Items · A2:B50" }],
       },
     ],
@@ -1323,6 +1329,7 @@ const searchableText = (topic) => [
     section.title.en, section.title.te, section.body?.en, section.body?.te,
     ...(section.items || []).flatMap((item) => [item.en, item.te]),
     ...(section.checklist || []).flatMap((item) => [item.en, item.te]),
+    ...(section.table || []).flatMap((item) => [item.item, item.telugu, item.quantity]),
   ]),
 ].filter(Boolean).join(" ").toLocaleLowerCase();
 
@@ -3327,6 +3334,10 @@ function sectionMarkup(section, topic) {
       const key = `${topic.id}-${section.id}-${index}`;
       return `<label><input type="checkbox" data-check="${key}" ${state.checked.has(key) ? "checked" : ""}><span>${esc(text(item))}</span></label>`;
     }).join("")}</fieldset>` : ""}
+    ${section.table ? `<table class="supplies-table"><caption>${t("Preparation checklist · stays checked during this visit", "సిద్ధత జాబితా · ఈ సందర్శనలో గుర్తులు నిలుస్తాయి")}</caption><thead><tr><th scope="col">${t("Item", "వస్తువు")}</th><th scope="col">${t("Quantity / arrangement", "పరిమాణం / ఏర్పాటు")} ${lang === "te" ? "(English)" : ""}</th></tr></thead><tbody>${section.table.map((item, index) => {
+      const key = `${topic.id}-${section.id}-${index}`;
+      return `<tr><td><label><input type="checkbox" data-check="${key}" ${state.checked.has(key) ? "checked" : ""}><span>${esc(t(item.item, item.telugu))}</span></label></td><td lang="${item.quantity ? "en" : lang}">${esc(item.quantity || t("Not specified in the source", "మూలంలో పరిమాణం ఇవ్వలేదు"))}</td></tr>`;
+    }).join("")}</tbody></table>` : ""}
     ${section.verse ? `<figure class="prayer"><blockquote>${esc(text(section.verse)).replaceAll("\n", "<br>")}</blockquote><figcaption>${esc(text(section.verseLabel))}</figcaption></figure>` : ""}
     ${section.note ? `<p class="editorial-note">${esc(text(section.note))}</p>` : ""}
     ${section.externalLinks ? `<div class="external-links">${section.externalLinks.map((item) => `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(text(item.title))}${icon("external")}</a>`).join("")}</div>` : ""}

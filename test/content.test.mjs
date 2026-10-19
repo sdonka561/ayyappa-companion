@@ -101,23 +101,30 @@ test("Sahasranamam shopping checklist retains all 49 source rows and arrangement
   assert.equal(poojaItems.length, 49);
   assert.deepEqual(poojaItems.map((item) => item.row), Array.from({ length: 49 }, (_, index) => index + 2));
   const section = topic.sections.find((entry) => entry.id === "items-checklist");
-  assert.equal(section.checklist.length, 49);
+  assert.equal(section.table.length, 49);
   for (const [index, item] of poojaItems.entries()) {
-    assert.ok(section.checklist[index].en.includes(item.item));
-    if (item.quantity) {
-      assert.ok(section.checklist[index].en.includes(item.quantity));
-      assert.ok(section.checklist[index].te.includes(item.quantity));
-    }
+    assert.equal(section.table[index].item, item.item);
+    assert.equal(section.table[index].quantity, item.quantity);
+    assert.match(section.table[index].telugu, /[\u0c00-\u0c7f]/);
   }
   assert.match(poojaItems.find((item) => item.row === 22).quantity, /20 big, 40 small.*Do not buy/);
   assert.match(poojaItems.find((item) => item.row === 4).quantity, /3ft - 1 count.*\n2ft - 2/);
   assert.equal(poojaItems.find((item) => item.row === 48).quantity, "");
-  assert.ok(section.checklist[46].en.includes("$21 for GuruDakshina"));
-  assert.ok(section.checklist[46].en.includes("Not specified in the source"));
+  assert.equal(section.table[46].item, "$21 for GuruDakshina");
+  assert.equal(section.checklist, undefined);
   assert.match(topic.sections[0].body.en, /app does not arrange supplies/);
   assert.ok(topic.sections[0].externalLinks.some((link) => link.url.includes("1rUCbZVUdAHl3bUwDW8lb3_ODmJHfg1Yn")));
   assert.ok(searchTopics("sahasranamam ghee").includes(topic));
   assert.ok(searchTopics("సామగ్రి").includes(topic));
+});
+
+test("supplies render in a two-column table without source-row labels", async () => {
+  const app = await readFile(new URL("../public/app.mjs", import.meta.url), "utf8");
+  assert.match(app, /<table class="supplies-table">/);
+  assert.match(app, /<th scope="col">/);
+  assert.match(app, /t\("Item", "వస్తువు"\)/);
+  assert.match(app, /t\("Quantity \/ arrangement"/);
+  assert.doesNotMatch(app, /Source row|మూల వరుస|item\.row/);
 });
 
 test("portable build has embedded content, styles, inventory, and image", async () => {

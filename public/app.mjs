@@ -65,6 +65,10 @@ function sectionMarkup(section, topic) {
       const key = `${topic.id}-${section.id}-${index}`;
       return `<label><input type="checkbox" data-check="${key}" ${state.checked.has(key) ? "checked" : ""}><span>${esc(text(item))}</span></label>`;
     }).join("")}</fieldset>` : ""}
+    ${section.table ? `<table class="supplies-table"><caption>${t("Preparation checklist · stays checked during this visit", "సిద్ధత జాబితా · ఈ సందర్శనలో గుర్తులు నిలుస్తాయి")}</caption><thead><tr><th scope="col">${t("Item", "వస్తువు")}</th><th scope="col">${t("Quantity / arrangement", "పరిమాణం / ఏర్పాటు")} ${lang === "te" ? "(English)" : ""}</th></tr></thead><tbody>${section.table.map((item, index) => {
+      const key = `${topic.id}-${section.id}-${index}`;
+      return `<tr><td><label><input type="checkbox" data-check="${key}" ${state.checked.has(key) ? "checked" : ""}><span>${esc(t(item.item, item.telugu))}</span></label></td><td lang="${item.quantity ? "en" : lang}">${esc(item.quantity || t("Not specified in the source", "మూలంలో పరిమాణం ఇవ్వలేదు"))}</td></tr>`;
+    }).join("")}</tbody></table>` : ""}
     ${section.verse ? `<figure class="prayer"><blockquote>${esc(text(section.verse)).replaceAll("\n", "<br>")}</blockquote><figcaption>${esc(text(section.verseLabel))}</figcaption></figure>` : ""}
     ${section.note ? `<p class="editorial-note">${esc(text(section.note))}</p>` : ""}
     ${section.externalLinks ? `<div class="external-links">${section.externalLinks.map((item) => `<a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(text(item.title))}${icon("external")}</a>`).join("")}</div>` : ""}
