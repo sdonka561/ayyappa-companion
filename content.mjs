@@ -133,10 +133,7 @@ export const topics = [
       {
         id: "items-checklist",
         title: b("Prepare the 49 items", "49 వస్తువులను సిద్ధం చేయండి"),
-        checklist: poojaItems.map(({ item, telugu, quantity, row }) => b(
-          `${item}\nQuantity / arrangement: ${quantity || "Not specified in the source"}\nSource row ${row}`,
-          `${telugu}\nమూల పరిమాణం / ఏర్పాటు (English): ${quantity || "మూలంలో పరిమాణం ఇవ్వలేదు"}\nమూల వరుస ${row}`,
-        )),
+        table: poojaItems,
         sources: [{ id: "1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk", pages: [], label: "Sahasranamam · Pooja Items", sheet: "Sahasranamam (ONLY) Pooja Items · A2:B50" }],
       },
     ],
@@ -481,6 +478,7 @@ export const searchableText = (topic) => [
     section.title.en, section.title.te, section.body?.en, section.body?.te,
     ...(section.items || []).flatMap((item) => [item.en, item.te]),
     ...(section.checklist || []).flatMap((item) => [item.en, item.te]),
+    ...(section.table || []).flatMap((item) => [item.item, item.telugu, item.quantity]),
   ]),
 ].filter(Boolean).join(" ").toLocaleLowerCase();
 
