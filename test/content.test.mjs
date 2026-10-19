@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { topics, topicById, searchTopics, sourceUrl, collectionUrl } from "../public/content.mjs";
+import { topics, topicById, searchTopics, sourceUrl, collectionUrl, poojaItems } from "../public/content.mjs";
 
 const inventory = JSON.parse(await readFile(new URL("../public/sources.json", import.meta.url), "utf8"));
 const byId = new Map(inventory.map((source) => [source.id, source]));
@@ -88,11 +88,36 @@ test("source disagreements and editorial health advice remain visible", () => {
 });
 
 test("unreadable and confirmation-required documents are not passed off as extracted", () => {
-  assert.equal(inventory.filter((entry) => entry.kind === "file").length, 52);
+  assert.equal(inventory.filter((entry) => entry.kind === "file").length, 53);
+  assert.equal(inventory.filter((entry) => entry.kind === "file" && entry.folder.startsWith("Ayyappa")).length, 52);
   const largePdf = inventory.find((entry) => entry.name === "chandramouli-ayyappa pooja.pdf");
   assert.equal(largePdf.status, "download-confirmation");
   assert.ok(inventory.some((entry) => entry.status === "needs-ocr"));
   assert.ok(inventory.some((entry) => entry.status === "needs-font-decoding"));
+});
+
+test("Sahasranamam shopping checklist retains all 49 source rows and arrangements", () => {
+  const topic = topicById("pooja-items");
+  assert.equal(poojaItems.length, 49);
+  assert.deepEqual(poojaItems.map((item) => item.row), Array.from({ length: 49 }, (_, index) => index + 2));
+  const section = topic.sections.find((entry) => entry.id === "items-checklist");
+  assert.equal(section.checklist.length, 49);
+  for (const [index, item] of poojaItems.entries()) {
+    assert.ok(section.checklist[index].en.includes(item.item));
+    if (item.quantity) {
+      assert.ok(section.checklist[index].en.includes(item.quantity));
+      assert.ok(section.checklist[index].te.includes(item.quantity));
+    }
+  }
+  assert.match(poojaItems.find((item) => item.row === 22).quantity, /20 big, 40 small.*Do not buy/);
+  assert.match(poojaItems.find((item) => item.row === 4).quantity, /3ft - 1 count.*\n2ft - 2/);
+  assert.equal(poojaItems.find((item) => item.row === 48).quantity, "");
+  assert.ok(section.checklist[46].en.includes("$21 for GuruDakshina"));
+  assert.ok(section.checklist[46].en.includes("Not specified in the source"));
+  assert.match(topic.sections[0].body.en, /app does not arrange supplies/);
+  assert.ok(topic.sections[0].externalLinks.some((link) => link.url.includes("1rUCbZVUdAHl3bUwDW8lb3_ODmJHfg1Yn")));
+  assert.ok(searchTopics("sahasranamam ghee").includes(topic));
+  assert.ok(searchTopics("సామగ్రి").includes(topic));
 });
 
 test("portable build has embedded content, styles, inventory, and image", async () => {

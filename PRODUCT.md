@@ -24,6 +24,8 @@ Readable traditional chants must not be confused with modern song references or 
 
 Keep prayer text in its supplied script: Telugu for current readers, and Tamil where present in linked books. The user does not want a Roman-script option. Add English translations where reliable, label editorial meanings separately, and retain Telugu without claiming a translation when none is available.
 
+The user-shared Sahasranamam puja-items spreadsheet (`1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk`) has its own preparation-checklist topic. Preserve all 49 source rows, quantities, qualifications, and original instruction links. Clearly distinguish the organizer's “provided” arrangements from supplies the reader needs to confirm or obtain.
+
 ## Evidence on Hand
 
 Permanent public Google Drive folder, replaced by the user: https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0. Contains PujaGuides, Books, Bhajans, Namavali, SharanuGhosha, SwamyAlankarams, Word documents, and a simplified process spreadsheet. Inventory and extraction must precede content publication.

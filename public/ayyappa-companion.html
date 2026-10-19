@@ -122,6 +122,7 @@ main { padding: 28px 5.5% 0; max-width: 1380px; margin: 0 auto; outline: none; }
 .checklist label { display: flex; gap: 12px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
 .checklist input { width: 19px; height: 19px; accent-color: var(--black); flex-shrink: 0; }
 .checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
+.checklist label span { white-space: pre-line; overflow-wrap: anywhere; min-width: 0; }
 .prayer { margin: 25px 0 0; padding: 25px 0 0; border-top: 1px solid #b7b7b7; }
 .prayer blockquote { margin: 0; font-size: calc(var(--reading-size) + 3px); line-height: 2; color: var(--black); }
 .prayer figcaption { margin-top: 12px; font-size: 11px; color: var(--muted); }
@@ -353,6 +354,17 @@ dialog p { font-size: 15px; line-height: 1.85; margin-top: 15px; }
 }
 </style>
   <script id="embedded-inventory" type="application/json">[
+  {
+    "id": "1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk",
+    "name": "Sahasranamam - Pooja Items.xlsx",
+    "folder": "User-shared spreadsheet",
+    "kind": "file",
+    "pages": null,
+    "status": "text-extracted",
+    "sheet": "Sahasranamam (ONLY) Pooja Items",
+    "rows": 49,
+    "url": "https://docs.google.com/spreadsheets/d/1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk/edit"
+  },
   {
     "id": "1QfhqqnSmqFHZbMkaAJWsxiziE4Ahq7Pa",
     "name": "Bhajans",
@@ -829,7 +841,7 @@ dialog p { font-size: 15px; line-height: 1.85; margin-top: 15px; }
     "status": "needs-ocr"
   }
 ]</script><script type="module">const collectionUrl = "https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0";
-const reviewedDate = "2026-10-18";
+const reviewedDate = "2026-10-19";
 const bilingual = (en, te) => ({ en, te });
 const b = bilingual;
 const rules = "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0";
@@ -843,6 +855,58 @@ const workbook = (sheet = "Maladharana and Peetham setup") => ({
   label: "ABP · Simplified process guide",
   sheet,
 });
+
+const poojaItems = [
+  ["Green Camphor", "పచ్చ కర్పూరం", "1 (very small)"],
+  ["Rose Bunches (Trader Joe's/Randalls/Sam's/Costco)", "గులాబీ పూల గుత్తులు", "Minimum of 8 dozen"],
+  ["Garland (You can choose to make it yourself or buy it from flower stores (like Vivek Flowers etc. Shop for flower shops in Austin area)", "పూల దండలు; స్వయంగా తయారు చేసుకోవచ్చు లేదా పూల దుకాణంలో కొనవచ్చు", "3ft - 1 count (Ayyappa)\n2ft - 2 (Vinayakar, Murugan)\n1 ft - 1 (Kalasam)\n1 additional for Kula Deivam (depends on the size) \nSize and count depends on number of swamies pictures\nThe above is based on standard pictures we use"],
+  ["Other Flower Bunches (Trader Joe's/Randalls/Sam's/Costco etc..no preference...shops listed for swamies convenience)", "ఇతర పూల గుత్తులు; దుకాణాల పేర్లు సౌలభ్యం కోసం మాత్రమే", "4 if big, 8 if small"],
+  ["jasmine string (from flower shops)", "మల్లెపూల మాలలు", "2-3 boxes"],
+  ["Get the leaf plates from Desi Brothers or Vivek Flowers. They both are ready to sell for further discounts too. This is only for Swamies biksha. For others you can use the regular paper plates.", "స్వాముల భిక్షకు విస్తరాకులు; ఇతరులకు సాధారణ పేపర్ ప్లేట్లు వాడవచ్చని మూలం చెబుతుంది. దుకాణాలు, రాయితీల వివరాలు మూలంలో ఉన్న స్థానిక సూచనలు మాత్రమే", "Only for Swamies. \nCount by number of swamies attending the pooja. "],
+  ["Ghee (HOMEMADE ONLY, instructions here)", "నెయ్యి; ఇంట్లో తయారు చేసినదే అని మూలంలో ఉంది. తయారీ సూచనల లింకు కింద ఉంది", "1 lb"],
+  ["Gingely Oil", "నువ్వుల నూనె", "2 Litres"],
+  ["Fruits (variety)", "రకరకాల పండ్లు", "total 5 lbs"],
+  ["Tender Coconuts", "లేత కొబ్బరికాయలు", "minimum 2 to maximum 5 (you can get it in HMART, Fiesta)"],
+  ["Coconuts", "కొబ్బరికాయలు", "minimum 5 (Prefer from HEB instead of Indian Stores). 1 with the tail if possible. "],
+  ["Painters Tape", "పెయింటర్స్ టేపు", "1 or 2 rolls (Blue tape - 2 inch or 3 inch, do not buy 1 inch)"],
+  ["Tulasi leaf", "తులసి ఆకులు", "small qty if available"],
+  ["Holy 18 Steps and Pooja Table", "పవిత్ర 18 మెట్లు, పూజా బల్ల", "will provide"],
+  ["Mango Leaf", "మామిడి ఆకులు", "10.0"],
+  ["Rose Water", "పన్నీరు", "2 bottles"],
+  ["Betel Leaf", "తమలపాకులు", "20.0"],
+  ["Turmeric Powder", "పసుపు పొడి", "Very Small packet"],
+  ["Betel Nut", "వక్కలు", "20.0"],
+  ["Viboothi (holy White Ash)", "విభూతి", "1 small packet"],
+  ["Wicks for Lamp", "దీపపు వత్తులు", "20 big, 40 small (prefer thread instead of cotton, if available) - Do not buy"],
+  ["Tarp (2 provided)", "టార్పులు; రెండు అందిస్తారని మూలంలో ఉంది", "extra you need to provide"],
+  ["Camphor (DO NOT BUY SMOKELESS!!!)", "కర్పూరం; స్మోక్‌లెస్ రకం కొనవద్దని మూలంలో ఉంది", "1 box - Small"],
+  ["Kalasam Pot (Sombu)", "కలశ పాత్ర / చెంబు", "silver(1) if available, we have a brass one if you dont have it"],
+  ["6-10 inches diameter stainless plates (if not available, we can use disposible plates and cover it with aluminum foil)", "6–10 అంగుళాల స్టీల్ పళ్లాలు; లేకపోతే డిస్పోజబుల్ పళ్లాలకు అల్యూమినియం ఫాయిల్ వేయవచ్చని మూలం చెబుతుంది", "8 (provided or can use your own)"],
+  ["Deepa Aarathi ", "దీప హారతి పాత్ర", "provided or can use your own. "],
+  ["Camphor Aarathi ", "కర్పూర హారతి పాత్ర", "provided or can use your own. "],
+  ["Bell", "గంట", "provided or can use your own. "],
+  ["Panchapathram and udharani", "పంచపాత్ర, ఉద్ధరిణి", "provided or can use your own. "],
+  ["Big Stainless Steel or Silver plate", "పెద్ద స్టీల్ లేదా వెండి పళ్లెం", "1.0"],
+  ["Cardamom seeds for Kalasam", "కలశానికి యాలకుల గింజలు", "5 nos"],
+  ["Cloves for Kalasam", "కలశానికి లవంగాలు", "5 nos"],
+  ["Coins for Kalasam", "కలశానికి నాణేలు", "5 nos (quarters)"],
+  ["Stainless steel or Silver Bowl for Therta patram (small)", "తీర్థానికి చిన్న స్టీల్ లేదా వెండి గిన్నె", "provided or can use your own. "],
+  ["Rice (Sona Masoori or Ponni Raw Rice)", "బియ్యం; సోనా మసూరి లేదా పొన్ని పచ్చి బియ్యం", "10 lb bag"],
+  ["Framed Ayyappan Photo, Ganesha photo, Murugan photo, Guruswamy photo, your Kuladeivam photo", "ఫ్రేముతో అయ్యప్ప, గణేశుడు, మురుగన్, గురుస్వామి, కులదైవం చిత్రాలు", "provided or can use your own. This will change the size of garland if using your own"],
+  ["Trays for all the fruits and archana flowers", "పండ్లు, అర్చన పూలకు ట్రేలు", "as needed"],
+  ["Flower vase", "పూల కుండీ", "as needed"],
+  ["Jewels", "ఆభరణాలు", "minimum 4, as needed"],
+  ["Brown Bags for Thamboolam", "తాంబూలానికి గోధుమరంగు పేపర్ సంచులు", "50 (get the brown paper lunch bags from HEB)"],
+  ["Sandal (pills preferred)", "గంధం; గంధపు బిళ్లలకు ప్రాధాన్యం అని మూలంలో ఉంది", "1 box (Indian Store)"],
+  ["Kumkum (please try to get thazhampoo kumkum variety)", "కుంకుమ; వీలైతే తాళంపూ రకం అని మూలంలో ఉంది", "1 small packet."],
+  ["Incense Sticks", "అగరబత్తులు", "1 packet"],
+  ["Padi lamps + tri lamp", "పడి దీపాలు, మూడు దీపాల దీపం", "provided"],
+  ["amman face + dress (if not available, please let Mani know)", "అమ్మవారి ముఖం, వస్త్రం; లేకపోతే మణికి తెలియజేయాలని మూలంలో ఉంది", "1.0"],
+  ["Kamakshi Amman Vilakku + small silver plate (if not available, please let Mani know)", "కామాక్షి అమ్మవారి దీపం, చిన్న వెండి పళ్లెం; లేకపోతే మణికి తెలియజేయాలని మూలంలో ఉంది", "1.0"],
+  ["$21 for GuruDakshina", "గురుదక్షిణకు $21", ""],
+  ["Additional lamps", "అదనపు దీపాలు", "as needed"],
+  ["cotton thread roll", "పత్తి దారం రోలు", "1.0"],
+].map(([item, telugu, quantity], index) => ({ row: index + 2, item, telugu, quantity }));
 
 const topics = [
   {
@@ -891,6 +955,36 @@ const topics = [
     related: ["puja", "food", "sleep"],
   },
   {
+    id: "pooja-items",
+    title: b("Sahasranamam puja items", "సహస్రనామ పూజా సామగ్రి"),
+    short: b("Sahasranamam puja items", "సహస్రనామ పూజా సామగ్రి"),
+    description: b("All 49 items from your “Sahasranamam (ONLY) Pooja Items” sheet, with the original quantities and arrangements. Check off what you have prepared.", "మీ “Sahasranamam (ONLY) Pooja Items” షీట్‌లోని మొత్తం 49 వస్తువులు, మూల పరిమాణాలు, ఏర్పాట్ల వివరాలు. సిద్ధమైన వాటిని గుర్తించండి."),
+    keywords: "sahasranamam sahasranama pooja puja items supplies shopping materials flowers garland ghee సహస్రనామం సామగ్రి పూజ పూలు నెయ్యి",
+    sections: [
+      {
+        id: "items-arrangements",
+        title: b("Confirm arrangements before shopping", "కొనుగోలుకు ముందు ఏర్పాట్లు నిర్ధారించండి"),
+        body: b("This sheet is for a Sahasranamam puja, not a universal daily-puja requirement. “Provided”, “will provide”, “Do not buy”, shop names, discounts, and the contact “Mani” describe the source organizer’s arrangements; this app does not arrange supplies or confirm current availability. Confirm these with your own organizer or Guruswamy before buying. Garland sizes depend on the photographs you use.", "ఈ షీట్ సహస్రనామ పూజ కోసం; ప్రతి నిత్యపూజకూ అన్నీ తప్పనిసరి కాదు. “Provided”, “will provide”, “Do not buy”, దుకాణాలు, రాయితీలు, “Mani” అనే సంప్రదింపు మూల నిర్వాహకుల ఏర్పాట్లకు సంబంధించినవి. ఈ యాప్ సామగ్రి అందించదు; ప్రస్తుత లభ్యతను నిర్ధారించదు. కొనుగోలు ముందు మీ నిర్వాహకులు లేదా గురుస్వామితో నిర్ధారించండి. దండల కొలతలు మీ చిత్రాల పరిమాణంపై ఆధారపడతాయి."),
+        note: b("English names and quantity cells are retained as supplied, including units, qualifications, and line breaks. Telugu item names are editorial translations; quantity/arrangement text stays in the source’s English to avoid changing its meaning. A blank quantity is explicitly marked, not filled in.", "ఆంగ్ల పేర్లు, పరిమాణాలు, కొలమానాలు, షరతులు, పంక్తులు మూలంలో ఉన్నట్లే ఉంచాం. తెలుగు వస్తు పేర్లు సంపాదకీయ అనువాదాలు; అర్థం మారకుండా పరిమాణాలు, ఏర్పాట్ల వివరాలు మూల ఆంగ్లంలో ఉంచాం. ఖాళీ పరిమాణాన్ని కల్పించి పూరించలేదు."),
+        sources: [{ id: "1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk", pages: [], label: "Sahasranamam · Pooja Items", sheet: "Sahasranamam (ONLY) Pooja Items · A2:B50" }],
+        externalLinks: [
+          { url: "https://docs.google.com/spreadsheets/d/1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk/edit", title: b("Open the original items sheet", "అసలు సామగ్రి షీట్ తెరవండి") },
+          { url: "https://docs.google.com/document/d/1rUCbZVUdAHl3bUwDW8lb3_ODmJHfg1Yn/edit", title: b("Homemade ghee instructions · linked in source cell A8", "ఇంటి నెయ్యి తయారీ సూచనలు · మూలంలోని A8 లింకు") },
+        ],
+      },
+      {
+        id: "items-checklist",
+        title: b("Prepare the 49 items", "49 వస్తువులను సిద్ధం చేయండి"),
+        checklist: poojaItems.map(({ item, telugu, quantity, row }) => b(
+          `${item}\nQuantity / arrangement: ${quantity || "Not specified in the source"}\nSource row ${row}`,
+          `${telugu}\nమూల పరిమాణం / ఏర్పాటు (English): ${quantity || "మూలంలో పరిమాణం ఇవ్వలేదు"}\nమూల వరుస ${row}`,
+        )),
+        sources: [{ id: "1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk", pages: [], label: "Sahasranamam · Pooja Items", sheet: "Sahasranamam (ONLY) Pooja Items · A2:B50" }],
+      },
+    ],
+    related: ["puja", "peetam", "sources"],
+  },
+  {
     id: "puja",
     title: b("Puja vidhanam", "పూజా విధానం"),
     short: b("Puja vidhanam", "పూజా విధానం"),
@@ -923,7 +1017,7 @@ const topics = [
         sources: [r([44, 45, 46, 47]), cite(puja, [2], "శ్రీ అయ్యప్ప స్వామి పూజ విధానం")],
       },
     ],
-    related: ["peetam", "prayers", "daily"],
+    related: ["pooja-items", "peetam", "prayers", "daily"],
   },
   {
     id: "peetam",
@@ -971,7 +1065,7 @@ const topics = [
         sources: [],
       },
     ],
-    related: ["puja", "prayers"],
+    related: ["pooja-items", "puja", "prayers"],
   },
   {
     id: "food",

@@ -108,6 +108,7 @@ main { padding: 28px 5.5% 0; max-width: 1380px; margin: 0 auto; outline: none; }
 .checklist label { display: flex; gap: 12px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
 .checklist input { width: 19px; height: 19px; accent-color: var(--black); flex-shrink: 0; }
 .checklist input:checked + span { color: var(--muted); text-decoration: line-through; }
+.checklist label span { white-space: pre-line; overflow-wrap: anywhere; min-width: 0; }
 .prayer { margin: 25px 0 0; padding: 25px 0 0; border-top: 1px solid #b7b7b7; }
 .prayer blockquote { margin: 0; font-size: calc(var(--reading-size) + 3px); line-height: 2; color: var(--black); }
 .prayer figcaption { margin-top: 12px; font-size: 11px; color: var(--muted); }
