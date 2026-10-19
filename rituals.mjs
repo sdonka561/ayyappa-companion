@@ -87,7 +87,7 @@ export const chantDefinitions = [
   },
   {
     id: "harivarasanam", title: bilingual("Harivarasanam · night devotion", "హరివరాసనం · రాత్రి భక్తి"), category: "night",
-    purpose: bilingual("The niyamavali places Harivarasanam under the night resting service. The final recording and full lyrics are not bundled until reuse permission is verified. This guide does not turn that temple-service context into a universally mandatory household ritual.", "నియమావళిలో హరివరాసనం రాత్రి పవళింపు సేవలో ఉంది. పునర్వినియోగ అనుమతి నిర్ధారణ వరకు పూర్తి సాహిత్యం, చివరి ఆడియో ట్రాక్ జత చేయలేదు. ఆలయ సేవ నేపథ్యాన్ని ప్రతి ఇంటికీ తప్పనిసరి ఆచారంగా ఈ మార్గదర్శి మార్చదు."),
+    purpose: bilingual("The niyamavali places Harivarasanam under the night resting service. This older companion entry has no typed lyrics or recording; the selected Nitya Puja book’s original pages are available in the main guide. The temple-service context is not treated as a universally mandatory household ritual.", "నియమావళిలో హరివరాసనం రాత్రి పవళింపు సేవలో ఉంది. ఈ పాత అదనపు అంశంలో టైప్ చేసిన సాహిత్యం లేదా రికార్డింగ్ లేదు; ఎంచుకున్న నిత్యపూజ పుస్తకంలోని అసలు పేజీలు ప్రధాన మార్గదర్శిలో ఉన్నాయి. ఆలయ సేవ నేపథ్యాన్ని ప్రతి ఇంటికీ తప్పనిసరి ఆచారంగా చూపించలేదు."),
     source: { id: "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0", pages: [68], label: "Ayyappa-Pooja-Niyamavali" }, referenceOnly: true,
   },
 ];
