@@ -1,5 +1,7 @@
 # Ayyappa companion
 
+In Telugu mode, the nine Source 1 tab names use Telugu-script pronunciation (for example, పూజ సీక్వెన్స్ and పంచరత్న స్తోత్రం) throughout navigation, contents, reader headings, tab selectors, and search. English mode and original workbook text remain unchanged.
+
 Under **How to eat / భిక్ష తీసుకునే విధానం**, “Guidelines for Serving and Space” preserves the four user-supplied bhiksha customs in English and Telugu. It is explicitly attributed as user-supplied guidance, not a verified source-book rule, with a separate health/accessibility note.
 
 The two guide choices are labeled **Source 1: Ayyappa Process Guide** (the ABP workbook) and **Source 2: Nitya Puja** (the original PDF). **Today & Telugu calendar** is first in the left navigation. Source, workbook-tab, Bhajans/Namavali, and Companion branches have separate expand/collapse buttons; parent links still open their contents. Branches start collapsed except the active reading's ancestors, which open on destination changes. Manual expansion choices last for the visit, including language changes. On phones the same tree scrolls vertically within a bounded region. Existing reading links and source contents are unchanged.

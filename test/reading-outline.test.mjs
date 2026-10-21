@@ -112,6 +112,29 @@ test("a fresh page starts the saved-location calendar without requiring hash nav
   }
 });
 
+test("all nine workbook tab names use Telugu-script pronunciation consistently", async () => {
+  const labels = ["మాలధారణ అండ్ పీఠం సెటప్", "పూజ సీక్వెన్స్", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
+  for (const [index, tab] of abp.abpTabs.entries()) {
+    assert.equal(abp.abpTabTitle(tab, "te"), labels[index]);
+    assert.equal(abp.abpTabTitle(tab, "en"), tab.title);
+    assert.ok(abp.searchAbp(labels[index]).some(result => result.tab.id === tab.id));
+  }
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    const nav = app.navigation("#topic=abp&lang=te");
+    const contents = app.render("#topic=abp&lang=te");
+    for (const [index, tab] of abp.abpTabs.entries()) {
+      assert.ok(nav.includes(labels[index]));
+      assert.ok(contents.includes(labels[index]));
+      assert.match(app.render(`#topic=abp&lang=te&tab=${tab.id}`), new RegExp(`<h1 id="page-title">${labels[index]}</h1>`));
+      const section = tab.sections[0];
+      const reading = app.render(`#topic=abp&lang=te&tab=${tab.id}&part=${section.id}`);
+      assert.ok(reading.includes(`>${labels[index]}</option>`));
+      assert.ok(app.navigation("#topic=abp&lang=en").includes(escapeHtml(tab.title)));
+    }
+  }
+});
+
 test("ABP short readings are complete inline; long lists have bounded previews and valid reader links", async () => {
   const app = await reader();
   for (const lang of ["en", "te"]) {
