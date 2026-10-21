@@ -2,7 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { open, readFile, stat } from "node:fs/promises";
 import { bhajanBook, resolveBhajan, searchBhajans } from "../public/bhajans.mjs";
-import { chantDefinitions } from "../public/rituals.mjs";
+import { chantDefinitions, selectedBhajans, searchSelectedBhajans } from "../public/rituals.mjs";
+import { songCatalogue } from "../public/chant-data.mjs";
 
 test("all 252 contents entries from all eight pages have unique title destinations", () => {
   assert.equal(bhajanBook.songs.length, 252);
@@ -23,6 +24,31 @@ test("all 252 contents entries from all eight pages have unique title destinatio
     for (let page = song.start; page <= song.end; page++) covered.add(page);
   }
   assert.deepEqual([...covered].sort((a, b) => a - b), Array.from({ length: 444 }, (_, i) => i + 8));
+});
+
+test("the selected 43 songs preserve the supplied order, singers, and SPD page references without guessed lyrics", () => {
+  assert.equal(selectedBhajans.length, 43);
+  assert.equal(new Set(selectedBhajans.map(song => song.id)).size, 43);
+  assert.deepEqual(selectedBhajans.map(song => song.title), songCatalogue.map(song => song.title.replace(/ {2,}/g, " ")));
+  assert.deepEqual(selectedBhajans.filter(song => song.referencePage).map(song => [Number(song.id.slice(-3)), song.referencePage]), [
+    [1, 10], [2, 21], [3, 21], [7, 16], [8, 41], [13, 26], [17, 18], [22, 77],
+    [25, 53], [26, 64], [29, 68], [30, 82], [31, 84], [32, 55], [33, 80],
+  ]);
+  assert.deepEqual(selectedBhajans.filter(song => !song.singer).map(song => song.id), [
+    "selected-002", "selected-008", "selected-026", "selected-031", "selected-043",
+  ]);
+  assert.equal(selectedBhajans[0].singer, "Sandeep swamy/Venky Swamy");
+  assert.equal(selectedBhajans[21].singer, "Venky Swamy/Kiran swamy/Sandeep swamy");
+  assert.equal(selectedBhajans[37].singer, "Harshini Sura/Seshikiran Swamy");
+  for (const song of selectedBhajans) {
+    assert.equal(song.excerpts, undefined);
+    assert.equal(song.lyrics, undefined);
+    assert.equal(song.audio, undefined);
+  }
+  assert.equal(searchSelectedBhajans("").length, 43);
+  assert.deepEqual(searchSelectedBhajans("santosh").map(song => song.id), ["selected-027", "selected-032"]);
+  assert.deepEqual(searchSelectedBhajans("harshini vel").map(song => song.id), ["selected-005", "selected-006"]);
+  assert.equal(searchSelectedBhajans("unmatched_12345").length, 0);
 });
 
 test("titles missing from PDF bookmarks are included and shared-page songs keep distinct destinations", () => {

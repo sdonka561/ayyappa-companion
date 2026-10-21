@@ -1,6 +1,8 @@
 # Ayyappa companion
 
-The Bhajans landing page starts with Source 1's seven prayer/stotra groups, using actual workbook text in Telugu or English pronunciation. Short prayers are complete inline, while long Namavali lists retain bounded previews and full typed-reader links. The separate `Ayyappa_bhajans3.pdf` follows under its own source heading with all 252 readings fully extracted inline and available as individual text readers. Its original page readers and title filter remain available.
+The Bhajans landing page is a curated 43-song session book in the user's order, grouped by the existing reference sheet's deities. Compact rows show the supplied song name, singer assignment, and SPD page reference; search accepts song, singer, or deity. Song details and Previous/Next follow the same order. The referenced **SPD bajana PDF has not been supplied**, so lyrics are explicitly awaiting that source: no guessed lyrics, false page links, recordings, translation, or pronunciation are added. Unassigned singers and missing references remain explicit.
+
+Secondary links preserve Source 1's prayer/stotra readings (`collection=prayers`) and the separate complete 252-reading `Ayyappa_bhajans3.pdf` archive (`collection=book`). All original archive song/page URLs and old section links remain supported. That book is not treated as the SPD source.
 
 **Suprabhatam** is a single continuous reading: opening prayer, all 14 verses, and closing prayer, with internal headings and focus view. The sidebar has one Suprabhatam link instead of individual verse entries. Existing verse-specific URLs show the complete reading and jump to the corresponding heading; original source sections and text remain intact.
 

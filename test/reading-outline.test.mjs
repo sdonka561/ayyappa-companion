@@ -141,7 +141,7 @@ test("bhajan home includes actual Source 1 prayer text separately from all 252 P
   for (const portable of [false, true]) {
     const app = await reader(portable);
     for (const language of ["en", "te"]) {
-      const html = app.render(`#topic=bhajans&lang=${language}`);
+      const html = app.render(`#topic=bhajans&lang=${language}&collection=book`);
       assert.ok(html.indexOf('id="process-readings-title"') < html.indexOf('id="separate-bhajan-book"'));
       const sourceReading = html.slice(0, html.indexOf('id="separate-bhajan-book"'));
       for (const tab of abp.abpTabs.filter(tab => tab.sections.some(section => section.kind === "prayer"))) {
@@ -249,7 +249,7 @@ test("PDF and bhajan indexes expose every child page without loading scanned pag
     assert.deepEqual(pageLinks.map((match) => Number(match[2])), Array.from({ length: 60 }, (_, index) => index + 2));
     for (const match of pageLinks) assert.ok(book.resolveBookLocation(match[1], match[2]));
     assert.equal((pdf.match(/<img /g) || []).length, 1, "only the cover is loaded");
-    const library = app.render(`#topic=bhajans&lang=${lang}`);
+    const library = app.render(`#topic=bhajans&lang=${lang}&collection=book`);
     assert.equal((library.match(/data-bhajan-title=/g) || []).length, 252);
     assert.doesNotMatch(library, /<img /);
     const links = [...library.matchAll(/href="#topic=bhajans&lang=\w+&song=(song-\d+)&bhajanPage=(\d+)"/g)];
@@ -265,7 +265,7 @@ test("all PDF song texts are inline and unchanged in either language, with indiv
   for (const portable of [false, true]) {
     const app = await reader(portable);
     for (const lang of ["en", "te"]) {
-      const library = app.render(`#topic=bhajans&lang=${lang}`);
+      const library = app.render(`#topic=bhajans&lang=${lang}&collection=book`);
       assert.equal((library.match(/class="bhajan-original"/g) || []).length, 252);
       for (const song of bhajans.bhajanBook.songs) {
         for (const excerpt of song.excerpts) {
@@ -281,6 +281,45 @@ test("all PDF song texts are inline and unchanged in either language, with indiv
       assert.match(scan, /id="bhajan-page-image"/);
       assert.match(scan, /id="bhajan-start"/);
     }
+  }
+});
+
+test("Bhajans opens the selected 43-song book, with honest sources and the complete archive secondary", async () => {
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    for (const lang of ["en", "te"]) {
+      const home = app.render(`#topic=bhajans&lang=${lang}`);
+      assert.equal((home.match(/data-selected-song=/g) || []).length, 43);
+      assert.equal((home.match(/data-song-group=/g) || []).length, 7);
+      assert.doesNotMatch(home, /class="bhajan-lyrics"|data-bhajan-title=|<img /);
+      assert.match(home, /collection=book/);
+      assert.match(home, /collection=prayers/);
+      const page = app.main(`#topic=bhajans&lang=${lang}`);
+      assert.doesNotMatch(page, /id="guide-version"|id="calendar-summary"/);
+      let previous = -1;
+      for (const song of rituals.selectedBhajans) {
+        const position = home.indexOf(`data-selected-song="${song.id}"`);
+        assert.ok(position > previous);
+        previous = position;
+        assert.ok(home.includes(escapeHtml(song.title)));
+        if (song.singer) assert.ok(home.includes(escapeHtml(song.singer)));
+        const selected = app.render(`#topic=bhajans&lang=${lang}&song=${song.id}`);
+        assert.ok(selected.includes(escapeHtml(song.title)));
+        assert.doesNotMatch(selected, /class="bhajan-lyrics"|<img |data-action="focus"/);
+        assert.match(selected, /SPD/);
+      }
+      assert.match(app.render(`#topic=bhajans&lang=${lang}&song=selected-999`), /class="empty-state"/);
+      assert.match(app.render(`#topic=bhajans&lang=${lang}&song=selected-001&bhajanPage=10`), /class="empty-state"/);
+      const legacy = app.render(`#topic=bhajans&lang=${lang}&section=separate-bhajan-book`);
+      assert.equal((legacy.match(/data-bhajan-title=/g) || []).length, 252);
+      const sourceOne = app.render(`#topic=bhajans&lang=${lang}&collection=prayers`);
+      assert.match(sourceOne, /id="process-readings-title"/);
+      assert.doesNotMatch(sourceOne, /data-bhajan-title=/);
+    }
+    const search = app.main("#topic=bhajans&lang=en&q=Santosh");
+    assert.match(search, /selected-027/);
+    assert.match(search, /selected-032/);
+    assert.doesNotMatch(search, /No matching section/);
   }
 });
 
