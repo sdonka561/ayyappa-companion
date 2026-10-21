@@ -627,7 +627,6 @@ window.addEventListener("hashchange", () => {
   const section = readRoute();
   if (!((active === "chanting" && state.chantId) || (active === "book" && state.bookChapter) || (active === "abp" && state.abpPart) || (active === "bhajans" && state.bhajanSong))) document.body.classList.remove("focus-reading");
   render();
-  startCalendar();
   if (section) {
     const element = document.getElementById(section);
     if (element?.classList.contains("reading-section")) {
@@ -645,6 +644,7 @@ window.addEventListener("hashchange", () => {
 const initialSection = readRoute();
 loadRoutine();
 render();
+startCalendar();
 if (initialSection) {
   requestAnimationFrame(() => document.getElementById(initialSection)?.scrollIntoView({ block: "start" }));
 }
