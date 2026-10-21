@@ -21,6 +21,11 @@ test("every typed chant and book draft can produce pronunciation without changin
   for (const line of Object.values(chantTexts).flat()) {
     const original = line.te;
     const pronunciation = pronounceTelugu(original);
+    if (line.missingTelugu) {
+      assert.equal(original, "");
+      assert.ok(line.pronunciation);
+      continue;
+    }
     assert.ok(/[a-z]/i.test(pronunciation));
     assert.doesNotMatch(pronunciation, /[అ-హా-ౌ్]/);
     assert.equal(line.te, original);

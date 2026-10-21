@@ -2,7 +2,11 @@
 
 ## Direction
 
-User-directed document-first rebuild, retaining the Ayyappa black-and-white identity: black chapter navigation, white reading pages, neutral gray states and rules, and original images in natural color. The selected Nitya Puja book is the main guide. The former mixed-source topics, chants, and checklists remain in a distinctly separate Companion area. This is one chapter-indexed book, not a gallery of source files.
+User-directed two-version guide, retaining the Ayyappa black-and-white identity: black section navigation, white reading pages, neutral gray states and rules, and original images in natural color. ABP Simplified process guide is the default; the version picker switches to the unchanged Nitya Puja PDF reader. The former mixed-source topics, chants, and checklists remain in a distinctly separate Companion area. ABP's nine original tabs have 54 individually selectable internal subsections; unrelated deity columns and prayer variants are never combined.
+
+The version picker is visible above reading content, including on mobile and Companion pages, and hidden in focus reading. ABP's contents links to each tab's internal contents; a reader selects its subsection through direct links or the tab/subsection controls. Previous/Next moves within that tab. English prayer text is pronunciation, using supplied workbook Roman text when present and generated pronunciation otherwise; original English procedure instructions remain unchanged in either interface language. Direct extraction is not labeled OCR. Original spellings, source step-number gaps, and actual invocation counts remain visible. All PDF routes, pages, controls, and OCR warnings remain intact.
+
+A shared Bhajans entry leads to a ruled, title-filterable list of all 252 contents entries. A title opens its complete original page range, with a title/page selector, Previous/Next, full-size zoom, focus reading, and a source-position marker on the first page. All eight contents pages can be read separately. The user selected preservation of the complete original pages, including source pronunciation, English meanings, and credits, instead of typed pronunciation-only extraction. Nothing is silently removed from those page images. Shared navigation also exposes the two dedicated Namavali readers; their English text is the original source pronunciation with diacritics, never a newly generated transliteration. A source-empty Telugu entry is an explicit gap, not an invented line.
 
 ## Tokens
 

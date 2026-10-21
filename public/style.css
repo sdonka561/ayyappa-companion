@@ -44,6 +44,7 @@ h1, h2 { text-wrap: balance; }
 .chapter-index { list-style: none; padding: 0; margin: 18px 0 0; }
 .chapter-index li { border-top: 1px solid var(--line); }
 .chapter-index a { display: flex; align-items: center; justify-content: space-between; gap: 24px; text-decoration: none; padding: 20px 0; }
+.chapter-index a > span:first-child { min-width: 0; overflow-wrap: anywhere; }
 .chapter-index a:hover strong { text-decoration: underline; text-underline-offset: 5px; }
 .chapter-index strong { font-size: 20px; font-weight: 600; line-height: 1.8; }
 .chapter-index a > span:first-child > span { display: block; font-size: 15px; color: var(--muted); line-height: 1.9; margin-top: 2px; }
@@ -61,6 +62,19 @@ h1, h2 { text-wrap: balance; }
 .book-page figcaption { font-size: 12px; color: var(--muted); line-height: 1.8; padding-bottom: 12px; }
 .book-page img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
 .book-draft { font-size: var(--reading-size); line-height: 2.1; white-space: pre-wrap; overflow-wrap: anywhere; max-width: 70ch; margin-inline: auto; padding: 20px 0 30px; }
+.guide-picker { display: grid; gap: 8px; max-width: 100%; margin-bottom: 32px; }
+.guide-picker label { font-size: 13px; color: var(--muted); }
+.guide-picker select { width: 100%; max-width: 540px; }
+.abp-reading { max-width: 70ch; margin: 30px auto; font-size: var(--reading-size); line-height: 1.9; overflow-wrap: anywhere; }
+.abp-reading p { padding-block: 12px; white-space: pre-wrap; }
+.abp-prayer p { line-height: 2.1; border-bottom: 1px solid var(--line); }
+.abp-step-number { font-weight: 650; }
+.bhajan-filter { display: grid; gap: 10px; max-width: 540px; margin-block: 28px 12px; }
+.bhajan-filter input { min-width: 0; width: 100%; }
+.bhajan-index [hidden] { display: none; }
+.bhajan-sheet { position: relative; }
+.bhajan-marker { position: absolute; left: 0; max-width: 100%; border-top: 1px solid var(--black); padding: 2px 6px; background: var(--white); color: var(--black); font-size: 12px; pointer-events: none; }
+.focus-reading .guide-picker { display: none; }
 .book-stepper { display: flex; align-items: center; justify-content: space-between; gap: 14px; position: sticky; bottom: 0; background: white; border-block: 1px solid var(--line); padding: 12px 0; margin-top: 20px; }
 .book-stepper a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; color: var(--ink); }
 .book-stepper > span { font-size: 12px; line-height: 1.8; color: var(--muted); }

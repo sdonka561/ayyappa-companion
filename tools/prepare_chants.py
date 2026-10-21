@@ -27,8 +27,15 @@ def read_cells(path, sheet):
         return result
 
 
-def line(value, reference):
-    return {"te": value, "reference": reference}
+def line(value, reference, pronunciation=None, pronunciation_reference=None):
+    result = {"te": value, "reference": reference}
+    if not value:
+        result["missingTelugu"] = True
+    if pronunciation is not None:
+        if not pronunciation:
+            raise ValueError(f"Missing source pronunciation at {pronunciation_reference}")
+        result.update(pronunciation=pronunciation, pronunciationReference=pronunciation_reference)
+    return result
 
 
 def main():
@@ -46,9 +53,15 @@ def main():
     for row in range(3, 111):
         if names.get(f"A{row}") != str(row - 2):
             raise ValueError(f"Namavali numbering missing at row {row}")
-        ashtottaram.append(line(names[f"C{row}"], f"C{row}"))
+        ashtottaram.append(line(names[f"C{row}"], f"C{row}", names[f"B{row}"], f"B{row}"))
     if len(ashtottaram) != 108 or any(not item["te"] for item in ashtottaram):
         raise ValueError("A full 108-entry Telugu namavali is required.")
+    sahasra_cells = read_cells(args.input / "1BIRAcVmUK0xYyWbpC7R4ZLPDguqUHhs7.xlsx", 1)
+    sahasranamavali = []
+    for row in range(3, 1007):
+        if sahasra_cells.get(f"A{row}") != str(row - 2):
+            raise ValueError(f"Sahasranamavali source numbering missing at row {row}")
+        sahasranamavali.append(line(sahasra_cells.get(f"B{row}", ""), f"B{row}", sahasra_cells[f"C{row}"], f"C{row}"))
     prayers = read_cells(workbook, 6)
     pancharatna = []
     for row in [2, 5, 8, 11, 14]:
@@ -59,6 +72,7 @@ def main():
     responses = [line(closing[f"J{row}"], f"J{row}") for row in range(2, 29) if closing.get(f"J{row}")]
     texts = {
         "ashtottaram": ashtottaram,
+        "sahasranamavali": sahasranamavali,
         "sharanaghosha": invocations,
         "sharanam-108": [line("స్వామియే శరణం అయ్యప్ప", f"Repetition {i}") for i in range(1, 109)],
         "pancharatna": pancharatna,
@@ -104,7 +118,7 @@ def main():
     output = "export const chantTexts = " + json.dumps(texts, ensure_ascii=False, indent=2) + ";\n"
     output += "export const songCatalogue = " + json.dumps(songs, ensure_ascii=False, indent=2) + ";\n"
     args.output.write_text(output, encoding="utf-8")
-    print(f"Prepared {len(ashtottaram)} names, {len(invocations)} supplied sharanaghosha lines, {len(songs)} song titles.")
+    print(f"Prepared {len(ashtottaram)} Ashtottaram and {len(sahasranamavali)} Sahasranamavali source pairs, {len(invocations)} sharanaghosha lines, {len(songs)} song titles.")
 
 
 if __name__ == "__main__":

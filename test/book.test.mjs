@@ -50,9 +50,9 @@ test("book search covers chapter names and draft text without changing the sourc
   assert.deepEqual(searchBook("nonexistent_12345"), []);
 });
 
-test("main guide defaults to the original book and keeps companion material separate", async () => {
+test("ABP defaults first while the original PDF and companion routes remain available", async () => {
   const app = await readFile(new URL("../public/app.mjs", import.meta.url), "utf8");
-  assert.match(app, /active = params\.get\("topic"\) \|\| "book"/);
+  assert.match(app, /active = params\.get\("topic"\) \|\| "abp"/);
   assert.match(app, /state\.bookView = "auto"/);
   assert.match(app, /lang === "en" \? "pronunciation" : "original"/);
   assert.match(app, /Unreviewed OCR draft—not verified chanting text/);

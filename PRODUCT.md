@@ -12,7 +12,7 @@ The owner's friends, reading Ayyappa devotional and observance guidance.
 
 ## Product Purpose
 
-Make the user-selected Nitya Puja book the site's main guide, organized by its own content and printed sequence. Keep the earlier mixed-source guides, chants, and preparation checklists available in a separate Companion area, as the user explicitly chose during the rebuild.
+Offer the user-selected ABP Simplified process workbook and the Nitya Puja PDF as separate selectable guide versions. ABP opens by default, as explicitly selected by the user. Organize all nine workbook tabs and their internal sections, never combining parallel deity prayers or source variants. Preserve the PDF's chapter/page reader and old shared links. Keep mixed-source guides, chants, and preparation checklists in the separate Companion area.
 
 ## Capabilities and Constraints
 
@@ -23,6 +23,10 @@ The user additionally requested phone-readable chanting, a 108-name reader, shar
 Readable traditional chants must not be confused with modern song references or missing recordings. Preserve the supplied sharanaghosha's actual 107-entry count rather than fabricating a 108th invocation; the dedicated ashtottaram has all 108 source-numbered names.
 
 User-directed update: for prayers and book text, English must show Telugu pronunciation in English letters, never translated meanings. Keep English section titles, navigation, and explanatory guide text. Preserve Telugu originals and use them in Telugu reading. Remove earlier editorial English prayer meanings. Book pronunciation inherits the unreviewed OCR's errors and must remain clearly marked as a draft requiring comparison and Guruswamy review. English-letter spelling is approximate, not an exact phonetic notation.
+
+Use the dedicated `HariHaraPutra_SahasraNamavali` and `DharmaSastha_Ayyappa_Astottara_Namavali` workbooks' original paired Telugu and English pronunciation, not generated conversion. Retain their actual counts (1004 and 108); show the Sahasranamavali's one blank Telugu cell explicitly. Do not substitute those lists into ABP's different source variants.
+
+Create the complete bhajan library from `Ayyappa_bhajans3.pdf`, using all eight table-of-contents pages to select titles and their respective content pages. The user explicitly selected **original book pages preserving everything on each page**, rather than typed pronunciation-only lyrics. This exception preserves the PDF's scripts, pronunciation, meanings, and credits intact. All 252 contents titles and 451 pages must be available, including continuation pages and shared-page title positions.
 
 The user-shared Sahasranamam puja-items spreadsheet (`1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk`) has its own preparation-checklist topic. Preserve all 49 source rows, quantities, qualifications, and original instruction links. Clearly distinguish the organizer's “provided” arrangements from supplies the reader needs to confirm or obtain.
 
@@ -40,7 +44,7 @@ Requested URL identity: `santoshdonka.github.io`. The user chose to rename their
 
 ## Product Principles
 
-- Lead with the chosen book and its real chapter sequence; do not mix other sources into its reader.
+- Lead with ABP tabs and their real internal readings; let the reader switch to the PDF without mixing their sources.
 - Preserve source traceability and make uncertainty visible.
 - Respect differing observance traditions.
 - Keep sharing simple and reading usable on phones.

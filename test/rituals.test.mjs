@@ -4,6 +4,7 @@ import { chantTexts, songCatalogue } from "../public/chant-data.mjs";
 import { chantDefinitions, pujaRoutine, ritualPhase, ritualDay } from "../public/rituals.mjs";
 import { topicById } from "../public/content.mjs";
 import { readFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 
 test("the ashtottaram contains exactly 108 source-numbered Telugu entries", () => {
   assert.equal(chantTexts.ashtottaram.length, 108);
@@ -28,7 +29,12 @@ test("each available reader has nonempty text; references are not fake playable 
     else {
       assert.ok(chantTexts[definition.id].length);
       for (const line of chantTexts[definition.id]) {
-        assert.match(line.te, /[\u0c00-\u0c7f]/);
+        if (line.missingTelugu) {
+          assert.equal(definition.id, "sahasranamavali");
+          assert.equal(line.reference, "B635");
+          assert.equal(line.te, "");
+          assert.ok(line.pronunciation);
+        } else assert.match(line.te, /[\u0c00-\u0c7f]/);
         assert.equal("roman" in line, false);
         assert.ok(line.reference);
       }
@@ -36,6 +42,23 @@ test("each available reader has nonempty text; references are not fake playable 
   }
   assert.equal(chantTexts.pancharatna.length, 5);
   assert.ok(chantTexts.responses.length > 20);
+});
+
+test("dedicated Namavali readers preserve the workbook's original Telugu/English pairs without conversion", () => {
+  for (const [id, count, digest] of [
+    ["ashtottaram", 108, "bfa831c1d9941ed77083e18a260d1d0daf0f0838c128af7e18ca22d602c13d55"],
+    ["sahasranamavali", 1004, "9c89a995080cc3056badda7f469ab21b1c536f86d5d164304a1daf7c4dfee0f9"],
+  ]) {
+    const lines = chantTexts[id];
+    assert.equal(lines.length, count);
+    assert.ok(lines.every((line) => line.pronunciation && line.pronunciationReference));
+    const pairs = lines.map((line) => [line.te, line.pronunciation]);
+    assert.equal(createHash("sha256").update(JSON.stringify(pairs)).digest("hex"), digest);
+    assert.equal(chantDefinitions.find((entry) => entry.id === id).sourcePronunciation, true);
+  }
+  assert.equal(chantTexts.ashtottaram[0].pronunciation, "ōṁ mahāśāstrē namaḥ |");
+  assert.equal(chantTexts.sahasranamavali[632].pronunciation, "om̐ dambhaghnāya namaḥ");
+  assert.equal(chantTexts.sahasranamavali.filter((line) => line.missingTelugu).length, 1);
 });
 
 test("English prayer reading is pronunciation only, not meaning translations", async () => {

@@ -16,7 +16,7 @@ const [html, css, content, chantData, rituals, app, inventory, image, favicon, p
   readFile(new URL("book.mjs", root), "utf8"),
 ]);
 const importLine = /^import \{[^\n]+\} from "\.\/[\w-]+\.mjs";\r?\n/gm;
-if (!(app.match(importLine)?.length === 5)) throw new Error("App imports changed; update the standalone builder.");
+if (!(app.match(importLine)?.length === 7)) throw new Error("App imports changed; update the standalone builder.");
 let embeddedBook = bookData;
 const { bookPages } = await import("../public/book-data.mjs");
 for (const page of bookPages) {
@@ -25,6 +25,10 @@ for (const page of bookPages) {
 }
 const script = [
   await readFile(new URL("pronunciation.mjs", root), "utf8"),
+  await readFile(new URL("abp-data.mjs", root), "utf8"),
+  (await readFile(new URL("abp.mjs", root), "utf8")).replace(importLine, "").replace(/^export \{ abpTabs \};\r?\n/m, ""),
+  await embedBhajanPages(),
+  (await readFile(new URL("bhajans.mjs", root), "utf8")).replace(importLine, "").replace(/^export \{ bhajanBook \};\r?\n/m, ""),
   content,
   chantData,
   embeddedBook,
@@ -37,4 +41,14 @@ const output = html
   .replace('<link rel="stylesheet" href="style.css">', () => `<style>${css}</style>`)
   .replace('<script type="module" src="app.mjs"></script>', () => `<script id="embedded-inventory" type="application/json">${inventory.replaceAll("<", "\\u003c")}</script><script type="module">${script}</script>`);
 await writeFile(new URL("ayyappa-companion.html", root), output);
-console.log(`Built public\\ayyappa-companion.html (self-contained, including ${bookPages.length} original book pages).`);
+console.log(`Built public\\ayyappa-companion.html (self-contained: ABP, Namavali, ${bookPages.length} Nitya Puja pages, and the complete bhajan book).`);
+
+async function embedBhajanPages() {
+  const { bhajanBook } = await import("../public/bhajan-data.mjs");
+  const pages = [];
+  for (const page of bhajanBook.pages) {
+    const image = await readFile(new URL(page.image, root));
+    pages.push({ ...page, image: `data:image/webp;base64,${image.toString("base64")}` });
+  }
+  return `export const bhajanBook = ${JSON.stringify({ ...bhajanBook, pages })};`;
+}
