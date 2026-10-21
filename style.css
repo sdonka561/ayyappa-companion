@@ -158,6 +158,9 @@ ol.inline-reading { padding-left: 24px; margin: 16px 0 0; }
 .bhajan-filter { display: grid; gap: 10px; max-width: 540px; margin-block: 28px 12px; }
 .bhajan-filter input { min-width: 0; width: 100%; }
 .bhajan-index [hidden] { display: none; }
+.bhajan-lyrics { white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--reading-size); line-height: 1.9; max-width: 70ch; }
+.bhajan-excerpt + .bhajan-excerpt { margin-top: 28px; }
+.bhajan-excerpt > .outline-note { font-size: 13px; color: var(--muted); margin: 16px 0 8px; }
 .bhajan-sheet { position: relative; }
 .bhajan-marker { position: absolute; left: 0; max-width: 100%; border-top: 1px solid var(--black); padding: 2px 6px; background: var(--white); color: var(--black); font-size: 12px; pointer-events: none; }
 .focus-reading .guide-picker { display: none; }
