@@ -3,7 +3,7 @@ import { chantTexts, songCatalogue } from "./chant-data.mjs";
 import { chantCategories, chantDefinitions, pujaRoutine, ritualPhase, ritualDay } from "./rituals.mjs";
 import { primaryBook, bookChapters, bookPages, resolveBookLocation, chapterForPage, searchBook } from "./book.mjs";
 import { pronounceTelugu } from "./pronunciation.mjs";
-import { abpTabs, abpSource, resolveAbp, searchAbp } from "./abp.mjs";
+import { abpTabs, abpSource, resolveAbp, searchAbp, sahasranamavaliGroups } from "./abp.mjs";
 import { bhajanBook, searchBhajans, resolveBhajan } from "./bhajans.mjs";
 
 const app = document.querySelector("#app");
@@ -170,16 +170,20 @@ function abpContent() {
   };
   const stepper = `<nav class="book-stepper" aria-label="${t("Subsection navigation", "ఉపవిభాగాల మార్పు")}">${stepLink(-1, t("← Previous section", "← ముందు విభాగం"))}<span>${index + 1} / ${tab.sections.length}</span>${stepLink(1, t("Next section →", "తర్వాతి విభాగం →"))}</nav>`;
   const sourcePronunciation = section.lines.some((line) => line.pronunciation);
+  const renderAbpLine = (line, number = line.number) => {
+    const sourceIsTelugu = /[\u0c00-\u0c7f]/.test(line.text);
+    const value = lang === "en" && sourceIsTelugu ? line.pronunciation || pronounceTelugu(line.text) : line.text;
+    const language = sourceIsTelugu ? (lang === "en" ? "te-Latn" : "te") : "en";
+    return `<p lang="${language}">${number ? `<span class="abp-step-number">${esc(number)}.</span> ` : ""}${esc(value).replaceAll("\n", "<br>")}</p>`;
+  };
+  const isSahasraNames = tab.id === "sahasranamavali" && section.id === "names";
+  const reading = isSahasraNames ? sahasranamavaliGroups().map((group) => `<section class="namavali-group" aria-labelledby="names-${group.start}"><h2 id="names-${group.start}">${t("Names", "నామాలు")} ${group.start}–${group.end}</h2>${group.lines.map((line, index) => renderAbpLine(line, group.start + index)).join("")}</section>`).join("") : section.lines.map((line) => renderAbpLine(line)).join("");
   return `<div class="reader-back"><a href="${route("abp", { tab: tab.id })}">← ${esc(tab.title)}</a><button data-action="focus">${document.body.classList.contains("focus-reading") ? t("Exit focus view", "సాధారణ వీక్షణ") : t("Focus view", "ఏకాగ్ర పఠనం")}</button></div><div class="topic-intro"><h1 id="page-title">${esc(section.title)}</h1></div>
   <div class="book-controls"><label>${t("Workbook tab", "వర్క్‌బుక్ ట్యాబ్")}<select id="abp-tab">${abpTabs.map((entry) => `<option value="${entry.id}" ${entry.id === tab.id ? "selected" : ""}>${esc(entry.title)}</option>`).join("")}</select></label><label>${t("Subsection", "ఉపవిభాగం")}<select id="abp-part">${tab.sections.map((part) => `<option value="${part.id}" ${part === section ? "selected" : ""}>${esc(part.title)}</option>`).join("")}</select></label></div>
   <p class="reader-language-note">${section.kind === "guide" ? t("Procedure instructions are retained in the workbook’s English. These are source-specific customs, not medical advice. Follow your Guruswamy and appropriate health and fire-safety precautions.", "విధాన సూచనలు మూలంలోని Englishలోనే ఉన్నాయి. ఇవి మూలంలోని ఆచారాలు; వైద్య సలహా కాదు. గురుస్వామి సూచనలు, ఆరోగ్య, అగ్ని జాగ్రత్తలు పాటించండి.") : t(`${sourcePronunciation ? "English pronunciation is supplied by the workbook." : "English pronunciation is generated from the workbook’s Telugu."} This is pronunciation, not translated meaning. aa, ee, oo mark long vowels. Source spellings are retained; confirm pronunciation with your Guruswamy.`, "English పఠనం ఉచ్చారణ మాత్రమే; అర్థానువాదం కాదు. మూలంలోని తెలుగు అలాగే ఉంది. ఉచ్చారణను గురుస్వామితో నిర్ధారించుకోండి.")}</p>
   ${tab.id === "sharanaghosha" || (tab.id === "ashtottaram" && section.id.startsWith("ayyappa-type")) ? `<p class="reader-notice">${t("This source supplies 107 invocations in this list. It is preserved as supplied, without inventing a missing 108th entry.", "ఈ మూల జాబితాలో 107 నామాలు ఉన్నాయి. లేని 108వ అంశాన్ని కల్పించకుండా మూలాన్ని అలాగే ఉంచాం.")}</p>` : ""}
-  ${stepper}<article class="abp-reading ${section.kind === "prayer" ? "abp-prayer" : ""}" aria-label="${esc(section.title)}">${section.lines.map((line) => {
-    const sourceIsTelugu = /[\u0c00-\u0c7f]/.test(line.text);
-    const value = lang === "en" && sourceIsTelugu ? line.pronunciation || pronounceTelugu(line.text) : line.text;
-    const language = sourceIsTelugu ? (lang === "en" ? "te-Latn" : "te") : "en";
-    return `<p lang="${language}">${line.number ? `<span class="abp-step-number">${esc(line.number)}.</span> ` : ""}${esc(value).replaceAll("\n", "<br>")}</p>`;
-  }).join("")}</article>${stepper}<p class="book-source"><a href="${abpSource.url}" target="_blank" rel="noopener noreferrer">${t("Original ABP workbook", "అసలు ABP వర్క్‌బుక్")} · ${esc(tab.title)}${icon("external")}</a></p>`;
+  ${isSahasraNames ? `<p class="reader-notice">${t("Sahasra means 1000: all 1000 names are numbered below in 100 groups of ten. Invocation and completion prayers remain separate.", "సహస్రం అంటే 1000: మొత్తం 1000 నామాలను పది చొప్పున 100 సమూహాలుగా సంఖ్యలతో ఉంచాం. ప్రారంభ, ముగింపు ప్రార్థనలు వేరుగా ఉన్నాయి.")}</p>` : ""}
+  ${stepper}<article class="abp-reading ${section.kind === "prayer" ? "abp-prayer" : ""}" aria-label="${esc(section.title)}">${reading}</article>${stepper}<p class="book-source"><a href="${abpSource.url}" target="_blank" rel="noopener noreferrer">${t("Original ABP workbook", "అసలు ABP వర్క్‌బుక్")} · ${esc(tab.title)}${icon("external")}</a></p>`;
 }
 
 function bookRange(chapter) {

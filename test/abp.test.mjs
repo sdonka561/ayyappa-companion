@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { abpTabs, abpSource, resolveAbp, searchAbp } from "../public/abp.mjs";
+import { abpTabs, abpSource, resolveAbp, searchAbp, sahasranamavaliGroups } from "../public/abp.mjs";
 import { pronounceTelugu } from "../public/pronunciation.mjs";
 
 test("ABP has all nine source tabs in order and 54 individually addressable subsections", () => {
@@ -80,6 +80,21 @@ test("ABP search finds subsection titles, Telugu prayer lines, and supplied pron
   assert.ok(searchAbp("shivaputraaya").some(({ tab }) => tab.id === "sahasranamavali"));
   assert.deepEqual(searchAbp(""), []);
   assert.deepEqual(searchAbp("nonexistent_12345"), []);
+});
+
+test("Sahasranamavali numbers exactly 1000 names in 100 groups of ten without modifying either source language", () => {
+  const groups = sahasranamavaliGroups();
+  const original = resolveAbp("sahasranamavali", "names").section.lines;
+  assert.equal(groups.length, 100);
+  for (const [index, group] of groups.entries()) {
+    assert.equal(group.start, index * 10 + 1);
+    assert.equal(group.end, index * 10 + 10);
+    assert.equal(group.lines.length, 10);
+    assert.ok(group.lines.every((line) => line.text && line.pronunciation));
+  }
+  assert.deepEqual(groups.flatMap((group) => group.lines), original);
+  assert.equal(groups[0].start, 1);
+  assert.equal(groups.at(-1).end, 1000);
 });
 
 test("version picker and ABP routing are included in normal and portable readers", async () => {
