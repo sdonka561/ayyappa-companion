@@ -191,8 +191,15 @@ ol.inline-reading { padding-left: 24px; margin: 16px 0 0; }
 .topic-nav ul { list-style: none; margin: 0; padding: 0; }
 .topic-nav .nav-tree { display: flex; flex-direction: column; gap: 24px; }
 .topic-nav li > ul { margin: 4px 0 0 14px; padding-left: 10px; border-left: 1px solid #6a6a6a; }
+.topic-nav ul[hidden] { display: none; }
+.nav-branch-heading { display: flex; align-items: center; }
+.nav-branch-heading > .nav-parent { flex: 1; min-width: 0; }
+.nav-toggle { flex: 0 0 44px; min-height: 44px; border: 0; border-radius: 4px; background: transparent; color: #e6e6e6; }
+.nav-toggle:hover { background: #454545; color: #ffffff; }
+.nav-toggle span { display: inline-block; font-size: 24px; line-height: 1; }
+.nav-toggle[aria-expanded="true"] span { transform: rotate(90deg); }
 .topic-nav .nav-parent { font-weight: 650; }
-.topic-nav span.nav-parent { display: block; padding: 13px 14px; line-height: 1.5; }
+.topic-nav span.nav-parent { display: block; padding: 13px 14px; font-size: 14px; line-height: 1.5; }
 .topic-nav li li a { font-size: 13px; padding: 10px; }
 .topic-nav a { display: flex; align-items: center; gap: 10px; text-decoration: none; padding: 13px 14px; border-radius: 4px; color: #e6e6e6; font-size: 14px; min-height: 47px; line-height: 1.5; }
 .topic-nav a:hover { background: #454545; color: white; }
@@ -30560,6 +30567,8 @@ const t = (en, te) => lang === "te" ? te : en;
 const text = (value) => value?.[lang] || "";
 const sourceOneTitle = abpSource.title;
 const sourceTwoTitle = "Source 2: Nitya Puja";
+const navigationOpen = new Map();
+let navigationPath = "";
 const icon = (name) => {
   const paths = {
     search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4 4"/>',
@@ -30599,6 +30608,16 @@ function readRoute() {
   state.query = params.get("q") || "";
   state.chantId = params.get("chant") || "";
   state.category = chantCategories.some((category) => category.id === params.get("category")) ? params.get("category") : "all";
+  const path = [active, state.abpTab, state.abpPart, state.bookChapter, state.chantId].join("/");
+  if (path !== navigationPath) {
+    if (active === "abp") {
+      navigationOpen.set("source-one", true);
+      if (state.abpTab) navigationOpen.set(`tab-${state.abpTab}`, true);
+    } else if (active === "book") navigationOpen.set("source-two", true);
+    else if (active === "bhajans" || (active === "chanting" && ["ashtottaram", "sahasranamavali"].includes(state.chantId))) navigationOpen.set("library", true);
+    else if (active !== "calendar") navigationOpen.set("companion", true);
+    navigationPath = path;
+  }
   return params.get("section");
 }
 
@@ -30819,10 +30838,22 @@ function guideContent() {
   return `<div class="empty-state"><h1 id="page-title">${t("This topic is not in the guide", "ఈ అంశం మార్గదర్శిలో లేదు")}</h1><p>${t("The link may be incomplete. Choose a topic from the navigation.", "లింకు అసంపూర్ణంగా ఉండవచ్చు. నావిగేషన్‌లోని అంశాన్ని ఎంచుకోండి.")}</p>${link("daily", t("Open daily practice", "నిత్య ఆచరణ తెరవండి"), "button")}</div>`;
 }
 
+function navigationBranch(id, label, href, children, current = "") {
+  const open = navigationOpen.get(id) === true;
+  const target = `navigation-${id}`;
+  return `<li class="nav-branch"><div class="nav-branch-heading">${href ? `<a class="nav-parent" href="${href}" ${current}>${esc(label)}</a>` : `<span class="nav-parent">${esc(label)}</span>`}<button type="button" class="nav-toggle" data-nav-toggle="${id}" aria-expanded="${open}" aria-controls="${target}" aria-label="${esc(label)}"><span aria-hidden="true">›</span></button></div><ul id="${target}" ${open ? "" : "hidden"}>${children}</ul></li>`;
+}
+
+function calendarNavigation() {
+  return `<li><a class="nav-parent" href="${route("calendar")}" ${active === "calendar" && !state.query ? 'aria-current="page"' : ""}>${t("Today & Telugu calendar", "ఈరోజు, తెలుగు క్యాలెండర్")}</a></li>`;
+}
+
 function guideNavigation() {
   const current = (matches) => matches && !state.query ? 'aria-current="page"' : "";
-  return `<li class="nav-branch"><a class="nav-parent" href="${route("abp")}" ${current(active === "abp" && !state.abpTab)}>${sourceOneTitle}</a><ul>${abpTabs.map((tab) => `<li><a href="${route("abp", { tab: tab.id })}" ${current(active === "abp" && state.abpTab === tab.id && !state.abpPart)}>${esc(tab.title)}</a>${active === "abp" && state.abpTab === tab.id ? `<ul>${tab.sections.map((section) => `<li><a href="${route("abp", { tab: tab.id, part: section.id })}" ${current(state.abpPart === section.id)}>${esc(section.title)}</a></li>`).join("")}</ul>` : ""}</li>`).join("")}</ul></li>
-  <li class="nav-branch"><a class="nav-parent" href="${route("book")}" ${current(active === "book" && !state.bookChapter)}>${sourceTwoTitle}</a><ul>${bookChapters.map((chapter) => `<li><a href="${route("book", { chapter: chapter.id })}" ${current(active === "book" && state.bookChapter === chapter.id)}>${esc(text(chapter.title))}</a></li>`).join("")}</ul></li>`;
+  const tabs = abpTabs.map((tab) => navigationBranch(`tab-${tab.id}`, tab.title, route("abp", { tab: tab.id }), tab.sections.map((section) => `<li><a href="${route("abp", { tab: tab.id, part: section.id })}" ${current(active === "abp" && state.abpTab === tab.id && state.abpPart === section.id)}>${esc(section.title)}</a></li>`).join(""), current(active === "abp" && state.abpTab === tab.id && !state.abpPart))).join("");
+  const chapters = bookChapters.map((chapter) => `<li><a href="${route("book", { chapter: chapter.id })}" ${current(active === "book" && state.bookChapter === chapter.id)}>${esc(text(chapter.title))}</a></li>`).join("");
+  return navigationBranch("source-one", sourceOneTitle, route("abp"), tabs, current(active === "abp" && !state.abpTab))
+    + navigationBranch("source-two", sourceTwoTitle, route("book"), chapters, current(active === "book" && !state.bookChapter));
 }
 
 function readingLibraries() {
@@ -30832,7 +30863,10 @@ function readingLibraries() {
     ...topics,
     { id: "sources", title: { en: "Source library", te: "మూలాల సేకరణ" } },
   ];
-  return `<li><a class="nav-parent" href="${route("calendar")}" ${active === "calendar" && !state.query ? 'aria-current="page"' : ""}>${t("Today & Telugu calendar", "ఈరోజు, తెలుగు క్యాలెండర్")}</a></li><li class="nav-branch"><span class="nav-parent">${t("Bhajans & Namavali", "భజనలు, నామావళి")}</span><ul><li><a href="${route("bhajans")}" ${active === "bhajans" && !state.query ? 'aria-current="page"' : ""}>${t("Bhajans · complete book", "భజనలు · పూర్తి పుస్తకం")}</a></li>${["ashtottaram", "sahasranamavali"].map((id) => `<li><a href="${route("chanting", { chant: id })}" ${active === "chanting" && state.chantId === id && !state.query ? 'aria-current="page"' : ""}>${esc(text(chantDefinitions.find((entry) => entry.id === id).title))}</a></li>`).join("")}</ul></li><li class="nav-branch"><a class="nav-parent" href="${route("companion")}" ${active === "companion" && !state.query ? 'aria-current="page"' : ""}>${t("Companion sections", "అదనపు విభాగాలు")}</a><ul>${companionEntries.map((entry) => `<li><a href="${route(entry.id)}" ${active === entry.id && !state.chantId && !state.query ? 'aria-current="page"' : ""}>${esc(text(entry.title))}</a></li>`).join("")}</ul></li>`;
+  const library = `<li><a href="${route("bhajans")}" ${active === "bhajans" && !state.query ? 'aria-current="page"' : ""}>${t("Bhajans · complete book", "భజనలు · పూర్తి పుస్తకం")}</a></li>${["ashtottaram", "sahasranamavali"].map((id) => `<li><a href="${route("chanting", { chant: id })}" ${active === "chanting" && state.chantId === id && !state.query ? 'aria-current="page"' : ""}>${esc(text(chantDefinitions.find((entry) => entry.id === id).title))}</a></li>`).join("")}`;
+  const companion = companionEntries.map((entry) => `<li><a href="${route(entry.id)}" ${active === entry.id && !state.chantId && !state.query ? 'aria-current="page"' : ""}>${esc(text(entry.title))}</a></li>`).join("");
+  return navigationBranch("library", t("Bhajans & Namavali", "భజనలు, నామావళి"), "", library)
+    + navigationBranch("companion", t("Companion sections", "అదనపు విభాగాలు"), route("companion"), companion, active === "companion" && !state.query ? 'aria-current="page"' : "");
 }
 
 function render() {
@@ -30841,7 +30875,7 @@ function render() {
   app.innerHTML = `<div class="app-layout">
     <aside class="sidebar">
       <a class="brand" href="${route(state.guide)}" aria-label="${t("Ayyappa companion home", "అయ్యప్ప మార్గదర్శి మొదటి పేజీ")}"><span class="brand-symbol">${icon("lamp")}</span><span>Ayyappa<span class="brand-subtitle">${t("Daily puja · your guides", "నిత్యపూజ · మీ మార్గదర్శులు")}</span></span></a>
-      <nav class="topic-nav book-nav" aria-label="${t("Guide sections", "మార్గదర్శి విభాగాలు")}"><ul class="nav-tree">${guideNavigation()}${readingLibraries()}</ul></nav>
+      <nav class="topic-nav book-nav" aria-label="${t("Guide sections", "మార్గదర్శి విభాగాలు")}"><ul class="nav-tree">${calendarNavigation()}${guideNavigation()}${readingLibraries()}</ul></nav>
       <div class="sidebar-bottom"><p lang="te">స్వామియే శరణం అయ్యప్ప</p><p>${t("Choose the guide for your practice.", "మీ ఆచరణకు మార్గదర్శిని ఎంచుకోండి.")}</p><a href="${state.guide === "abp" ? abpSource.url : primaryBook.url}" target="_blank" rel="noopener noreferrer">${state.guide === "abp" ? t("Original Source 1 workbook", "అసలు Source 1 వర్క్‌బుక్") : t("Original Nitya Puja book", "అసలు నిత్యపూజ పుస్తకం")}${icon("external")}</a></div>
     </aside>
     <div class="workspace"><header class="toolbar"><form class="search-form" role="search"><label for="guide-search" class="sr-only">${t("Search the book and companion", "పుస్తకం, అదనపు విభాగాల్లో వెతకండి")}</label>${icon("search")}<input id="guide-search" type="search" placeholder="${t("Find a prayer, chapter, or item…", "ప్రార్థన, విభాగం, వస్తువు వెతకండి…")}" value="${esc(state.query)}" autocomplete="off"><button class="search-submit" type="submit">${t("Search", "వెతకండి")}</button></form><div class="toolbar-actions"><div class="language-switch" role="group" aria-label="${t("Interface language", "యాప్ భాష")}"><button data-lang="en" lang="en" aria-pressed="${lang === "en"}">English</button><button data-lang="te" lang="te" aria-pressed="${lang === "te"}">తెలుగు</button></div><button class="share-button" data-action="share">${icon("share")}<span>${t("Share", "పంచుకోండి")}</span></button></div></header>
@@ -30857,6 +30891,12 @@ function render() {
 }
 
 function bindEvents() {
+  app.querySelectorAll("[data-nav-toggle]").forEach((button) => button.addEventListener("click", () => {
+    const open = button.getAttribute("aria-expanded") !== "true";
+    navigationOpen.set(button.dataset.navToggle, open);
+    button.setAttribute("aria-expanded", String(open));
+    document.getElementById(button.getAttribute("aria-controls")).hidden = !open;
+  }));
   document.querySelector(".skip-link").onclick = (event) => {
     event.preventDefault();
     document.querySelector("#main").focus();
