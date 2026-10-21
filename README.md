@@ -1,6 +1,6 @@
 # Ayyappa companion
 
-In Telugu mode, the nine Source 1 tab names use Telugu-script pronunciation (for example, పూజ సీక్వెన్స్ and పంచరత్న స్తోత్రం) throughout navigation, contents, reader headings, tab selectors, and search. English mode and original workbook text remain unchanged.
+In Telugu mode, the nine Source 1 tab names use Telugu-script labels (for example, పూజ వరుస and పంచరత్న స్తోత్రం) throughout navigation, contents, reader headings, tab selectors, and search. The user-selected wording uses మరియు for “and” and వరుస for “sequence.” English mode and original workbook text remain unchanged.
 
 Under **How to eat / భిక్ష తీసుకునే విధానం**, “Guidelines for Serving and Space” preserves the four user-supplied bhiksha customs in English and Telugu. It is explicitly attributed as user-supplied guidance, not a verified source-book rule, with a separate health/accessibility note.
 

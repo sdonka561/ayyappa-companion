@@ -113,7 +113,7 @@ test("a fresh page starts the saved-location calendar without requiring hash nav
 });
 
 test("all nine workbook tab names use Telugu-script pronunciation consistently", async () => {
-  const labels = ["మాలధారణ అండ్ పీఠం సెటప్", "పూజ సీక్వెన్స్", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
+  const labels = ["మాలధారణ మరియు పీఠం సెటప్", "పూజ వరుస", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
   for (const [index, tab] of abp.abpTabs.entries()) {
     assert.equal(abp.abpTabTitle(tab, "te"), labels[index]);
     assert.equal(abp.abpTabTitle(tab, "en"), tab.title);

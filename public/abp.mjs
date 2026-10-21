@@ -2,8 +2,8 @@ import { abpTabs } from "./abp-data.mjs";
 export { abpTabs };
 
 const abpTeluguTitles = {
-  maladharana: "మాలధారణ అండ్ పీఠం సెటప్",
-  sequence: "పూజ సీక్వెన్స్",
+  maladharana: "మాలధారణ మరియు పీఠం సెటప్",
+  sequence: "పూజ వరుస",
   angapooja: "అథ అంగపూజ",
   ashtottaram: "అష్టోత్తరం",
   sharanaghosha: "శరణుఘోష",
