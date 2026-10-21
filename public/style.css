@@ -49,6 +49,36 @@ h1, h2 { text-wrap: balance; }
 .chapter-index strong { font-size: 20px; font-weight: 600; line-height: 1.8; }
 .chapter-index a > span:first-child > span { display: block; font-size: 15px; color: var(--muted); line-height: 1.9; margin-top: 2px; }
 .chapter-range { display: flex; align-items: center; gap: 14px; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+.reading-outline { list-style: none; padding: 0; margin: 24px 0 40px; }
+.reading-outline > li { min-width: 0; border-top: 1px solid var(--line); padding: 32px 0; }
+.reading-outline h2, .reading-outline h3 { font-size: 24px; line-height: 1.6; font-weight: 600; color: var(--heading); overflow-wrap: anywhere; margin: 0 0 16px; }
+.reading-outline h3 { font-size: 20px; }
+.outline-number { font-variant-numeric: tabular-nums; margin-right: 4px; }
+.outline-children { margin-left: 24px; min-width: 0; }
+.outline-children > p { font-size: var(--reading-size); line-height: 1.9; max-width: 70ch; overflow-wrap: anywhere; }
+.outline-children > p + p { margin-top: 12px; }
+.reading-outline .reading-section { padding: 0; border: 0; }
+.reading-outline .reading-outline { margin: 24px 0 0; }
+.reading-outline .reading-outline > li { padding: 24px 0; }
+.reading-outline .reading-outline > li:first-child { border-top: 0; padding-top: 0; }
+.reading-outline .reading-outline > li:last-child { padding-bottom: 0; }
+.companion-outline .outline-children > .reading-section { padding-top: 28px; }
+.inline-reading { max-width: 70ch; font-size: var(--reading-size); line-height: 1.9; overflow-wrap: anywhere; }
+.inline-reading p { padding-block: 8px; white-space: pre-wrap; }
+ol.inline-reading { padding-left: 24px; margin: 16px 0 0; }
+.inline-reading li { padding: 8px 0 8px 4px; }
+.inline-prayer { line-height: 2.1; }
+.inline-prayer p + p, .inline-prayer li + li { border-top: 1px solid var(--line); }
+.outline-reading-link { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; max-width: 100%; margin-top: 12px; font-size: 14px; line-height: 1.8; }
+.outline-reading-link svg { width: 16px; }
+.outline-children > .outline-note { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.page-children { list-style: none; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+.page-children a { min-height: 44px; display: inline-flex; align-items: center; font-size: 14px; line-height: 1.8; }
+.outline-links { padding-left: 24px; margin: 16px 0; }
+.outline-links li { padding: 4px 0; font-size: var(--reading-size); line-height: 1.9; overflow-wrap: anywhere; }
+.outline-links a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 15px; line-height: 1.8; }
+.outline-jumps { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-block: 24px; }
+.outline-jumps a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; line-height: 1.8; overflow-wrap: anywhere; }
 .companion-link { padding: 32px 0 40px; border-top: 1px solid var(--line); margin-top: 20px; }
 .companion-link p { font-size: 16px; line-height: 1.9; color: var(--muted); max-width: 75ch; margin: 16px 0 22px; }
 .book-nav { margin-top: 30px; }
@@ -255,8 +285,8 @@ select:focus-visible { outline: 3px solid #777777; outline-offset: 3px; }
 .song-list li { display: grid; gap: 9px; border-top: 1px solid var(--line); padding: 20px 0; }
 .song-list li[hidden] { display: none; }
 .song-list strong { font-size: 16px; font-weight: 600; line-height: 1.8; }
-.song-list span { font-size: 11px; color: var(--muted); }
-.song-list a { font-size: 11px; width: fit-content; display: inline-flex; align-items: center; gap: 7px; }
+.song-list p { font-size: 13px; color: var(--muted); }
+.song-list a { font-size: 13px; width: fit-content; min-height: 44px; display: inline-flex; align-items: center; gap: 7px; }
 .song-list svg { width: 12px; height: 12px; }
 .routine-progress { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .routine-progress strong { font-size: 16px; color: var(--black); }
@@ -320,6 +350,10 @@ dialog p { font-size: 15px; line-height: 1.85; margin-top: 15px; }
   .topic-intro h1 { font-size: 38px; }
 }
 @media (max-width: 760px) {
+  .outline-children { margin-left: 12px; }
+  .reading-outline > li { padding-block: 24px; }
+  .reading-outline h2 { font-size: 22px; }
+  .reading-outline h3 { font-size: 19px; }
   .app-layout { display: block; }
   .sidebar { position: static; height: auto; padding: 20px 0 0; overflow: visible; }
   .brand { font-size: 26px; padding: 0 22px; }

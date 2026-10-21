@@ -20,6 +20,8 @@ English and Telugu reading; sections for puja vidhanam, peetam setup, food, eati
 
 The user additionally requested phone-readable chanting, a 108-name reader, sharanaghosha, morning/evening essentials, an interactive daily routine, eighteen discipline reminders, categorized bhajans, and pilgrimage preparation. Publish a mobile-friendly public website. GitHub Pages was selected using the connected account; source repository is `sdonka561/ayyappa-companion`.
 
+User-directed reading hierarchy: show numbered parents and already-visible indented details throughout the site, rather than requiring a click to discover every short procedure or prayer. Keep clear nested links for long lists and original book pages instead of loading hundreds of scans in an index. Preserve source numbering, original reader URLs, language choices, and checklist state.
+
 Readable traditional chants must not be confused with modern song references or missing recordings. Preserve the supplied sharanaghosha's actual 107-entry count rather than fabricating a 108th invocation; the dedicated ashtottaram has all 108 source-numbered names.
 
 User-directed update: for prayers and book text, English must show Telugu pronunciation in English letters, never translated meanings. Keep English section titles, navigation, and explanatory guide text. Preserve Telugu originals and use them in Telugu reading. Remove earlier editorial English prayer meanings. Book pronunciation inherits the unreviewed OCR's errors and must remain clearly marked as a draft requiring comparison and Guruswamy review. English-letter spelling is approximate, not an exact phonetic notation.
