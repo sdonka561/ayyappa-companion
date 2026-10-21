@@ -1,5 +1,7 @@
 # Ayyappa companion
 
+**Suprabhatam** is a single continuous reading: opening prayer, all 14 verses, and closing prayer, with internal headings and focus view. The sidebar has one Suprabhatam link instead of individual verse entries. Existing verse-specific URLs show the complete reading and jump to the corresponding heading; original source sections and text remain intact.
+
 In Telugu mode, the nine Source 1 tab names and all 54 subsection names use Telugu labels throughout navigation, contents, reader headings, selectors, and search. Instructional English labels are translated naturally (for example, మాలధారణ పరిచయం and పూజా స్థలాన్ని శుభ్రపరిచి సిద్ధం చేయడం), while deity and prayer names retain their Telugu forms. “And” uses the user-selected మరియు, and “sequence” uses వరుస. This translates navigation labels only: prayer reading remains pronunciation, not meaning translation. English mode and original workbook text remain unchanged.
 
 Under **How to eat / భిక్ష తీసుకునే విధానం**, “Guidelines for Serving and Space” preserves the four user-supplied bhiksha customs in English and Telugu. It is explicitly attributed as user-supplied guidance, not a verified source-book rule, with a separate health/accessibility note.

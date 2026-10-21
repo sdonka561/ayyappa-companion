@@ -30695,6 +30695,9 @@ function readRoute() {
   if (active === "abp" || active === "book") state.guide = active;
   state.abpTab = params.get("tab") || "";
   state.abpPart = params.get("part") || "";
+  const suprabhatamSection = active === "abp" && state.abpTab === "suprabhatam" && state.abpPart
+    ? `outline-suprabhatam-${state.abpPart}` : "";
+  if (suprabhatamSection) state.abpPart = "";
   state.bhajanSong = params.get("song") || "";
   state.bhajanPage = params.get("bhajanPage") || "";
   state.bookChapter = params.get("chapter") || "";
@@ -30712,7 +30715,7 @@ function readRoute() {
     else if (active !== "calendar") navigationOpen.set("companion", true);
     navigationPath = path;
   }
-  return params.get("section");
+  return params.get("section") || suprabhatamSection;
 }
 
 function citations(sources) {
@@ -30830,7 +30833,7 @@ function abpSectionOutline(tab, headingLevel = 2) {
     const isSahasraNames = tab.id === "sahasranamavali" && part.id === "names";
     const countNote = tab.id === "sharanaghosha" || (tab.id === "ashtottaram" && part.id.startsWith("ayyappa-type"))
       ? `<p class="outline-note">${t("Source count: 107 invocations, preserved without adding a 108th.", "మూలంలో 107 నామాలు; లేని 108వ నామాన్ని జోడించలేదు.")}</p>` : "";
-    return `<li><section aria-labelledby="outline-${tab.id}-${part.id}"><h${headingLevel} id="outline-${tab.id}-${part.id}"><span class="outline-number" aria-hidden="true">${index + 1}.</span> ${esc(abpSectionTitle(tab, part, lang))}</h${headingLevel}><div class="outline-children"><div class="inline-reading ${part.kind === "prayer" ? "inline-prayer" : ""}">${visibleLines.map((line, lineIndex) => renderAbpLine(line, isSahasraNames ? lineIndex + 1 : line.number)).join("")}</div>${!full ? `<p class="outline-note">${t(`Showing the first 3 of ${part.lines.length} source lines.`, `మూలంలోని ${part.lines.length} పంక్తులలో మొదటి 3 ఇక్కడ ఉన్నాయి.`)}</p>` : ""}${countNote}${isSahasraNames ? `<p class="outline-note">${t("The complete reader numbers all 1000 names in groups of ten.", "పూర్తి పఠనంలో 1000 నామాలు పది చొప్పున సంఖ్యలతో ఉన్నాయి.")}</p>` : ""}<a class="outline-reading-link" href="${route("abp", { tab: tab.id, part: part.id })}">${full ? t("Open separate reader", "ప్రత్యేక పఠనం తెరవండి") : t("Read the complete list", "పూర్తి జాబితా చదవండి")}${icon("arrow")}</a></div></section></li>`;
+    return `<li><section aria-labelledby="outline-${tab.id}-${part.id}"><h${headingLevel} id="outline-${tab.id}-${part.id}" tabindex="-1"><span class="outline-number" aria-hidden="true">${index + 1}.</span> ${esc(abpSectionTitle(tab, part, lang))}</h${headingLevel}><div class="outline-children"><div class="inline-reading ${part.kind === "prayer" ? "inline-prayer" : ""}">${visibleLines.map((line, lineIndex) => renderAbpLine(line, isSahasraNames ? lineIndex + 1 : line.number)).join("")}</div>${!full ? `<p class="outline-note">${t(`Showing the first 3 of ${part.lines.length} source lines.`, `మూలంలోని ${part.lines.length} పంక్తులలో మొదటి 3 ఇక్కడ ఉన్నాయి.`)}</p>` : ""}${countNote}${isSahasraNames ? `<p class="outline-note">${t("The complete reader numbers all 1000 names in groups of ten.", "పూర్తి పఠనంలో 1000 నామాలు పది చొప్పున సంఖ్యలతో ఉన్నాయి.")}</p>` : ""}${tab.id === "suprabhatam" ? "" : `<a class="outline-reading-link" href="${route("abp", { tab: tab.id, part: part.id })}">${full ? t("Open separate reader", "ప్రత్యేక పఠనం తెరవండి") : t("Read the complete list", "పూర్తి జాబితా చదవండి")}${icon("arrow")}</a>`}</div></section></li>`;
   }).join("")}</ol>`;
 }
 
@@ -30843,6 +30846,7 @@ function abpContent() {
   const resolved = resolveAbp(state.abpTab, state.abpPart);
   if (!resolved) return `<div class="empty-state"><h1 id="page-title">${t("Source 1 tab or subsection not found", "Source 1 ట్యాబ్ లేదా ఉపవిభాగం లభించలేదు")}</h1>${link("abp", t("Choose an Source 1 tab", "Source 1 ట్యాబ్ ఎంచుకోండి"), "button")}</div>`;
   const { tab, section } = resolved;
+  if (tab.id === "suprabhatam") return `<div class="reader-back">${link("abp", t("← Source 1 contents", "← Source 1 విషయ సూచిక"))}<button data-action="focus">${document.body.classList.contains("focus-reading") ? t("Exit focus view", "సాధారణ వీక్షణ") : t("Focus view", "ఏకాగ్ర పఠనం")}</button></div><div class="topic-intro"><h1 id="page-title">${esc(abpTabTitle(tab, lang))}</h1><p class="intro-copy">${t("Read the opening prayer, all 14 verses, and closing prayer together on this page.", "ప్రారంభ ప్రార్థన, మొత్తం 14 శ్లోకాలు, ముగింపు ప్రార్థనను ఒకే పేజీలో చదవండి.")}</p></div><p class="reader-language-note">${t("Prayer text retains the workbook's Telugu or supplied English pronunciation, not meaning translations.", "మూలంలోని తెలుగు లేదా అందించిన English ఉచ్చారణను ఉంచాం; అర్థానువాదం కాదు.")}</p>${abpSectionOutline(tab)}<p class="book-source"><a href="${abpSource.url}" target="_blank" rel="noopener noreferrer">${t("Original Source 1 workbook", "అసలు Source 1 వర్క్‌బుక్")}${icon("external")}</a></p>`;
   if (!section) return `<div class="reader-back">${link("abp", t("← Source 1 contents", "← Source 1 విషయ సూచిక"))}</div><div class="topic-intro"><h1 id="page-title">${esc(abpTabTitle(tab, lang))}</h1><p class="intro-copy">${t("Read each section and its steps directly below. Separate deity prayers stay separate; long lists show a preview and a complete-reading link.", "ప్రతి విభాగం, దాని దశలను కిందే చదవండి. దేవతల ప్రార్థనలు వేర్వేరుగానే ఉన్నాయి; పెద్ద జాబితాలకు నమూనా, పూర్తి పఠన లింకులు ఉన్నాయి.")}</p></div><p class="reader-language-note">${t("Procedure instructions retain the source’s English. Prayer text uses Telugu or English-letter pronunciation, not translated meanings. Confirm source customs and pronunciation with your Guruswamy; use appropriate health and fire-safety precautions.", "విధాన సూచనలు మూలంలోని Englishలోనే ఉన్నాయి. ప్రార్థనలకు తెలుగు లేదా English ఉచ్చారణ; అర్థానువాదం కాదు. గురుస్వామితో నిర్ధారించండి; ఆరోగ్య, అగ్ని జాగ్రత్తలు పాటించండి.")}</p>${abpSectionOutline(tab)}`;
   const index = tab.sections.indexOf(section);
   const stepLink = (offset, label) => {
@@ -30944,7 +30948,9 @@ function calendarNavigation() {
 
 function guideNavigation() {
   const current = (matches) => matches && !state.query ? 'aria-current="page"' : "";
-  const tabs = abpTabs.map((tab) => navigationBranch(`tab-${tab.id}`, abpTabTitle(tab, lang), route("abp", { tab: tab.id }), tab.sections.map((section) => `<li><a href="${route("abp", { tab: tab.id, part: section.id })}" ${current(active === "abp" && state.abpTab === tab.id && state.abpPart === section.id)}>${esc(abpSectionTitle(tab, section, lang))}</a></li>`).join(""), current(active === "abp" && state.abpTab === tab.id && !state.abpPart))).join("");
+  const tabs = abpTabs.map((tab) => tab.id === "suprabhatam"
+    ? `<li><a href="${route("abp", { tab: tab.id })}" ${current(active === "abp" && state.abpTab === tab.id)}>${esc(abpTabTitle(tab, lang))}</a></li>`
+    : navigationBranch(`tab-${tab.id}`, abpTabTitle(tab, lang), route("abp", { tab: tab.id }), tab.sections.map((section) => `<li><a href="${route("abp", { tab: tab.id, part: section.id })}" ${current(active === "abp" && state.abpTab === tab.id && state.abpPart === section.id)}>${esc(abpSectionTitle(tab, section, lang))}</a></li>`).join(""), current(active === "abp" && state.abpTab === tab.id && !state.abpPart))).join("");
   const chapters = bookChapters.map((chapter) => `<li><a href="${route("book", { chapter: chapter.id })}" ${current(active === "book" && state.bookChapter === chapter.id)}>${esc(text(chapter.title))}</a></li>`).join("");
   return navigationBranch("source-one", sourceOneTitle, route("abp"), tabs, current(active === "abp" && !state.abpTab))
     + navigationBranch("source-two", sourceTwoTitle, route("book"), chapters, current(active === "book" && !state.bookChapter));
@@ -31066,6 +31072,7 @@ function chantOutline(entry) {
   }
   if (entry.abpReference) {
     const tab = resolveAbp(entry.abpReference[0]).tab;
+    if (tab.id === "suprabhatam") return `<a class="outline-reading-link" href="${route("abp", { tab: tab.id })}">${t("Read the complete Suprabhatam", "పూర్తి సుప్రభాతం చదవండి")}${icon("arrow")}</a>`;
     return `<ol class="outline-links">${tab.sections.map((part) => `<li><a href="${route("abp", { tab: tab.id, part: part.id })}">${esc(abpSectionTitle(tab, part, lang))}${icon("arrow")}</a></li>`).join("")}</ol>`;
   }
   if (entry.bhajanQuery) return `<ol class="outline-links">${searchBhajans(entry.bhajanQuery).map((song) => `<li><span>${esc(song.title)}</span>${pageChildren(song.start, song.end, (page) => route("bhajans", { song: song.id, bhajanPage: page }), (page) => `${t("Page", "పేజీ")} ${page}`)}</li>`).join("")}</ol>`;
@@ -31295,7 +31302,7 @@ window.addEventListener("hashchange", () => {
   const previousBhajanSong = state.bhajanSong;
   const previousBhajanPage = state.bhajanPage;
   const section = readRoute();
-  if (!((active === "chanting" && state.chantId) || (active === "book" && state.bookChapter) || (active === "abp" && state.abpPart) || (active === "bhajans" && state.bhajanSong))) document.body.classList.remove("focus-reading");
+  if (!((active === "chanting" && state.chantId) || (active === "book" && state.bookChapter) || (active === "abp" && (state.abpPart || state.abpTab === "suprabhatam")) || (active === "bhajans" && state.bhajanSong))) document.body.classList.remove("focus-reading");
   render();
   if (section) {
     const element = document.getElementById(section);
@@ -31304,6 +31311,9 @@ window.addEventListener("hashchange", () => {
       const heading = element.querySelector("h2, h3");
       heading.setAttribute("tabindex", "-1");
       heading.focus({ preventScroll: true });
+    } else if (element?.matches("h2, h3")) {
+      element.scrollIntoView({ block: "start" });
+      element.focus({ preventScroll: true });
     }
   } else if (previousTopic !== active || previousLang !== lang || previousChapter !== state.bookChapter || previousPage !== state.bookPage || previousTab !== state.abpTab || previousPart !== state.abpPart || previousBhajanSong !== state.bhajanSong || previousBhajanPage !== state.bhajanPage || state.query) {
     document.querySelector("#main").scrollIntoView({ block: "start" });
@@ -31316,7 +31326,11 @@ loadRoutine();
 render();
 startCalendar();
 if (initialSection) {
-  requestAnimationFrame(() => document.getElementById(initialSection)?.scrollIntoView({ block: "start" }));
+  requestAnimationFrame(() => {
+    const element = document.getElementById(initialSection);
+    element?.scrollIntoView({ block: "start" });
+    if (element?.matches("h2, h3")) element.focus({ preventScroll: true });
+  });
 }
 loadInventory();
 </script>

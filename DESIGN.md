@@ -16,6 +16,8 @@ System typography: Segoe UI, Nirmala UI, system sans. The body reading size is a
 
 ## Composition and behavior
 
+Suprabhatam is a single continuous reader with opening prayer, 14 verses, and completion under internal headings. Its sidebar entry is a direct link, with no per-verse branch, selector, or Previous/Next stepper. Focus view remains available. Old subsection links open the whole reading and scroll to the requested heading; source data is not merged or rewritten.
+
 Reading indexes share numbered headings and indented children instead of flat link rows or closed accordions. The PDF contents exposes each printed-page link beneath its chapter; bhajan titles retain their stable 1–252 numbering when filtered and expose all start/continuation pages. Images are requested only when reading a page. Chant & Sing shows short prayers in full and long lists as labeled three-entry previews. Companion topics show short guidance and preparation checklists directly; the long supplies table has a labeled child link. Existing topic readers use the same numbered headings and indented body. Numbering for source steps remains separate and unchanged.
 
 Parent groups use 32px vertical spacing on desktop and 24px on phones; children indent 24px or 12px respectively. Inner groups use 24px spacing, and prayer lines use 8px padding with neutral separators. Reading text follows the adjustable font size. Long titles wrap, page links wrap onto new lines, and links retain 44px touch targets. Numbered lists retain list semantics when visual markers are replaced by heading numbers.

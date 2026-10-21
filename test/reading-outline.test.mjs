@@ -76,7 +76,7 @@ test("source names and nested navigation stay available in both sources and lang
         assert.match(main, /<option value="book"[^>]*>Source 2: Nitya Puja<\/option>/);
       }
       const nav = app.navigation(`#topic=abp&lang=${language}&tab=sequence&part=${abp.resolveAbp("sequence").tab.sections[0].id}`);
-      assert.equal((nav.match(/&part=/g) || []).length, abp.abpTabs.flatMap(tab => tab.sections).length);
+      assert.equal((nav.match(/&part=/g) || []).length, abp.abpTabs.filter(tab => tab.id !== "suprabhatam").flatMap(tab => tab.sections).length);
       assert.equal((nav.match(/aria-current="page"/g) || []).length, 1);
     }
   }
@@ -88,7 +88,7 @@ test("calendar is first and disclosure state follows reading routes without losi
     let nav = app.navigation("#topic=calendar&lang=en");
     assert.match(nav, /^<li><a class="nav-parent" href="#topic=calendar/);
     assert.equal((nav.match(/aria-expanded="true"/g) || []).length, 0);
-    assert.equal((nav.match(/aria-expanded="false"/g) || []).length, 13);
+    assert.equal((nav.match(/aria-expanded="false"/g) || []).length, 12);
     const controls = [...nav.matchAll(/aria-controls="([^"]+)"/g)].map(match => match[1]);
     assert.equal(new Set(controls).size, controls.length);
     for (const id of controls) assert.ok(nav.includes(`<ul id="${id}" hidden>`));
@@ -112,6 +112,31 @@ test("a fresh page starts the saved-location calendar without requiring hash nav
   }
 });
 
+test("Suprabhatam is one complete reading with no verse-level navigation destinations", async () => {
+  const tab = abp.resolveAbp("suprabhatam").tab;
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    for (const language of ["en", "te"]) {
+      const hash = `#topic=abp&lang=${language}&tab=suprabhatam`;
+      const html = app.render(hash);
+      assert.equal((html.match(/<h2 /g) || []).length, 16);
+      assert.equal((html.match(/<p lang=/g) || []).length, 59);
+      assert.match(html, /data-action="focus"/);
+      assert.doesNotMatch(html, /id="abp-part"|class="book-stepper"|Open separate reader|ప్రత్యేక పఠనం తెరవండి/);
+      const nav = app.navigation(hash);
+      assert.equal((nav.match(/href="#topic=abp&lang=\w+&tab=suprabhatam"/g) || []).length, 1);
+      assert.doesNotMatch(nav, /data-nav-toggle="tab-suprabhatam"|tab=suprabhatam&part=/);
+      for (const section of tab.sections) {
+        assert.equal(app.render(`${hash}&part=${section.id}`), html, `Legacy link: ${section.id}`);
+        for (const line of section.lines) {
+          const value = language === "en" ? line.pronunciation || pronunciation.pronounceTelugu(line.text) : line.text;
+          assert.ok(html.includes(escapeHtml(value).replaceAll("\n", "<br>")));
+        }
+      }
+    }
+  }
+});
+
 test("all nine workbook tab names use Telugu-script pronunciation consistently", async () => {
   const labels = ["మాలధారణ మరియు పీఠం ఏర్పాటు", "పూజ వరుస", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
   for (const [index, tab] of abp.abpTabs.entries()) {
@@ -129,7 +154,7 @@ test("all nine workbook tab names use Telugu-script pronunciation consistently",
       assert.match(app.render(`#topic=abp&lang=te&tab=${tab.id}`), new RegExp(`<h1 id="page-title">${labels[index]}</h1>`));
       const section = tab.sections[0];
       const reading = app.render(`#topic=abp&lang=te&tab=${tab.id}&part=${section.id}`);
-      assert.ok(reading.includes(`>${labels[index]}</option>`));
+      if (tab.id !== "suprabhatam") assert.ok(reading.includes(`>${labels[index]}</option>`));
       assert.ok(app.navigation("#topic=abp&lang=en").includes(escapeHtml(tab.title)));
     }
   }
@@ -151,9 +176,13 @@ test("all 54 subsection names use Telugu labels without changing English source 
     const nav = app.navigation("#topic=abp&lang=te");
     const contents = app.render("#topic=abp&lang=te");
     for (const { tab, section, label } of names) {
-      assert.ok(nav.includes(label));
+      if (tab.id !== "suprabhatam") assert.ok(nav.includes(label));
       assert.ok(contents.includes(label));
       const reading = app.render(`#topic=abp&lang=te&tab=${tab.id}&part=${section.id}`);
+      if (tab.id === "suprabhatam") {
+        assert.ok(reading.includes(`id="outline-suprabhatam-${section.id}"`));
+        continue;
+      }
       assert.ok(reading.includes(`<h1 id="page-title">${label}</h1>`));
       assert.ok(reading.includes(`>${label}</option>`));
       assert.ok(app.render(`#topic=abp&lang=en&tab=${tab.id}&part=${section.id}`).includes(`<h1 id="page-title">${escapeHtml(section.title)}</h1>`));
@@ -170,7 +199,7 @@ test("ABP short readings are complete inline; long lists have bounded previews a
       const expectedLines = tab.sections.reduce((count, part) => count + (part.kind === "guide" || part.lines.length <= 30 ? part.lines.length : 3), 0);
       assert.equal((html.match(/<p lang=/g) || []).length, expectedLines, tab.id);
       for (const part of tab.sections) {
-        assert.ok(html.includes(`tab=${tab.id}&part=${part.id}`));
+        if (tab.id !== "suprabhatam") assert.ok(html.includes(`tab=${tab.id}&part=${part.id}`));
         const shown = part.kind === "guide" || part.lines.length <= 30 ? part.lines : part.lines.slice(0, 3);
         for (const line of shown) {
           const value = lang === "en" && /[\u0c00-\u0c7f]/.test(line.text) ? line.pronunciation || pronunciation.pronounceTelugu(line.text) : line.text;
