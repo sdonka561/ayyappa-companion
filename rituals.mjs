@@ -1,7 +1,7 @@
 import { bilingual } from "./content.mjs";
 
 const abpId = "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx";
-const abpCitation = (sheet) => ({ id: abpId, pages: [], label: "ABP · Simplified process guide", sheet });
+const abpCitation = (sheet) => ({ id: abpId, pages: [], label: "Source 1: Ayyappa Process Guide", sheet });
 export const chantCategories = [
   { id: "all", title: bilingual("All", "అన్నీ") },
   { id: "opening", title: bilingual("Ganesha & Guru", "గణపతి, గురువు") },
@@ -33,12 +33,12 @@ export const chantDefinitions = [
     id: "sahasranamavali", title: bilingual("HariHaraPutra Sahasranamavali", "హరిహరపుత్ర సహస్రనామావళి"), category: "core",
     purpose: bilingual("Original Telugu and English-letter pronunciation from HariHaraPutra_SahasraNamavali, preserved together by source row. No generated transliteration is used.", "HariHaraPutra_SahasraNamavali మూలంలోని తెలుగు, English ఉచ్చారణ జతలు. కొత్తగా లిప్యంతరీకరణ చేయలేదు."),
     sourcePronunciation: true,
-    notice: bilingual("The workbook numbers 1–1004, including closing invocations; all are retained. Entry 633 has English pronunciation but its Telugu cell is blank in the source, and is explicitly marked—not invented. This differs from ABP’s 1000-name list.", "మూలంలో ముగింపు నామాలతో కలిపి 1–1004 సంఖ్యలు ఉన్నాయి. 633వ అంశానికి English ఉచ్చారణ ఉంది కానీ తెలుగు ఖాళీగా ఉంది; కల్పించకుండా గుర్తించాం. ఇది ABPలోని 1000 నామాల జాబితాకు భిన్నమైన మూలం."),
+    notice: bilingual("The workbook numbers 1–1004, including closing invocations; all are retained. Entry 633 has English pronunciation but its Telugu cell is blank in the source, and is explicitly marked—not invented. This differs from Source 1’s 1000-name list.", "మూలంలో ముగింపు నామాలతో కలిపి 1–1004 సంఖ్యలు ఉన్నాయి. 633వ అంశానికి English ఉచ్చారణ ఉంది కానీ తెలుగు ఖాళీగా ఉంది; కల్పించకుండా గుర్తించాం. ఇది Source 1లోని 1000 నామాల జాబితాకు భిన్నమైన మూలం."),
     source: { id: "1BIRAcVmUK0xYyWbpC7R4ZLPDguqUHhs7", pages: [], sheet: "Telugu B / English C · rows 3–1006", label: "HariHaraPutra · Sahasra Namavali" },
   },
   {
     id: "sharanaghosha", title: bilingual("Saranu ghosha · full supplied litany", "శరణుఘోష · అందించిన పూర్తి జాబితా"), category: "core",
-    purpose: bilingual("Read the collective invocations directly. The supplied ABP sheet contains 107 non-empty invocations, not 108; all are preserved in order without inventing a missing line.", "సమూహ శరణుఘోషను నేరుగా చదవండి. అందించిన ABP షీట్‌లో 108 కాకుండా 107 నిండిన శరణు పలుకులు ఉన్నాయి. లేని పలుకును కల్పించకుండా ఉన్న క్రమాన్ని ఉంచాం."),
+    purpose: bilingual("Read the collective invocations directly. The supplied Source 1 sheet contains 107 non-empty invocations, not 108; all are preserved in order without inventing a missing line.", "సమూహ శరణుఘోషను నేరుగా చదవండి. అందించిన Source 1 షీట్‌లో 108 కాకుండా 107 నిండిన శరణు పలుకులు ఉన్నాయి. లేని పలుకును కల్పించకుండా ఉన్న క్రమాన్ని ఉంచాం."),
     source: abpCitation("SARANUGHOSHA"),
     notice: bilingual("Source count: 107. For a 108-repeat refrain, use “108 sharanam repetitions” instead.", "మూలంలో సంఖ్య: 107. ఒకే శరణు పలుకును 108 సార్లు పలకడానికి “108 శరణం పునరావృతాలు” ఉపయోగించండి."),
   },
@@ -54,7 +54,7 @@ export const chantDefinitions = [
   },
   {
     id: "pancharatna", title: bilingual("Loka Veeram · Pancharatna stotram", "లోకవీరం · పంచరత్న స్తోత్రం"), category: "night",
-    purpose: bilingual("Five traditional salutation verses to Shasta. The ABP daily sequence includes this near the conclusion; it is not established here as an exclusively night-time requirement.", "శాస్తాకు ఐదు సంప్రదాయ నమస్కార శ్లోకాలు. ABP నిత్యపూజా క్రమంలో ముగింపు దగ్గర ఉంది; ఇది రాత్రికి మాత్రమే తప్పనిసరి అని ఇక్కడ నిర్ణయించలేదు."),
+    purpose: bilingual("Five traditional salutation verses to Shasta. The Source 1 daily sequence includes this near the conclusion; it is not established here as an exclusively night-time requirement.", "శాస్తాకు ఐదు సంప్రదాయ నమస్కార శ్లోకాలు. Source 1 నిత్యపూజా క్రమంలో ముగింపు దగ్గర ఉంది; ఇది రాత్రికి మాత్రమే తప్పనిసరి అని ఇక్కడ నిర్ణయించలేదు."),
     source: abpCitation("PANCHARATNA STOTRAM · C2:C16"),
   },
   {
@@ -69,7 +69,7 @@ export const chantDefinitions = [
   },
   {
     id: "suprabhatam", title: bilingual("Suprabhatam & awakening hymns", "సుప్రభాతం, మేలుకొలుపు"), category: "morning",
-    purpose: bilingual("Read the ABP workbook's 14 Suprabhatam verses in its tab-based guide, in Telugu or English-letter pronunciation. No recording is bundled.", "ABP ట్యాబ్ మార్గదర్శిలో 14 సుప్రభాత శ్లోకాలను తెలుగు లేదా English ఉచ్చారణలో చదవండి. ఆడియో జత చేయలేదు."),
+    purpose: bilingual("Read the Source 1 workbook's 14 Suprabhatam verses in its tab-based guide, in Telugu or English-letter pronunciation. No recording is bundled.", "Source 1 ట్యాబ్ మార్గదర్శిలో 14 సుప్రభాత శ్లోకాలను తెలుగు లేదా English ఉచ్చారణలో చదవండి. ఆడియో జత చేయలేదు."),
     abpReference: ["suprabhatam", "verse-1"],
     source: abpCitation("SUPRABHATAM"), referenceOnly: true,
   },
