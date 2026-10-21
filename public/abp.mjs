@@ -2,7 +2,7 @@ import { abpTabs } from "./abp-data.mjs";
 export { abpTabs };
 
 export const abpSource = {
-  title: "ABP - Simplified version of process guide",
+  title: "Source 1: Ayyappa Process Guide",
   url: "https://drive.google.com/file/d/1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx/view",
 };
 

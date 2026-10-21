@@ -21,6 +21,8 @@ async function reader(portable = false) {
   return runInNewContext(`${declarations}
     ({
       render(hash) { location.hash = hash; readRoute(); return guideContent(); },
+      navigation(hash) { location.hash = hash; readRoute(); return guideNavigation() + readingLibraries(); },
+      main(hash) { location.hash = hash; readRoute(); return mainContent(); },
       abpOutline(tab) { return abpSectionOutline(resolveAbp(tab).tab); },
       chantOutline(id) { return chantOutline(chantDefinitions.find(entry => entry.id === id)); },
       dailyCalendar(key, place) { return calculatePanchang(key, place); }
@@ -51,6 +53,31 @@ test("all ABP procedure lines are visible under numbered parents with source num
     const shownNumbers = [...sequence.matchAll(/class="abp-step-number">(\d+)\.<\/span>/g)].map((match) => match[1]);
     const sourceNumbers = abp.resolveAbp("sequence").tab.sections.flatMap((part) => part.lines).map((line) => line.number).filter(Boolean);
     assert.deepEqual(shownNumbers, sourceNumbers);
+  }
+});
+
+test("source names and nested navigation stay available in both sources and languages", async () => {
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    for (const language of ["en", "te"]) {
+      for (const topic of ["abp", "book", "calendar"]) {
+        const hash = `#topic=${topic}&lang=${language}`;
+        const nav = app.navigation(hash);
+        assert.match(nav, /class="nav-parent"[^>]+>Source 1: Ayyappa Process Guide<\/a><ul>/);
+        assert.match(nav, /class="nav-parent"[^>]+>Source 2: Nitya Puja<\/a><ul>/);
+        assert.equal((nav.match(/href="#topic=abp[^"]*&tab=/g) || []).length, abp.abpTabs.length);
+        assert.equal((nav.match(/href="#topic=book[^"]*&chapter=/g) || []).length, book.bookChapters.length);
+        assert.match(nav, /<span class="nav-parent">[^<]+<\/span><ul>/);
+        assert.equal((nav.match(/aria-current="page"/g) || []).length, 1);
+        assert.doesNotMatch(nav, /\bABP\b|Simplified process guide|Original PDF/);
+        const main = app.main(hash);
+        assert.match(main, /<option value="abp"[^>]*>Source 1: Ayyappa Process Guide<\/option>/);
+        assert.match(main, /<option value="book"[^>]*>Source 2: Nitya Puja<\/option>/);
+      }
+      const nav = app.navigation(`#topic=abp&lang=${language}&tab=sequence&part=${abp.resolveAbp("sequence").tab.sections[0].id}`);
+      assert.equal((nav.match(/&part=/g) || []).length, abp.resolveAbp("sequence").tab.sections.length);
+      assert.equal((nav.match(/aria-current="page"/g) || []).length, 1);
+    }
   }
 });
 

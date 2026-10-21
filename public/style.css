@@ -174,6 +174,12 @@ ol.inline-reading { padding-left: 24px; margin: 16px 0 0; }
 .brand-subtitle { display: block; font-size: 11px; color: #d5d5d5; font-weight: 400; letter-spacing: 0; margin-top: 3px; }
 .nav-label { color: #d5d5d5; margin: 46px 12px 16px; font-size: 10px; letter-spacing: .14em; font-weight: 600; }
 .topic-nav { display: flex; flex-direction: column; gap: 5px; }
+.topic-nav ul { list-style: none; margin: 0; padding: 0; }
+.topic-nav .nav-tree { display: flex; flex-direction: column; gap: 24px; }
+.topic-nav li > ul { margin: 4px 0 0 14px; padding-left: 10px; border-left: 1px solid #6a6a6a; }
+.topic-nav .nav-parent { font-weight: 650; }
+.topic-nav span.nav-parent { display: block; padding: 13px 14px; line-height: 1.5; }
+.topic-nav li li a { font-size: 13px; padding: 10px; }
 .topic-nav a { display: flex; align-items: center; gap: 10px; text-decoration: none; padding: 13px 14px; border-radius: 4px; color: #e6e6e6; font-size: 14px; min-height: 47px; line-height: 1.5; }
 .topic-nav a:hover { background: #454545; color: white; }
 .topic-nav a[aria-current="page"] { background: #f2f2f2; color: var(--heading); font-weight: 650; }
@@ -421,8 +427,9 @@ dialog p { font-size: 15px; line-height: 1.85; margin-top: 15px; }
   .brand-subtitle { font-size: 11px; }
   .brand-symbol svg { width: 29px; height: 35px; }
   .nav-label, .sidebar-bottom { display: none; }
-  .topic-nav { flex-direction: row; gap: 5px; overflow-x: auto; padding: 19px 18px 14px; scrollbar-width: thin; scrollbar-color: #8d8d8d var(--black); }
-  .topic-nav a { flex-shrink: 0; padding: 10px 14px; min-height: 44px; font-size: 12px; white-space: nowrap; }
+  .topic-nav { max-height: 320px; overflow: auto; padding: 16px 18px; scrollbar-width: thin; scrollbar-color: #8d8d8d var(--black); }
+  .topic-nav a { padding: 10px 14px; min-height: 44px; font-size: 13px; white-space: normal; }
+  .topic-nav .nav-tree { gap: 20px; }
   .nav-dot { display: none; }
   .topic-nav .library-nav { margin: 0; padding: 10px 14px; border: none; border-radius: 4px; }
   .toolbar { padding: 12px 20px; flex-wrap: wrap; gap: 8px; min-height: 0; }

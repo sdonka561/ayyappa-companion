@@ -1,5 +1,7 @@
 # Ayyappa companion
 
+Public source labels are **Source 1: Ayyappa Process Guide** for the original ABP workbook and **Source 2: Nitya Puja** for the PDF. Visitors navigate a parent/child source tree rather than a flat source-dependent list. Source content and existing routes remain intact. Individual city choices remain browser-local; a requested personal city must not become a global default for friends.
+
 <!-- impeccable:product-schema 1 -->
 
 ## Platform

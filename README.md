@@ -1,5 +1,7 @@
 # Ayyappa companion
 
+The two guide choices are labeled **Source 1: Ayyappa Process Guide** (the ABP workbook) and **Source 2: Nitya Puja** (the original PDF). The left navigation keeps both source parents and their indented children available, with subsections under the selected workbook tab. Bhajans/Namavali and Companion topics have their own parent groups. On phones the same tree scrolls vertically within a bounded region. Existing reading links and source contents are unchanged.
+
 A document-first mobile reading companion with two selectable versions. **ABP - Simplified version of process guide** opens by default: all nine workbook tabs are organized into 54 internal subsections, preserving separate deity prayers and variants. **Nitya Puja - Original PDF** retains all 61 supplied pages organized into 15 chapter divisions. Previous guides from the permanent [Ayyappa collection](https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0), typed chant readers, and the items table remain in **Companion sections**.
 
 **Live website:** https://sdonka561.github.io/ayyappa-companion/

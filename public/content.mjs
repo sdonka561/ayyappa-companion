@@ -10,7 +10,7 @@ const r = (pages) => cite(rules, pages, "Ayyappa-Pooja-Niyamavali");
 const workbook = (sheet = "Maladharana and Peetham setup") => ({
   id: "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx",
   pages: [],
-  label: "ABP · Simplified process guide",
+  label: "Source 1: Ayyappa Process Guide",
   sheet,
 });
 
@@ -77,7 +77,7 @@ export const topics = [
       {
         id: "daily-sequence",
         title: b("The daily puja, at a glance", "నిత్యపూజా క్రమం సంక్షిప్తంగా"),
-        body: b("The permanent collection includes an ABP simplified process workbook. Its Pooja Sequence sheet can be read in these stages; conditional steps remain conditional, not extra requirements for every household.", "శాశ్వత సేకరణలో ABP సంక్షిప్త ప్రక్రియ పట్టిక ఉంది. అందులోని Pooja Sequence షీట్‌ను ఈ దశలుగా చూడవచ్చు. సందర్భానుసార దశలు ప్రతి ఇంటికీ అదనపు తప్పనిసరి నియమాలు కావు."),
+        body: b("The permanent collection includes an Source 1 simplified process workbook. Its Pooja Sequence sheet can be read in these stages; conditional steps remain conditional, not extra requirements for every household.", "శాశ్వత సేకరణలో Source 1 సంక్షిప్త ప్రక్రియ పట్టిక ఉంది. అందులోని Pooja Sequence షీట్‌ను ఈ దశలుగా చూడవచ్చు. సందర్భానుసార దశలు ప్రతి ఇంటికీ అదనపు తప్పనిసరి నియమాలు కావు."),
         items: [
           b("Prepare: bathe, apply the sacred marks, clean the puja space, decorate, and light the lamp.", "సిద్ధత: స్నానం, తిలకధారణ, పూజా స్థలం శుభ్రత, అలంకరణ, దీప ప్రజ్వలన."),
           b("Begin worship: the introductory upacharas, Ganapati puja, Guru prayer, and invocations. Kalasha puja is included only if being performed.", "పూజ ప్రారంభం: ప్రారంభ ఉపచారాలు, గణపతి పూజ, గురు ప్రార్థన, దేవతా ఆవాహనాలు. కలశపూజ చేస్తుంటేనే ఆ దశ ఉంటుంది."),
@@ -178,7 +178,7 @@ export const topics = [
     id: "peetam",
     title: b("Peetam setup", "పీఠం ఏర్పాటు"),
     short: b("Peetam setup", "పీఠం ఏర్పాటు"),
-    description: b("Set up a dedicated home sannidhanam using the ABP process guide in your permanent collection. Confirm your household’s tradition with your Guruswamy.", "మీ శాశ్వత సేకరణలోని ABP ప్రక్రియ మార్గదర్శి ఆధారంగా ఇంటి సన్నిధానం ఏర్పాటు చేసుకోండి. మీ ఇంటి సంప్రదాయాన్ని గురుస్వామితో నిర్ధారించండి."),
+    description: b("Set up a dedicated home sannidhanam using the Source 1 process guide in your permanent collection. Confirm your household’s tradition with your Guruswamy.", "మీ శాశ్వత సేకరణలోని Source 1 ప్రక్రియ మార్గదర్శి ఆధారంగా ఇంటి సన్నిధానం ఏర్పాటు చేసుకోండి. మీ ఇంటి సంప్రదాయాన్ని గురుస్వామితో నిర్ధారించండి."),
     keywords: "altar setup peetham pitham sannidhanam materials shopping దీపం సామగ్రి పీఠం సన్నిధానం",
     sections: [
       {
@@ -197,13 +197,13 @@ export const topics = [
       {
         id: "layout",
         title: b("Arrange the platform and deities", "పీఠం, దేవతల అమరిక"),
-        body: b("ABP recommends a quiet, clean corner, preferably north- or east-facing, with a raised platform rather than idols on the bare floor. It describes a rangoli at the base, a clean unused cloth and rice on the platform, with Ayyappa centered. Its recommended three-deity frame places Ganapati on the left and Subrahmanya on the right. Because left/right and facing can be interpreted differently, confirm the arrangement with your Guruswamy rather than infer a compass diagram.", "ABP మార్గదర్శి ప్రశాంతమైన, శుభ్రమైన మూలను, వీలైతే ఉత్తర లేదా తూర్పు ముఖ అమరికను సూచిస్తుంది. విగ్రహాలను నేలపై కాకుండా ఎత్తైన పీఠంపై ఉంచాలని చెబుతుంది. పీఠం కింద ముగ్గు, పైన వాడని శుభ్రమైన వస్త్రం, బియ్యం; మధ్యలో అయ్యప్పను ఉంచడం వివరిస్తుంది. మూడు దేవతల చిత్రంలో గణపతి ఎడమ, సుబ్రహ్మణ్యుడు కుడి వైపు ఉండాలని సూచిస్తుంది. ఎడమ, కుడి, ముఖదిశ అర్థంలో భేదాలు ఉండవచ్చు కాబట్టి గురుస్వామితో అమరికను నిర్ధారించండి."),
+        body: b("Source 1 recommends a quiet, clean corner, preferably north- or east-facing, with a raised platform rather than idols on the bare floor. It describes a rangoli at the base, a clean unused cloth and rice on the platform, with Ayyappa centered. Its recommended three-deity frame places Ganapati on the left and Subrahmanya on the right. Because left/right and facing can be interpreted differently, confirm the arrangement with your Guruswamy rather than infer a compass diagram.", "Source 1 మార్గదర్శి ప్రశాంతమైన, శుభ్రమైన మూలను, వీలైతే ఉత్తర లేదా తూర్పు ముఖ అమరికను సూచిస్తుంది. విగ్రహాలను నేలపై కాకుండా ఎత్తైన పీఠంపై ఉంచాలని చెబుతుంది. పీఠం కింద ముగ్గు, పైన వాడని శుభ్రమైన వస్త్రం, బియ్యం; మధ్యలో అయ్యప్పను ఉంచడం వివరిస్తుంది. మూడు దేవతల చిత్రంలో గణపతి ఎడమ, సుబ్రహ్మణ్యుడు కుడి వైపు ఉండాలని సూచిస్తుంది. ఎడమ, కుడి, ముఖదిశ అర్థంలో భేదాలు ఉండవచ్చు కాబట్టి గురుస్వామితో అమరికను నిర్ధారించండి."),
         sources: [workbook()],
       },
       {
         id: "lamps-and-care",
         title: b("Lamps, decoration, and daily care", "దీపాలు, అలంకరణ, నిత్య శుభ్రత"),
-        body: b("The ABP guide places brass lamps on either side, using sesame oil or ghee and cotton wicks. Keep incense, an arati plate, and a bell ready, along with flowers or garlands, drinking water, and fruit or prasada. It calls for cleaning the space before each puja, a simple puja mat in front, and leaving the established peetam and frames undisturbed until the vow is completed. A dedicated stool may be inside an existing puja mandir or in a separate space.", "ABP మార్గదర్శి రెండు వైపులా ఇత్తడి దీపాలు, నువ్వుల నూనె లేదా నెయ్యి, పత్తి వత్తులను సూచిస్తుంది. ధూపం, హారతి పళ్లెం, గంట, పూలు లేదా మాలలు, తాగునీరు, ఫలాలు లేదా ప్రసాదం సిద్ధంగా ఉంచాలి. ప్రతి పూజకు ముందు స్థలం శుభ్రం చేయడం, ముందు సాధారణ పూజా చాప ఉంచడం, దీక్ష ముగిసే వరకు స్థాపించిన పీఠం, చిత్రాలను కదపకుండా ఉంచడం చెబుతుంది. ప్రత్యేక పీఠాన్ని ఉన్న పూజా మందిరంలో లేదా వేరే ప్రదేశంలో ఏర్పాటు చేయవచ్చు."),
+        body: b("The Source 1 guide places brass lamps on either side, using sesame oil or ghee and cotton wicks. Keep incense, an arati plate, and a bell ready, along with flowers or garlands, drinking water, and fruit or prasada. It calls for cleaning the space before each puja, a simple puja mat in front, and leaving the established peetam and frames undisturbed until the vow is completed. A dedicated stool may be inside an existing puja mandir or in a separate space.", "Source 1 మార్గదర్శి రెండు వైపులా ఇత్తడి దీపాలు, నువ్వుల నూనె లేదా నెయ్యి, పత్తి వత్తులను సూచిస్తుంది. ధూపం, హారతి పళ్లెం, గంట, పూలు లేదా మాలలు, తాగునీరు, ఫలాలు లేదా ప్రసాదం సిద్ధంగా ఉంచాలి. ప్రతి పూజకు ముందు స్థలం శుభ్రం చేయడం, ముందు సాధారణ పూజా చాప ఉంచడం, దీక్ష ముగిసే వరకు స్థాపించిన పీఠం, చిత్రాలను కదపకుండా ఉంచడం చెబుతుంది. ప్రత్యేక పీఠాన్ని ఉన్న పూజా మందిరంలో లేదా వేరే ప్రదేశంలో ఏర్పాటు చేయవచ్చు."),
         sources: [workbook()],
       },
       {
@@ -238,7 +238,7 @@ export const topics = [
       {
         id: "ingredients",
         title: b("What to avoid—and where the guides differ", "మానవలసినవి, గ్రంథాల మధ్య భేదాలు"),
-        body: b("The ABP process guide lists meat, eggs, alcohol, tobacco, onion, and garlic as exclusions. The niyamavali also prohibits meat and alcohol, but its food passage specifically names ginger and garlic. These are not identical ingredient lists. Both are shown rather than silently merging them into a stricter universal rule. Ask your Guruswamy which list your group follows; tea, coffee, and packaged-food questions are not settled by these passages.", "ABP ప్రక్రియ మార్గదర్శి మాంసం, గుడ్లు, మద్యం, పొగాకు, ఉల్లిపాయ, వెల్లుల్లిని మానాలని చెబుతుంది. నియమావళి కూడా మాంసం, మద్యాన్ని నిషేధిస్తుంది; అయితే ఆహార భాగంలో ప్రత్యేకంగా అల్లం, వెల్లుల్లిని పేర్కొంటుంది. ఇవి ఒకే పదార్థాల జాబితాలు కావు. రెండింటినీ కలిపి అందరికీ మరింత కఠిన నియమం చేయకుండా, భేదాన్ని చూపించాం. మీ బృందం ఏ జాబితా పాటిస్తుందో గురుస్వామిని అడగండి. టీ, కాఫీ, ప్యాకేజ్డ్ ఆహారం గురించి ఈ భాగాలు పూర్తి నిర్ణయం ఇవ్వవు."),
+        body: b("The Source 1 process guide lists meat, eggs, alcohol, tobacco, onion, and garlic as exclusions. The niyamavali also prohibits meat and alcohol, but its food passage specifically names ginger and garlic. These are not identical ingredient lists. Both are shown rather than silently merging them into a stricter universal rule. Ask your Guruswamy which list your group follows; tea, coffee, and packaged-food questions are not settled by these passages.", "Source 1 ప్రక్రియ మార్గదర్శి మాంసం, గుడ్లు, మద్యం, పొగాకు, ఉల్లిపాయ, వెల్లుల్లిని మానాలని చెబుతుంది. నియమావళి కూడా మాంసం, మద్యాన్ని నిషేధిస్తుంది; అయితే ఆహార భాగంలో ప్రత్యేకంగా అల్లం, వెల్లుల్లిని పేర్కొంటుంది. ఇవి ఒకే పదార్థాల జాబితాలు కావు. రెండింటినీ కలిపి అందరికీ మరింత కఠిన నియమం చేయకుండా, భేదాన్ని చూపించాం. మీ బృందం ఏ జాబితా పాటిస్తుందో గురుస్వామిని అడగండి. టీ, కాఫీ, ప్యాకేజ్డ్ ఆహారం గురించి ఈ భాగాలు పూర్తి నిర్ణయం ఇవ్వవు."),
         sources: [workbook(), r([17])],
       },
       {
@@ -298,7 +298,7 @@ export const topics = [
       {
         id: "where-to-sleep",
         title: b("Where to sleep", "ఎక్కడ నిద్రించాలి"),
-        body: b("The ABP workbook asks the devotee to sleep in the room or space where the peetam is established. It recommends the ground with a clean mat or new bedding and blankets, avoiding pillows. This is a source-specific practice, not proof that a separate dedicated room is required in every home. Confirm a workable arrangement with your Guruswamy.", "ABP వర్క్‌బుక్ పీఠం ఉన్న గది లేదా ప్రదేశంలో భక్తుడు నిద్రించాలని చెబుతుంది. నేలపై శుభ్రమైన చాప లేదా కొత్త పరుపు వస్త్రాలు, దుప్పట్లతో విశ్రాంతి, దిండు నివారణను సూచిస్తుంది. ఇది ఆ మూలానికి సంబంధించిన ఆచారం; ప్రతి ఇంటిలో ప్రత్యేక గది తప్పనిసరి అని అర్థం కాదు. మీకు సాధ్యమైన అమరికను గురుస్వామితో నిర్ధారించుకోండి."),
+        body: b("The Source 1 workbook asks the devotee to sleep in the room or space where the peetam is established. It recommends the ground with a clean mat or new bedding and blankets, avoiding pillows. This is a source-specific practice, not proof that a separate dedicated room is required in every home. Confirm a workable arrangement with your Guruswamy.", "Source 1 వర్క్‌బుక్ పీఠం ఉన్న గది లేదా ప్రదేశంలో భక్తుడు నిద్రించాలని చెబుతుంది. నేలపై శుభ్రమైన చాప లేదా కొత్త పరుపు వస్త్రాలు, దుప్పట్లతో విశ్రాంతి, దిండు నివారణను సూచిస్తుంది. ఇది ఆ మూలానికి సంబంధించిన ఆచారం; ప్రతి ఇంటిలో ప్రత్యేక గది తప్పనిసరి అని అర్థం కాదు. మీకు సాధ్యమైన అమరికను గురుస్వామితో నిర్ధారించుకోండి."),
         sources: [workbook()],
       },
       {
@@ -428,13 +428,13 @@ export const topics = [
       {
         id: "maladharanam",
         title: b("Maladharanam · Day 1", "మాలధారణ · మొదటి రోజు"),
-        body: b("The ABP guide describes bathing and preparing, wearing the traditional deeksha dress, and taking a Tulsi or Rudraksha mala to the Guruswamy or priest. The guide conducts the sankalpa, puja, purification and mala-dharana mantra; the devotee recites and receives the mala, seeks blessings, and begins the vow. A second thodu mala is recommended in that guide, not declared universal here.", "ABP మార్గదర్శిలో స్నానం, సిద్ధత, దీక్షా వస్త్రధారణ, తులసి లేదా రుద్రాక్ష మాలతో గురుస్వామి లేదా అర్చకుని వద్దకు వెళ్లడం ఉంది. గురువు సంకల్పం, పూజ, మాల శుద్ధి, మాలధారణ మంత్రం నిర్వహిస్తారు; భక్తుడు మంత్రం పలికి మాల స్వీకరించి ఆశీర్వాదాలతో దీక్ష ప్రారంభిస్తాడు. ఆ మార్గదర్శి తోడు మాలను సూచిస్తుంది; ఇక్కడ దానిని అందరికీ తప్పనిసరి చేయలేదు."),
+        body: b("The Source 1 guide describes bathing and preparing, wearing the traditional deeksha dress, and taking a Tulsi or Rudraksha mala to the Guruswamy or priest. The guide conducts the sankalpa, puja, purification and mala-dharana mantra; the devotee recites and receives the mala, seeks blessings, and begins the vow. A second thodu mala is recommended in that guide, not declared universal here.", "Source 1 మార్గదర్శిలో స్నానం, సిద్ధత, దీక్షా వస్త్రధారణ, తులసి లేదా రుద్రాక్ష మాలతో గురుస్వామి లేదా అర్చకుని వద్దకు వెళ్లడం ఉంది. గురువు సంకల్పం, పూజ, మాల శుద్ధి, మాలధారణ మంత్రం నిర్వహిస్తారు; భక్తుడు మంత్రం పలికి మాల స్వీకరించి ఆశీర్వాదాలతో దీక్ష ప్రారంభిస్తాడు. ఆ మార్గదర్శి తోడు మాలను సూచిస్తుంది; ఇక్కడ దానిని అందరికీ తప్పనిసరి చేయలేదు."),
         sources: [workbook(), r([17])],
       },
       {
         id: "irumudi",
         title: b("Irumudi kattu · preparation checkpoint", "ఇరుముడి కట్టు · సిద్ధత నిర్ధారణ"),
-        body: b("Arrange the irumudi ritual with your Guruswamy rather than treating a generic packing list as sufficient. The ABP workbook specifically says the first-day mudupu/mokku offering is brought and surrendered on the irumudi day. A complete item-by-item packing quantity list has not been verified from the reviewed passages, so quantities and substitutes are intentionally not invented.", "ఇరుముడిని సాధారణ ప్యాకింగ్ జాబితాతో సరిపెట్టకుండా గురుస్వామితో ఏర్పాటు చేసుకోండి. మొదటి రోజు ముడుపు / మొక్కును ఇరుముడి రోజున తీసుకెళ్లి సమర్పించాలని ABP వర్క్‌బుక్ స్పష్టంగా చెబుతుంది. పరిశీలించిన భాగాల్లో పూర్తి సామగ్రి, పరిమాణాల జాబితా నిర్ధారణ కాలేదు; కాబట్టి పరిమాణాలు, ప్రత్యామ్నాయాలను కల్పించలేదు."),
+        body: b("Arrange the irumudi ritual with your Guruswamy rather than treating a generic packing list as sufficient. The Source 1 workbook specifically says the first-day mudupu/mokku offering is brought and surrendered on the irumudi day. A complete item-by-item packing quantity list has not been verified from the reviewed passages, so quantities and substitutes are intentionally not invented.", "ఇరుముడిని సాధారణ ప్యాకింగ్ జాబితాతో సరిపెట్టకుండా గురుస్వామితో ఏర్పాటు చేసుకోండి. మొదటి రోజు ముడుపు / మొక్కును ఇరుముడి రోజున తీసుకెళ్లి సమర్పించాలని Source 1 వర్క్‌బుక్ స్పష్టంగా చెబుతుంది. పరిశీలించిన భాగాల్లో పూర్తి సామగ్రి, పరిమాణాల జాబితా నిర్ధారణ కాలేదు; కాబట్టి పరిమాణాలు, ప్రత్యామ్నాయాలను కల్పించలేదు."),
         checklist: [
           b("Confirm date, place, and the supervising Guruswamy.", "తేదీ, ప్రదేశం, పర్యవేక్షించే గురుస్వామిని నిర్ధారించండి."),
           b("Obtain your group’s exact materials and quantities list.", "మీ బృందానికి తగిన ఖచ్చిత సామగ్రి, పరిమాణాల జాబితా పొందండి."),
