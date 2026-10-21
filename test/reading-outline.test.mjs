@@ -137,6 +137,30 @@ test("Suprabhatam is one complete reading with no verse-level navigation destina
   }
 });
 
+test("bhajan home includes actual Source 1 prayer text separately from all 252 PDF titles", async () => {
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    for (const language of ["en", "te"]) {
+      const html = app.render(`#topic=bhajans&lang=${language}`);
+      assert.ok(html.indexOf('id="process-readings-title"') < html.indexOf('id="separate-bhajan-book"'));
+      const sourceReading = html.slice(0, html.indexOf('id="separate-bhajan-book"'));
+      for (const tab of abp.abpTabs.filter(tab => tab.sections.some(section => section.kind === "prayer"))) {
+        assert.ok(sourceReading.includes(`id="process-${tab.id}"`));
+        for (const part of tab.sections) {
+          assert.ok(sourceReading.includes(escapeHtml(abp.abpSectionTitle(tab, part, language))));
+          const visible = part.lines.length <= 30 ? part.lines : part.lines.slice(0, 3);
+          for (const line of visible) {
+            const value = language === "en" ? line.pronunciation || pronunciation.pronounceTelugu(line.text) : line.text;
+            assert.ok(sourceReading.includes(escapeHtml(value).replaceAll("\n", "<br>")));
+          }
+        }
+      }
+      assert.equal((html.match(/data-bhajan-title=/g) || []).length, 252);
+      assert.doesNotMatch(sourceReading, /<img /);
+    }
+  }
+});
+
 test("all nine workbook tab names use Telugu-script pronunciation consistently", async () => {
   const labels = ["మాలధారణ మరియు పీఠం ఏర్పాటు", "పూజ వరుస", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
   for (const [index, tab] of abp.abpTabs.entries()) {

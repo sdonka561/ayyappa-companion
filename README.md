@@ -1,5 +1,7 @@
 # Ayyappa companion
 
+The Bhajans landing page starts with Source 1's seven prayer/stotra groups, using actual workbook text in Telugu or English pronunciation. Short prayers are complete inline, while long Namavali lists retain bounded previews and full typed-reader links. The separate 252-title `Ayyappa_bhajans3.pdf` catalogue follows under its own source heading; its original page readers and title filter remain available.
+
 **Suprabhatam** is a single continuous reading: opening prayer, all 14 verses, and closing prayer, with internal headings and focus view. The sidebar has one Suprabhatam link instead of individual verse entries. Existing verse-specific URLs show the complete reading and jump to the corresponding heading; original source sections and text remain intact.
 
 In Telugu mode, the nine Source 1 tab names and all 54 subsection names use Telugu labels throughout navigation, contents, reader headings, selectors, and search. Instructional English labels are translated naturally (for example, మాలధారణ పరిచయం and పూజా స్థలాన్ని శుభ్రపరిచి సిద్ధం చేయడం), while deity and prayer names retain their Telugu forms. “And” uses the user-selected మరియు, and “sequence” uses వరుస. This translates navigation labels only: prayer reading remains pronunciation, not meaning translation. English mode and original workbook text remain unchanged.
