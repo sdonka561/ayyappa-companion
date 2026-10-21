@@ -1,4 +1,5 @@
 import { bilingual } from "./content.mjs";
+import { songCatalogue } from "./chant-data.mjs";
 
 const abpId = "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx";
 const abpCitation = (sheet) => ({ id: abpId, pages: [], label: "Source 1: Ayyappa Process Guide", sheet });
@@ -11,6 +12,67 @@ export const chantCategories = [
   { id: "padi", title: bilingual("Padi puja & hills", "పడిపూజ, శబరిగిరి") },
   { id: "night", title: bilingual("Evening & bedtime", "సాయంత్రం, రాత్రి") },
 ];
+
+// Singer assignments and SPD references supplied by the user, in songbook order.
+const selectedSongDetails = [
+  ["Sandeep swamy/Venky Swamy", 10],
+  ["", 21],
+  ["Sandeep Swamy / Seshikiran swamy", 21],
+  ["Phani Swamy", null],
+  ["Harshini Sura", null],
+  ["Harshini Sura", null],
+  ["Venky Swamy", 16],
+  ["", 41],
+  ["Raghav swamy", null],
+  ["Venky Swamy", null],
+  ["Venky Swamy", null],
+  ["Phani Swamy", null],
+  ["Venky Swamy", 26],
+  ["Phani Swamy", null],
+  ["Naveen Swamy", null],
+  ["Raghav swamy", null],
+  ["Venky Swamy", 18],
+  ["Raghav swamy", null],
+  ["Rohini Swamy", null],
+  ["Raghav swamy", null],
+  ["Raghav swamy", null],
+  ["Venky Swamy/Kiran swamy/Sandeep swamy", 77],
+  ["Naveen Swamy", null],
+  ["Sandeep Swamy", null],
+  ["Venky Swamy", 53],
+  ["", 64],
+  ["Santosh Swamy", null],
+  ["Harsha Swamy/ Harshini Sura", null],
+  ["Sandeep Swamy", 68],
+  ["Venky Swamy/Phani Swamy", 82],
+  ["", 84],
+  ["Santosh Swamy", 55],
+  ["Venky Swamy", 80],
+  ["Hemanth Swamy", null],
+  ["Raghav swamy", null],
+  ["Raghav swamy", null],
+  ["Raghav swamy", null],
+  ["Harshini Sura/Seshikiran Swamy", null],
+  ["Harshini Sura", null],
+  ["Phani Swamy", null],
+  ["Seshikiran swamy", null],
+  ["Seshikiran swamy", null],
+  ["", null],
+];
+
+export const selectedBhajans = songCatalogue.map((song, index) => ({
+  ...song,
+  id: `selected-${String(index + 1).padStart(3, "0")}`,
+  title: song.title.replace(/ {2,}/g, " "),
+  singer: selectedSongDetails[index][0],
+  referencePage: selectedSongDetails[index][1],
+}));
+
+export function searchSelectedBhajans(query) {
+  const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+  return selectedBhajans.filter(song => words.every(word =>
+    `${song.title} ${song.singer} ${song.deity}`.toLocaleLowerCase().includes(word)));
+}
 
 export const chantDefinitions = [
   {
