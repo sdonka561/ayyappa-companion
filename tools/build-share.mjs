@@ -16,7 +16,7 @@ const [html, css, content, chantData, rituals, app, inventory, image, favicon, p
   readFile(new URL("book.mjs", root), "utf8"),
 ]);
 const importLine = /^import \{[^\n]+\} from "\.\/[\w-]+\.mjs";\r?\n/gm;
-if (!(app.match(importLine)?.length === 7)) throw new Error("App imports changed; update the standalone builder.");
+if (!(app.match(importLine)?.length === 8)) throw new Error("App imports changed; update the standalone builder.");
 let embeddedBook = bookData;
 const { bookPages } = await import("../public/book-data.mjs");
 for (const page of bookPages) {
@@ -24,6 +24,9 @@ for (const page of bookPages) {
   embeddedBook = embeddedBook.replace(JSON.stringify(page.image), JSON.stringify(`data:image/jpeg;base64,${bytes.toString("base64")}`));
 }
 const script = [
+  await readFile(new URL("astronomy.mjs", root), "utf8"),
+  (await readFile(new URL("panchang.mjs", root), "utf8")).replace(importLine, ""),
+  (await readFile(new URL("calendar.mjs", root), "utf8")).replace(importLine, ""),
   await readFile(new URL("pronunciation.mjs", root), "utf8"),
   await readFile(new URL("abp-data.mjs", root), "utf8"),
   (await readFile(new URL("abp.mjs", root), "utf8")).replace(importLine, "").replace(/^export \{ abpTabs \};\r?\n/m, ""),

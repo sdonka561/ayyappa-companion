@@ -9,6 +9,8 @@ import * as book from "../public/book.mjs";
 import * as pronunciation from "../public/pronunciation.mjs";
 import * as abp from "../public/abp.mjs";
 import * as bhajans from "../public/bhajans.mjs";
+import * as panchang from "../public/panchang.mjs";
+import * as calendar from "../public/calendar.mjs";
 
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 
@@ -20,10 +22,11 @@ async function reader(portable = false) {
     ({
       render(hash) { location.hash = hash; readRoute(); return guideContent(); },
       abpOutline(tab) { return abpSectionOutline(resolveAbp(tab).tab); },
-      chantOutline(id) { return chantOutline(chantDefinitions.find(entry => entry.id === id)); }
+      chantOutline(id) { return chantOutline(chantDefinitions.find(entry => entry.id === id)); },
+      dailyCalendar(key, place) { return calculatePanchang(key, place); }
     })`, {
-    ...content, ...chants, ...rituals, ...book, ...pronunciation, ...abp, ...bhajans,
-    URLSearchParams,
+    ...content, ...chants, ...rituals, ...book, ...pronunciation, ...abp, ...bhajans, ...panchang, ...calendar,
+    URL, URLSearchParams,
     location: { hash: "" },
     document: { querySelector: () => ({}), body: { classList: { contains: () => false } } },
     window: { addEventListener() {} },
@@ -143,8 +146,10 @@ test("companion details have unique nested section IDs and working preparation c
 test("portable and hosted guides render the same reading hierarchy", async () => {
   const hosted = await reader();
   const portable = await reader(true);
-  for (const hash of ["#topic=abp&lang=en", "#topic=abp&lang=te&tab=sequence", "#topic=chanting&lang=en", "#topic=companion&lang=te"]) {
+  for (const hash of ["#topic=abp&lang=en", "#topic=abp&lang=te&tab=sequence", "#topic=chanting&lang=en", "#topic=companion&lang=te", "#topic=calendar&lang=te"]) {
     const normalizeImages = (html) => html.replace(/src="(?:ayyappa\.jpg|data:image\/jpeg;base64,[^"]+)"/g, 'src="PHOTO"');
     assert.equal(normalizeImages(portable.render(hash)), normalizeImages(hosted.render(hash)), hash);
   }
+  const place = { name: "Hyderabad", latitude: 17.38, longitude: 78.46, timeZone: "Asia/Kolkata" };
+  assert.equal(JSON.stringify(portable.dailyCalendar("2026-10-21", place)), JSON.stringify(hosted.dailyCalendar("2026-10-21", place)));
 });

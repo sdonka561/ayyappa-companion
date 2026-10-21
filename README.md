@@ -8,7 +8,7 @@ A document-first mobile reading companion with two selectable versions. **ABP - 
 
 ## Run
 
-Requires Node.js 20 or later. Serving, building, and testing need no npm installation; the site has no runtime dependencies. The optional local OCR extraction tool uses the development dependency `tesseract.js` (`npm ci`).
+Requires Node.js 20 or later. Serving, building, and testing need no npm installation; the browser astronomy library is already bundled locally. The optional local OCR extraction tool uses the development dependency `tesseract.js` (`npm ci`). Regenerating the astronomy wrapper also needs `npm ci`.
 
 ```powershell
 Set-Location .\ayyappa-guide
@@ -50,6 +50,29 @@ git push origin pages-update:gh-pages
 Use a new local split branch name for subsequent publications, or split directly to a commit and push that commit. GitHub Pages rebuilds the site after the `gh-pages` push.
 
 The portable file embeds scripts/styles. Open it as a downloaded local file; the development server intentionally blocks inline scripts on HTTP pages. The normal hosted website uses external script/style files instead.
+
+## Today & Telugu calendar
+
+Open **Today & Telugu calendar** in the section navigation, or use the daily summary above guide pages. Each visitor chooses a city or explicitly taps **Use my location**; no city is assumed and geolocation is never requested on page load. The browser remembers the selected city/timezone locally, and **Forget this location** removes it. Coordinates never appear in shared links. City search sends the query to Open-Meteo/GeoNames. Consented device coordinates are rounded to 0.01 degrees before Open-Meteo resolves their timezone and solar timings.
+
+The calendar shows sunrise, sunset, approximate tithi and nakshatram transitions, amanta lunar month (including adhika months), daily Rahukalam/Yamagandam/Gulika, and a clickable Gregorian month grid labeled with sunrise tithis in Telugu or English. City-local dates and IANA timezones handle daylight saving. Today follows the selected city's date; browsing another day does not get overridden at midnight.
+
+**Not a live temple Panchang feed:** as selected by the user, this is the free, calculated version rather than a paid Panchang API/backend. Lunar positions come from the bundled MIT-licensed **Astronomy Engine 2.1.19**, with an approximate Lahiri ayanamsha. Lunar values are labeled approximate, not attributed to an online Panchang provider. Tithi/nakshatram details run from local sunrise to the next sunrise, and identify next-day transition times. The month grid can correctly repeat or skip a sunrise tithi. It is not a verified festival calendar.
+
+Today's sunrise/sunset are checked through [Open-Meteo](https://open-meteo.com/) (CC BY 4.0) on location selection/load, every six hours while open, at the selected city's date rollover, or via **Refresh**. Returning to the tab checks freshness and refreshes when needed. The visible update time is in the selected city's timezone. A failed/blocked/offline request explicitly switches to calculated solar values with a retry message; previously selected cities still work offline. Other selected dates use calculated solar timings. Polar day/night has explicit unavailable daylight periods, not invented sunrise times. Exact sunrise definitions differ between providers and religious calendars.
+
+**Shubha gadiyalu uses an explicit daytime Choghadiya convention:** Amrit, Shubh, and Labh intervals, after excluding overlaps with Rahukalam, Yamagandam, and Gulika. It is not Telugu Amrita Kalam or a personally selected muhurtham. Abhijit is approximate and omitted on Wednesdays under this convention. Varjyam, Durmuhurtam, festival decisions, and personal muhurthams are not calculated. Published Telugu calendar, date-specific Panchangam, and Drik Panchang links remain visible; select/verify the same city, timezone, and date on those sources and consult a Guruswamy for formal use.
+
+To regenerate the committed, license-preserving astronomy wrapper after reviewing an upstream version change:
+
+```powershell
+npm ci
+npm run prepare:astronomy
+npm run build
+npm test
+```
+
+No API keys, paid services, location tracking, or backend are added. The local preview CSP allows only the two required Open-Meteo API origins in addition to same-origin resources.
 
 ## Content and limitations
 

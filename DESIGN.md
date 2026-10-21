@@ -32,6 +32,12 @@ Chant & Sing adds large prayer text, numbered reading positions, full-list and s
 
 ## Content integrity
 
+The **Today & Telugu calendar** surface is Read/Operate within the same monochrome world. A compact daily summary appears above guide content and disappears in focus view. The dedicated page has a prominent approximation disclosure, explicit location consent/city search, a date reading with semantic definition-list rows, named timing periods, a seven-column month table, and source links. At phone widths, labels stack above values and month cells wrap their short tithi labels; the calendar is not a separate colorful dashboard.
+
+No assumed location or automatic permission prompt. The selected location/timezone is saved only in this browser; location is not part of hash routes. Source status differentiates fresh online solar updates, loading, calculated historical dates, and explicit online-failure fallback. Refresh occurs on selected-city midnight and every six hours while active, with foreground/reconnect checks. Approximate lunar values are computed locally using the bundled licensed engine and never presented as source-fetched Panchang data. The daily view starts at sunrise and marks transition times on the following civil date. The monthly view shows calculated sunrise tithis, not invented festival labels.
+
+Shubha gadiyalu explicitly means daytime Choghadiya Amrit/Shubh/Labh after removing overlaps with the three daily avoidance periods, not Telugu Amrita Kalam or a guaranteed personal muhurtham. Source links request verification of the same place/date/timezone, and unsupported Varjyam, Durmuhurtam, and festival decisions remain external. No sunrise-based timing is invented for polar day/night.
+
 Do not hide source disagreements or imply every source file was consolidated. Preserve page/sheet references, the permanent Drive collection, and separate editorial health/safety guidance from source-derived observances.
 
 Book-original content and other-source companion content must not be conflated. The chosen scan, including both padayatra pages, closing stotras, Harivarasanam, puja-materials pages, and bhajans, is available intact. Printed page numbers are physical PDF page + 2 after the cover; the cover has no printed label. English descriptions and chapter groupings are navigation/editorial aids, not source translations. Retain the source's historical customs as original text, not contemporary health or travel advice.

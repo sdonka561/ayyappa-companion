@@ -6,12 +6,14 @@
   "scripts": {
     "start": "node server.mjs",
     "build": "node tools\\build-share.mjs",
+    "prepare:astronomy": "node tools\\prepare-astronomy.mjs",
     "test": "node --test"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
+    "astronomy-engine": "2.1.19",
     "tesseract.js": "^6.0.1"
   }
 }
