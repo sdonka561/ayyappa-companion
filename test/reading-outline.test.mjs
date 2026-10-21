@@ -261,6 +261,29 @@ test("PDF and bhajan indexes expose every child page without loading scanned pag
   }
 });
 
+test("all PDF song texts are inline and unchanged in either language, with individual text and scan readers", async () => {
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    for (const lang of ["en", "te"]) {
+      const library = app.render(`#topic=bhajans&lang=${lang}`);
+      assert.equal((library.match(/class="bhajan-original"/g) || []).length, 252);
+      for (const song of bhajans.bhajanBook.songs) {
+        for (const excerpt of song.excerpts) {
+          assert.ok(library.includes(`<div class="bhajan-lyrics">${escapeHtml(excerpt.text)}</div>`), song.id);
+        }
+      }
+      const song = bhajans.bhajanBook.songs[31];
+      const textReader = app.render(`#topic=bhajans&lang=${lang}&song=${song.id}`);
+      for (const excerpt of song.excerpts) assert.ok(textReader.includes(escapeHtml(excerpt.text)));
+      assert.doesNotMatch(textReader, /<img /);
+      assert.match(textReader, /data-action="focus"/);
+      const scan = app.render(`#topic=bhajans&lang=${lang}&song=${song.id}&bhajanPage=${song.start}`);
+      assert.match(scan, /id="bhajan-page-image"/);
+      assert.match(scan, /id="bhajan-start"/);
+    }
+  }
+});
+
 test("chant library preserves source pronunciation and shows short prayers without a second click", async () => {
   const app = await reader();
   for (const lang of ["en", "te"]) {

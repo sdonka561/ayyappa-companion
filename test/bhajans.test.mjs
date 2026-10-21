@@ -48,6 +48,36 @@ test("bhajan routes reject unknown titles, invalid pages, and pages outside the 
   assert.equal(resolveBhajan("song-001", "7"), null);
 });
 
+test("all 252 readings retain original PDF text with complete and nonoverlapping page fragments", () => {
+  const pages = new Set();
+  let lines = 0;
+  for (const song of bhajanBook.songs) {
+    assert.ok(song.excerpts.length > 0, song.id);
+    assert.equal(song.excerpts[0].page, song.start);
+    assert.equal(song.excerpts.at(-1).page, song.end);
+    assert.equal(new Set(song.excerpts.map(excerpt => excerpt.page)).size, song.excerpts.length);
+    for (const excerpt of song.excerpts) {
+      assert.ok(excerpt.text.trim().length > 0);
+      assert.doesNotMatch(excerpt.text, /\ufffd/);
+      assert.ok(excerpt.page >= song.start && excerpt.page <= song.end);
+      pages.add(excerpt.page);
+      lines += excerpt.text.split("\n").filter(line => line.trim()).length;
+    }
+  }
+  assert.deepEqual([...pages].sort((a, b) => a - b), Array.from({ length: 444 }, (_, i) => i + 8));
+  assert.equal(lines, 19543);
+  assert.equal(lines, bhajanBook.textExtraction.nonemptyLines);
+  assert.equal(bhajanBook.textExtraction.generatedTranslation, false);
+  assert.equal(bhajanBook.textExtraction.generatedPronunciation, false);
+  assert.match(bhajanBook.songs[0].excerpts[0].text, /Shaastha Pancharathnam/);
+  assert.match(bhajanBook.songs.flatMap(song => song.excerpts).find(excerpt => excerpt.page === 100).text, /[\u0b80-\u0bff]/);
+  // Page 176 has the previous song's last lines before the next title near the top.
+  assert.equal(bhajanBook.songs[81].end, 176);
+  assert.match(bhajanBook.songs[81].excerpts.at(-1).text, /I Surrender, I surrender/);
+  assert.doesNotMatch(bhajanBook.songs[81].excerpts.at(-1).text, /Saranam  Ayyappa SWamiye/);
+  assert.match(bhajanBook.songs[82].excerpts[0].text, /Saranam  Ayyappa SWamiye/);
+});
+
 test("all 451 lossless original page images exist, including the contents", async () => {
   assert.equal(bhajanBook.pages.length, 451);
   for (const [index, page] of bhajanBook.pages.entries()) {
