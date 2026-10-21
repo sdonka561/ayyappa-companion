@@ -1,7 +1,7 @@
 import { bilingual } from "./content.mjs";
 
 const abpId = "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx";
-const abpSource = (sheet) => ({ id: abpId, pages: [], label: "ABP · Simplified process guide", sheet });
+const abpCitation = (sheet) => ({ id: abpId, pages: [], label: "ABP · Simplified process guide", sheet });
 export const chantCategories = [
   { id: "all", title: bilingual("All", "అన్నీ") },
   { id: "opening", title: bilingual("Ganesha & Guru", "గణపతి, గురువు") },
@@ -25,13 +25,21 @@ export const chantDefinitions = [
   },
   {
     id: "ashtottaram", title: bilingual("Ayyappa ashtottaram · 108 names", "అయ్యప్ప అష్టోత్తరం · 108 నామాలు"), category: "core",
-    purpose: bilingual("The complete numbered 108-name Telugu list from your dedicated namavali workbook, ready for archana from your phone.", "ప్రత్యేక నామావళి వర్క్‌బుక్‌లోని పూర్తి 108 తెలుగు నామాలు. ఫోన్ చూస్తూ అర్చన చేసుకోవచ్చు."),
-    source: { id: "1-G_Kq-QKZlVl8z0EXzWBagleDaq6vbqi", pages: [], sheet: "Telugu · rows 3–110", label: "DharmaSastha · Ashtottara Namavali" },
+    purpose: bilingual("All 108 names from DharmaSastha_Ayyappa_Astottara_Namavali, with the workbook’s original Telugu and English-letter pronunciation paired by row.", "DharmaSastha_Ayyappa_Astottara_Namavali వర్క్‌బుక్‌లోని 108 నామాలు; మూలంలోని తెలుగు, English ఉచ్చారణ జతలుగా ఉన్నాయి."),
+    sourcePronunciation: true,
+    source: { id: "1-G_Kq-QKZlVl8z0EXzWBagleDaq6vbqi", pages: [], sheet: "Telugu C / English B · rows 3–110", label: "DharmaSastha · Ashtottara Namavali" },
+  },
+  {
+    id: "sahasranamavali", title: bilingual("HariHaraPutra Sahasranamavali", "హరిహరపుత్ర సహస్రనామావళి"), category: "core",
+    purpose: bilingual("Original Telugu and English-letter pronunciation from HariHaraPutra_SahasraNamavali, preserved together by source row. No generated transliteration is used.", "HariHaraPutra_SahasraNamavali మూలంలోని తెలుగు, English ఉచ్చారణ జతలు. కొత్తగా లిప్యంతరీకరణ చేయలేదు."),
+    sourcePronunciation: true,
+    notice: bilingual("The workbook numbers 1–1004, including closing invocations; all are retained. Entry 633 has English pronunciation but its Telugu cell is blank in the source, and is explicitly marked—not invented. This differs from ABP’s 1000-name list.", "మూలంలో ముగింపు నామాలతో కలిపి 1–1004 సంఖ్యలు ఉన్నాయి. 633వ అంశానికి English ఉచ్చారణ ఉంది కానీ తెలుగు ఖాళీగా ఉంది; కల్పించకుండా గుర్తించాం. ఇది ABPలోని 1000 నామాల జాబితాకు భిన్నమైన మూలం."),
+    source: { id: "1BIRAcVmUK0xYyWbpC7R4ZLPDguqUHhs7", pages: [], sheet: "Telugu B / English C · rows 3–1006", label: "HariHaraPutra · Sahasra Namavali" },
   },
   {
     id: "sharanaghosha", title: bilingual("Saranu ghosha · full supplied litany", "శరణుఘోష · అందించిన పూర్తి జాబితా"), category: "core",
     purpose: bilingual("Read the collective invocations directly. The supplied ABP sheet contains 107 non-empty invocations, not 108; all are preserved in order without inventing a missing line.", "సమూహ శరణుఘోషను నేరుగా చదవండి. అందించిన ABP షీట్‌లో 108 కాకుండా 107 నిండిన శరణు పలుకులు ఉన్నాయి. లేని పలుకును కల్పించకుండా ఉన్న క్రమాన్ని ఉంచాం."),
-    source: abpSource("SARANUGHOSHA"),
+    source: abpCitation("SARANUGHOSHA"),
     notice: bilingual("Source count: 107. For a 108-repeat refrain, use “108 sharanam repetitions” instead.", "మూలంలో సంఖ్య: 107. ఒకే శరణు పలుకును 108 సార్లు పలకడానికి “108 శరణం పునరావృతాలు” ఉపయోగించండి."),
   },
   {
@@ -47,26 +55,28 @@ export const chantDefinitions = [
   {
     id: "pancharatna", title: bilingual("Loka Veeram · Pancharatna stotram", "లోకవీరం · పంచరత్న స్తోత్రం"), category: "night",
     purpose: bilingual("Five traditional salutation verses to Shasta. The ABP daily sequence includes this near the conclusion; it is not established here as an exclusively night-time requirement.", "శాస్తాకు ఐదు సంప్రదాయ నమస్కార శ్లోకాలు. ABP నిత్యపూజా క్రమంలో ముగింపు దగ్గర ఉంది; ఇది రాత్రికి మాత్రమే తప్పనిసరి అని ఇక్కడ నిర్ణయించలేదు."),
-    source: abpSource("PANCHARATNA STOTRAM · C2:C16"),
+    source: abpCitation("PANCHARATNA STOTRAM · C2:C16"),
   },
   {
     id: "kshamapana", title: bilingual("Kshamapana mantram", "క్షమాపణ మంత్రం"), category: "night",
     purpose: bilingual("Ask forgiveness humbly for mistakes made knowingly or unknowingly. The workbook explicitly advises requesting pardon gently, not shouting.", "తెలిసి తెలియక చేసిన తప్పులకు వినయంగా క్షమాపణ అడగండి. అరిచినట్లు కాకుండా క్షమాపణ కోరాలని వర్క్‌బుక్ ప్రత్యేకంగా చెబుతుంది."),
-    source: abpSource("HARATHI-KSHAMAPANA · N2:N6"),
+    source: abpCitation("HARATHI-KSHAMAPANA · N2:N6"),
   },
   {
     id: "responses", title: bilingual("Bhajan call & response", "భజన పిలుపు, ప్రతిస్పందన"), category: "bhajan",
     purpose: bilingual("The short traditional Ayyappa invocations from the workbook, laid out for a group to read and respond together.", "వర్క్‌బుక్‌లోని చిన్న సంప్రదాయ అయ్యప్ప నినాదాలు. సమూహంగా చదివి ప్రతిస్పందించడానికి అనువుగా ఉన్నాయి."),
-    source: abpSource("HARATHI-KSHAMAPANA · J2:J28"),
+    source: abpCitation("HARATHI-KSHAMAPANA · J2:J28"),
   },
   {
     id: "suprabhatam", title: bilingual("Suprabhatam & awakening hymns", "సుప్రభాతం, మేలుకొలుపు"), category: "morning",
-    purpose: bilingual("The ABP workbook has a 14-verse Suprabhatam sheet for morning devotion. Full-text reuse and a matching recording have not been verified for this edition; open the supplied source for that hymn.", "ఉదయపు భక్తి కోసం ABP వర్క్‌బుక్‌లో 14 శ్లోకాల సుప్రభాతం షీట్ ఉంది. ఈ సంచికకు పూర్తి పాఠ్య పునర్వినియోగం, సరిపోయే రికార్డింగ్ నిర్ధారణ కాలేదు. ఆ స్తోత్రానికి అందించిన మూలాన్ని తెరవండి."),
-    source: abpSource("SUPRABHATAM"), referenceOnly: true,
+    purpose: bilingual("Read the ABP workbook's 14 Suprabhatam verses in its tab-based guide, in Telugu or English-letter pronunciation. No recording is bundled.", "ABP ట్యాబ్ మార్గదర్శిలో 14 సుప్రభాత శ్లోకాలను తెలుగు లేదా English ఉచ్చారణలో చదవండి. ఆడియో జత చేయలేదు."),
+    abpReference: ["suprabhatam", "verse-1"],
+    source: abpCitation("SUPRABHATAM"), referenceOnly: true,
   },
   {
     id: "kavacham", title: bilingual("Ayyappa Kavacham", "అయ్యప్ప కవచం"), category: "core",
-    purpose: bilingual("The bhajan book indexes a Sasthru kavacham and a Tamil Ayyappa kavacham. Their text/audio reuse is not verified here, so they are references rather than invented recitations.", "భజన పుస్తక సూచికలో శాస్తృ కవచం, తమిళ అయ్యప్ప కవచం ఉన్నాయి. పాఠ్యం, ఆడియో పునర్వినియోగం ఇక్కడ నిర్ధారణ కాలేదు; కల్పించిన పఠనం బదులుగా మూల సూచనలు ఇచ్చాం."),
+    purpose: bilingual("Open the kavacham titles in the complete bhajan book and read their original pages. No recording is bundled.", "పూర్తి భజన పుస్తకంలోని కవచ శీర్షికలను తెరిచి అసలు పేజీలు చదవండి. ఆడియో జత చేయలేదు."),
+    bhajanQuery: "kavacham",
     source: { id: "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_", pages: [29, 32], label: "Ayyappa bhajans collection" }, referenceOnly: true,
   },
   {
@@ -78,12 +88,14 @@ export const chantDefinitions = [
   },
   {
     id: "padi-puja", title: bilingual("Padi puja melodies & hills bhajans", "పడిపూజ గీతాలు, శబరిగిరి భజనలు"), category: "padi",
-    purpose: bilingual("The book indexes Padi Pooja Kazhinju and Padi Pattu, plus pilgrimage-themed songs. No verified “18 hills” playlist or authorized recording is supplied. The 18 holy steps and pilgrimage hills are not treated as the same thing.", "పుస్తక సూచికలో Padi Pooja Kazhinju, Padi Pattu, యాత్ర గీతాలు ఉన్నాయి. నిర్ధారించిన “18 కొండలు” ప్లేలిస్ట్ లేదా అనుమతించిన రికార్డింగ్ లేదు. 18 పవిత్ర మెట్లు, యాత్రలోని కొండలను ఒకటిగా చూపించలేదు."),
+    purpose: bilingual("Read Padi Pooja Kazhinju and Padi Pattu from their original pages in the complete bhajan book. The 18 holy steps and pilgrimage hills are not treated as the same thing; no recording is bundled.", "పూర్తి భజన పుస్తకంలో Padi Pooja Kazhinju, Padi Pattu అసలు పేజీలు చదవండి. 18 పవిత్ర మెట్లు, యాత్ర కొండలు ఒకటిగా చూపించలేదు; ఆడియో లేదు."),
+    bhajanQuery: "padi",
     source: { id: "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_", pages: [69, 76], label: "Ayyappa bhajans collection" }, referenceOnly: true,
   },
   {
     id: "harivarasanam", title: bilingual("Harivarasanam · night devotion", "హరివరాసనం · రాత్రి భక్తి"), category: "night",
-    purpose: bilingual("The niyamavali places Harivarasanam under the night resting service. This older companion entry has no typed lyrics or recording; the selected Nitya Puja book’s original pages are available in the main guide. The temple-service context is not treated as a universally mandatory household ritual.", "నియమావళిలో హరివరాసనం రాత్రి పవళింపు సేవలో ఉంది. ఈ పాత అదనపు అంశంలో టైప్ చేసిన సాహిత్యం లేదా రికార్డింగ్ లేదు; ఎంచుకున్న నిత్యపూజ పుస్తకంలోని అసలు పేజీలు ప్రధాన మార్గదర్శిలో ఉన్నాయి. ఆలయ సేవ నేపథ్యాన్ని ప్రతి ఇంటికీ తప్పనిసరి ఆచారంగా చూపించలేదు."),
+    purpose: bilingual("Read Harivarasanam in the complete bhajan book or the Nitya Puja PDF version. The niyamavali places it under night resting service; this is not treated as a universally mandatory household ritual. No recording is bundled.", "పూర్తి భజన పుస్తకం లేదా నిత్యపూజ PDFలో హరివరాసనం చదవండి. నియమావళిలో రాత్రి పవళింపు సేవలో ఉంది; ప్రతి ఇంటికీ తప్పనిసరి అని నిర్ణయించలేదు. ఆడియో లేదు."),
+    bhajanQuery: "Harivarasanam",
     source: { id: "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0", pages: [68], label: "Ayyappa-Pooja-Niyamavali" }, referenceOnly: true,
   },
 ];
