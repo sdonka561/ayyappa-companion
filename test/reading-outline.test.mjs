@@ -21,7 +21,8 @@ async function reader(portable = false) {
   return runInNewContext(`${declarations}
     ({
       render(hash) { location.hash = hash; readRoute(); return guideContent(); },
-      navigation(hash) { location.hash = hash; readRoute(); return guideNavigation() + readingLibraries(); },
+      navigation(hash) { location.hash = hash; readRoute(); return calendarNavigation() + guideNavigation() + readingLibraries(); },
+      collapseNavigation(id) { navigationOpen.set(id, false); },
       main(hash) { location.hash = hash; readRoute(); return mainContent(); },
       abpOutline(tab) { return abpSectionOutline(resolveAbp(tab).tab); },
       chantOutline(id) { return chantOutline(chantDefinitions.find(entry => entry.id === id)); },
@@ -63,11 +64,11 @@ test("source names and nested navigation stay available in both sources and lang
       for (const topic of ["abp", "book", "calendar"]) {
         const hash = `#topic=${topic}&lang=${language}`;
         const nav = app.navigation(hash);
-        assert.match(nav, /class="nav-parent"[^>]+>Source 1: Ayyappa Process Guide<\/a><ul>/);
-        assert.match(nav, /class="nav-parent"[^>]+>Source 2: Nitya Puja<\/a><ul>/);
-        assert.equal((nav.match(/href="#topic=abp[^"]*&tab=/g) || []).length, abp.abpTabs.length);
+        assert.match(nav, /class="nav-parent"[^>]+>Source 1: Ayyappa Process Guide<\/a>/);
+        assert.match(nav, /class="nav-parent"[^>]+>Source 2: Nitya Puja<\/a>/);
+        assert.equal((nav.match(/href="#topic=abp&lang=\w+&tab=[^"&]+"/g) || []).length, abp.abpTabs.length);
         assert.equal((nav.match(/href="#topic=book[^"]*&chapter=/g) || []).length, book.bookChapters.length);
-        assert.match(nav, /<span class="nav-parent">[^<]+<\/span><ul>/);
+        assert.match(nav, /<span class="nav-parent">[^<]+<\/span><button/);
         assert.equal((nav.match(/aria-current="page"/g) || []).length, 1);
         assert.doesNotMatch(nav, /\bABP\b|Simplified process guide|Original PDF/);
         const main = app.main(hash);
@@ -75,9 +76,32 @@ test("source names and nested navigation stay available in both sources and lang
         assert.match(main, /<option value="book"[^>]*>Source 2: Nitya Puja<\/option>/);
       }
       const nav = app.navigation(`#topic=abp&lang=${language}&tab=sequence&part=${abp.resolveAbp("sequence").tab.sections[0].id}`);
-      assert.equal((nav.match(/&part=/g) || []).length, abp.resolveAbp("sequence").tab.sections.length);
+      assert.equal((nav.match(/&part=/g) || []).length, abp.abpTabs.flatMap(tab => tab.sections).length);
       assert.equal((nav.match(/aria-current="page"/g) || []).length, 1);
     }
+  }
+});
+
+test("calendar is first and disclosure state follows reading routes without losing manual collapse", async () => {
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    let nav = app.navigation("#topic=calendar&lang=en");
+    assert.match(nav, /^<li><a class="nav-parent" href="#topic=calendar/);
+    assert.equal((nav.match(/aria-expanded="true"/g) || []).length, 0);
+    assert.equal((nav.match(/aria-expanded="false"/g) || []).length, 13);
+    const controls = [...nav.matchAll(/aria-controls="([^"]+)"/g)].map(match => match[1]);
+    assert.equal(new Set(controls).size, controls.length);
+    for (const id of controls) assert.ok(nav.includes(`<ul id="${id}" hidden>`));
+    nav = app.navigation("#topic=abp&lang=en&tab=sequence");
+    assert.match(nav, /aria-expanded="true" aria-controls="navigation-source-one"/);
+    assert.match(nav, /aria-expanded="true" aria-controls="navigation-tab-sequence"/);
+    app.collapseNavigation("source-one");
+    nav = app.navigation("#topic=abp&lang=te&tab=sequence");
+    assert.match(nav, /aria-expanded="false" aria-controls="navigation-source-one"/);
+    nav = app.navigation("#topic=abp&lang=te&tab=ashtottaram");
+    assert.match(nav, /aria-expanded="true" aria-controls="navigation-source-one"/);
+    nav = app.navigation("#topic=book&lang=te&chapter=opening");
+    assert.match(nav, /aria-expanded="true" aria-controls="navigation-source-two"/);
   }
 });
 
