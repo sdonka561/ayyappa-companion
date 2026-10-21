@@ -1,5 +1,7 @@
 # Ayyappa companion
 
+Under **How to eat / భిక్ష తీసుకునే విధానం**, “Guidelines for Serving and Space” preserves the four user-supplied bhiksha customs in English and Telugu. It is explicitly attributed as user-supplied guidance, not a verified source-book rule, with a separate health/accessibility note.
+
 The two guide choices are labeled **Source 1: Ayyappa Process Guide** (the ABP workbook) and **Source 2: Nitya Puja** (the original PDF). **Today & Telugu calendar** is first in the left navigation. Source, workbook-tab, Bhajans/Namavali, and Companion branches have separate expand/collapse buttons; parent links still open their contents. Branches start collapsed except the active reading's ancestors, which open on destination changes. Manual expansion choices last for the visit, including language changes. On phones the same tree scrolls vertically within a bounded region. Existing reading links and source contents are unchanged.
 
 A document-first mobile reading companion with two selectable versions. **ABP - Simplified version of process guide** opens by default: all nine workbook tabs are organized into 54 internal subsections, preserving separate deity prayers and variants. **Nitya Puja - Original PDF** retains all 61 supplied pages organized into 15 chapter divisions. Previous guides from the permanent [Ayyappa collection](https://drive.google.com/drive/folders/1CksLIfctrHaQum3a2GMWF2M-ZbwC4pz0), typed chant readers, and the items table remain in **Companion sections**.

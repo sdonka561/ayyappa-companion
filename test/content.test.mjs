@@ -87,6 +87,26 @@ test("source disagreements and editorial health advice remain visible", () => {
   assert.equal(sleep.sections.find((section) => section.id === "adapt-rest").status, "editorial");
 });
 
+test("bhiksha serving guidance retains all four user-supplied customs with clear attribution", () => {
+  const eating = topicById("eating");
+  const guidance = eating.sections.find(section => section.id === "serving-and-space");
+  assert.ok(guidance);
+  assert.equal(guidance.title.en, "Guidelines for Serving and Space");
+  assert.equal(guidance.status, "editorial");
+  assert.deepEqual(guidance.sources, []);
+  assert.match(guidance.body.en, /User-supplied.*not a rule verified/);
+  assert.equal(guidance.items.length, 4);
+  for (const [index, heading] of ["Serve with Humility, Then Step Aside", "Avoid Crowding", "Maintain Strict Seating Separation", "The Exception for Help"].entries()) {
+    assert.ok(guidance.items[index].en.startsWith(`${heading}:`));
+    hasBoth(guidance.items[index]);
+  }
+  assert.match(guidance.items[2].en, /not sit at the same level or eat alongside them simultaneously/);
+  assert.match(guidance.items[3].en, /second helping of food or water/);
+  assert.match(guidance.note.en, /do not require floor seating/);
+  assert.ok(searchTopics("bikhsa teesukune vidhanam").includes(eating));
+  assert.ok(searchTopics("serving").includes(eating));
+});
+
 test("unreadable and confirmation-required documents are not passed off as extracted", () => {
   assert.equal(inventory.filter((entry) => entry.kind === "file").length, 53);
   assert.equal(inventory.filter((entry) => entry.kind === "file" && entry.folder.startsWith("Ayyappa")).length, 52);
