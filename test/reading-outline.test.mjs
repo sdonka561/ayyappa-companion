@@ -81,6 +81,13 @@ test("source names and nested navigation stay available in both sources and lang
   }
 });
 
+test("a fresh page starts the saved-location calendar without requiring hash navigation", async () => {
+  for (const filename of ["app.mjs", "ayyappa-companion.html"]) {
+    const source = await readFile(new URL(`../public/${filename}`, import.meta.url), "utf8");
+    assert.match(source, /const initialSection = readRoute\(\);\s*loadRoutine\(\);\s*render\(\);\s*startCalendar\(\);/);
+  }
+});
+
 test("ABP short readings are complete inline; long lists have bounded previews and valid reader links", async () => {
   const app = await reader();
   for (const lang of ["en", "te"]) {
