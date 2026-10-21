@@ -21372,6 +21372,70 @@ function abpTabTitle(tab, language = "en") {
   return language === "te" ? abpTeluguTitles[tab.id] || tab.title : tab.title;
 }
 
+const abpTeluguSectionTitles = {
+  maladharana: {
+    introduction: "మాలధారణం ఇంట్రడక్షన్",
+    purification: "ప్యూరిఫికేషన్ బాత్ మరియు ప్రిపరేషన్",
+    mala: "అడార్నింగ్ ద మాల",
+    dakshina: "దక్షిణ మరియు బ్లెస్సింగ్స్",
+    vows: "డైలీ వౌస్ మరియు వ్రతం రూల్స్",
+    altar: "సెట్టింగ్ అప్ ద హోమ్ ఆల్టర్",
+    "prepare-space": "ప్రిపేర్ మరియు క్లీన్ ది ఏరియా",
+    platform: "అడార్న్ ద సేక్రెడ్ ప్లాట్‌ఫార్మ్",
+    deities: "పోర్ట్రెయిట్స్, ఐడల్స్ మరియు పూజ సప్లైస్",
+    "peetham-rules": "పీఠం గైడ్‌లైన్స్",
+    offerings: "ముడుపు / మొక్కు మరియు ఆఫరింగ్స్",
+  },
+  sequence: {
+    preparation: "బాత్, ప్రిపరేషన్ మరియు ల్యాంప్",
+    opening: "ఓపెనింగ్ పూజ మరియు ఇన్వొకేషన్",
+    worship: "అంగపూజ, అభిషేకం మరియు నామావళి",
+    offerings: "ఆఫరింగ్స్, హారతి మరియు నమస్కారం",
+    closing: "స్తోత్రాలు, శరణుఘోష మరియు క్లోజింగ్",
+  },
+  angapooja: {
+    ganesha: "గణేశ అంగపూజ",
+    subramanya: "సుబ్రహ్మణ్య అంగపూజ",
+    ayyappa: "అయ్యప్ప అంగపూజ",
+  },
+  ashtottaram: {
+    ganesha: "గణేశ అష్టోత్తరం",
+    subramanya: "సుబ్రహ్మణ్య అష్టోత్తరం",
+    viniyoga: "అయ్యప్ప వినియోగ మరియు న్యాస",
+    dhyana: "అయ్యప్ప ధ్యానం",
+    "ayyappa-type-1": "అయ్యప్ప అష్టోత్తరం · టైప్ 1",
+    "ayyappa-type-2": "అయ్యప్ప అష్టోత్తరం · టైప్ 2",
+    completion: "అయ్యప్ప నామావళి కంప్లీషన్",
+  },
+  sharanaghosha: { sharanaghosha: "అయ్యప్ప శరణుఘోష" },
+  pancharatna: {
+    pancharatna: "పంచరత్న స్తోత్రం · లోకవీరం",
+    phala: "పంచరత్న కన్క్లూడింగ్ వర్స్",
+    arunodaya: "అరుణోదయ మరియు వందేహం సాల్యుటేషన్స్",
+    mahavaidya: "మహావైద్య సాల్యుటేషన్",
+    bhootanatha: "భూతనాథ సదానంద",
+  },
+  harathi: {
+    harathi: "మంగళ హారతి",
+    responses: "అయ్యప్ప నినాదాలు · కాల్స్ మరియు రెస్పాన్సెస్",
+    kshamapana: "క్షమాపణ మంత్రం",
+  },
+  sahasranamavali: {
+    invocation: "సహస్రనామావళి ఇన్వొకేషన్",
+    names: "సహస్రనామావళి నేమ్స్",
+    completion: "సహస్రనామావళి కంప్లీషన్",
+  },
+  suprabhatam: {
+    invocation: "సుప్రభాతం ఇన్వొకేషన్",
+    ...Object.fromEntries(Array.from({ length: 14 }, (_, index) => [`verse-${index + 1}`, `సుప్రభాతం · వర్స్ ${index + 1}`])),
+    completion: "సుప్రభాతం కంప్లీషన్",
+  },
+};
+
+function abpSectionTitle(tab, section, language = "en") {
+  return language === "te" ? abpTeluguSectionTitles[tab.id]?.[section.id] || section.title : section.title;
+}
+
 const abpSource = {
   title: "Source 1: Ayyappa Process Guide",
   url: "https://drive.google.com/file/d/1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx/view",
@@ -21397,7 +21461,7 @@ function searchAbp(query) {
   const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   if (!words.length) return [];
   return abpTabs.flatMap((tab) => tab.sections.filter((section) => {
-    const haystack = [tab.title, abpTabTitle(tab, "te"), section.title, ...section.lines.flatMap((line) => [line.text, line.pronunciation || ""])].join(" ").toLocaleLowerCase();
+    const haystack = [tab.title, abpTabTitle(tab, "te"), section.title, abpSectionTitle(tab, section, "te"), ...section.lines.flatMap((line) => [line.text, line.pronunciation || ""])].join(" ").toLocaleLowerCase();
     return words.every((word) => haystack.includes(word));
   }).map((section) => ({ tab, section })));
 }
@@ -30731,7 +30795,7 @@ function renderSearch() {
   const words = state.query.trim().toLocaleLowerCase().split(/\s+/);
   const chants = chantDefinitions.filter((entry) => words.every((word) => [entry.id, entry.title.en, entry.title.te, entry.purpose.en, entry.purpose.te].join(" ").toLocaleLowerCase().includes(word)));
   return `<div class="topic-intro"><h1 id="page-title">${t("Find in your guides & bhajans", "మార్గదర్శులు, భజనల్లో వెతకండి")}</h1><p class="intro-copy">${results.length + chants.length + chapters.length + abpResults.length + bhajanMatches.length} ${t("matches for", "ఫలితాలు")} “${esc(state.query)}”</p></div>
-  ${abpResults.length || bhajanMatches.length ? `<div class="search-results">${abpResults.map(({ tab, section }) => `<a href="${route("abp", { tab: tab.id, part: section.id })}"><div><h2>${esc(section.title)}</h2><p>Source 1 · ${esc(abpTabTitle(tab, lang))}</p></div>${icon("arrow")}</a>`).join("")}${bhajanMatches.map((song) => `<a href="${route("bhajans", { song: song.id })}"><div><h2>${esc(song.title)}</h2><p>${t("Bhajan book · p.", "భజనల పుస్తకం · పేజీ")} ${song.start}</p></div>${icon("arrow")}</a>`).join("")}</div>` : ""}
+  ${abpResults.length || bhajanMatches.length ? `<div class="search-results">${abpResults.map(({ tab, section }) => `<a href="${route("abp", { tab: tab.id, part: section.id })}"><div><h2>${esc(abpSectionTitle(tab, section, lang))}</h2><p>Source 1 · ${esc(abpTabTitle(tab, lang))}</p></div>${icon("arrow")}</a>`).join("")}${bhajanMatches.map((song) => `<a href="${route("bhajans", { song: song.id })}"><div><h2>${esc(song.title)}</h2><p>${t("Bhajan book · p.", "భజనల పుస్తకం · పేజీ")} ${song.start}</p></div>${icon("arrow")}</a>`).join("")}</div>` : ""}
   <p class="reader-language-note">${t("Book search includes chapter titles and unreviewed Telugu OCR. Recognition errors can cause missed or incorrect matches. Other results come from the companion’s separate sources.", "పుస్తక శోధనలో విభాగాల పేర్లు, సమీక్షించని తెలుగు OCR పాఠ్యం ఉన్నాయి. అక్షర గుర్తింపు తప్పుల వల్ల కొన్ని ఫలితాలు దొరకకపోవచ్చు లేదా తప్పుగా రావచ్చు. ఇతర ఫలితాలు అదనపు విభాగాల మూలాల నుంచి వస్తాయి.")}</p>
   ${results.length || chants.length || chapters.length || abpResults.length || bhajanMatches.length ? `<div class="search-results">${chapters.map((chapter) => `<a href="${route("book", { chapter: chapter.id, page: chapter.matchPage })}"><div><h2>${esc(text(chapter.title))}</h2><p>${t("Nitya Puja PDF", "నిత్యపూజ PDF")} · ${esc(bookRange(chapter))}</p></div>${icon("arrow")}</a>`).join("")}${chants.map((entry) => `<a href="${route("chanting", { chant: entry.id })}"><div><h2>${esc(text(entry.title))}</h2><p>${t("Companion chant", "అదనపు ప్రార్థన")} · ${esc(text(entry.purpose))}</p></div>${icon("arrow")}</a>`).join("")}${results.map((topic) => link(topic.id, `<div><h2>${esc(text(topic.title))}</h2><p>${t("Companion guide", "అదనపు మార్గదర్శి")} · ${esc(text(topic.description))}</p></div>${icon("arrow")}`)).join("")}</div>` : `<div class="empty-state"><h2>${t("No matching section", "సరిపోలే విభాగం లేదు")}</h2><p>${t("Try a tab, prayer, or chapter title. PDF OCR may not recognize every Telugu word.", "ట్యాబ్, ప్రార్థన, విభాగం పేరుతో ప్రయత్నించండి. PDF OCR ప్రతి తెలుగు పదాన్నీ గుర్తించకపోవచ్చు.")}</p><button data-action="clear-search">${t("Show guide contents", "విషయ సూచిక చూపించండి")}</button></div>`}`;
 }
@@ -30766,7 +30830,7 @@ function abpSectionOutline(tab, headingLevel = 2) {
     const isSahasraNames = tab.id === "sahasranamavali" && part.id === "names";
     const countNote = tab.id === "sharanaghosha" || (tab.id === "ashtottaram" && part.id.startsWith("ayyappa-type"))
       ? `<p class="outline-note">${t("Source count: 107 invocations, preserved without adding a 108th.", "మూలంలో 107 నామాలు; లేని 108వ నామాన్ని జోడించలేదు.")}</p>` : "";
-    return `<li><section aria-labelledby="outline-${tab.id}-${part.id}"><h${headingLevel} id="outline-${tab.id}-${part.id}"><span class="outline-number" aria-hidden="true">${index + 1}.</span> ${esc(part.title)}</h${headingLevel}><div class="outline-children"><div class="inline-reading ${part.kind === "prayer" ? "inline-prayer" : ""}">${visibleLines.map((line, lineIndex) => renderAbpLine(line, isSahasraNames ? lineIndex + 1 : line.number)).join("")}</div>${!full ? `<p class="outline-note">${t(`Showing the first 3 of ${part.lines.length} source lines.`, `మూలంలోని ${part.lines.length} పంక్తులలో మొదటి 3 ఇక్కడ ఉన్నాయి.`)}</p>` : ""}${countNote}${isSahasraNames ? `<p class="outline-note">${t("The complete reader numbers all 1000 names in groups of ten.", "పూర్తి పఠనంలో 1000 నామాలు పది చొప్పున సంఖ్యలతో ఉన్నాయి.")}</p>` : ""}<a class="outline-reading-link" href="${route("abp", { tab: tab.id, part: part.id })}">${full ? t("Open separate reader", "ప్రత్యేక పఠనం తెరవండి") : t("Read the complete list", "పూర్తి జాబితా చదవండి")}${icon("arrow")}</a></div></section></li>`;
+    return `<li><section aria-labelledby="outline-${tab.id}-${part.id}"><h${headingLevel} id="outline-${tab.id}-${part.id}"><span class="outline-number" aria-hidden="true">${index + 1}.</span> ${esc(abpSectionTitle(tab, part, lang))}</h${headingLevel}><div class="outline-children"><div class="inline-reading ${part.kind === "prayer" ? "inline-prayer" : ""}">${visibleLines.map((line, lineIndex) => renderAbpLine(line, isSahasraNames ? lineIndex + 1 : line.number)).join("")}</div>${!full ? `<p class="outline-note">${t(`Showing the first 3 of ${part.lines.length} source lines.`, `మూలంలోని ${part.lines.length} పంక్తులలో మొదటి 3 ఇక్కడ ఉన్నాయి.`)}</p>` : ""}${countNote}${isSahasraNames ? `<p class="outline-note">${t("The complete reader numbers all 1000 names in groups of ten.", "పూర్తి పఠనంలో 1000 నామాలు పది చొప్పున సంఖ్యలతో ఉన్నాయి.")}</p>` : ""}<a class="outline-reading-link" href="${route("abp", { tab: tab.id, part: part.id })}">${full ? t("Open separate reader", "ప్రత్యేక పఠనం తెరవండి") : t("Read the complete list", "పూర్తి జాబితా చదవండి")}${icon("arrow")}</a></div></section></li>`;
   }).join("")}</ol>`;
 }
 
@@ -30789,12 +30853,12 @@ function abpContent() {
   const sourcePronunciation = section.lines.some((line) => line.pronunciation);
   const isSahasraNames = tab.id === "sahasranamavali" && section.id === "names";
   const reading = isSahasraNames ? sahasranamavaliGroups().map((group) => `<section class="namavali-group" aria-labelledby="names-${group.start}"><h2 id="names-${group.start}">${t("Names", "నామాలు")} ${group.start}–${group.end}</h2>${group.lines.map((line, index) => renderAbpLine(line, group.start + index)).join("")}</section>`).join("") : section.lines.map((line) => renderAbpLine(line)).join("");
-  return `<div class="reader-back"><a href="${route("abp", { tab: tab.id })}">← ${esc(abpTabTitle(tab, lang))}</a><button data-action="focus">${document.body.classList.contains("focus-reading") ? t("Exit focus view", "సాధారణ వీక్షణ") : t("Focus view", "ఏకాగ్ర పఠనం")}</button></div><div class="topic-intro"><h1 id="page-title">${esc(section.title)}</h1></div>
-  <div class="book-controls"><label>${t("Workbook tab", "వర్క్‌బుక్ ట్యాబ్")}<select id="abp-tab">${abpTabs.map((entry) => `<option value="${entry.id}" ${entry.id === tab.id ? "selected" : ""}>${esc(abpTabTitle(entry, lang))}</option>`).join("")}</select></label><label>${t("Subsection", "ఉపవిభాగం")}<select id="abp-part">${tab.sections.map((part) => `<option value="${part.id}" ${part === section ? "selected" : ""}>${esc(part.title)}</option>`).join("")}</select></label></div>
+  return `<div class="reader-back"><a href="${route("abp", { tab: tab.id })}">← ${esc(abpTabTitle(tab, lang))}</a><button data-action="focus">${document.body.classList.contains("focus-reading") ? t("Exit focus view", "సాధారణ వీక్షణ") : t("Focus view", "ఏకాగ్ర పఠనం")}</button></div><div class="topic-intro"><h1 id="page-title">${esc(abpSectionTitle(tab, section, lang))}</h1></div>
+  <div class="book-controls"><label>${t("Workbook tab", "వర్క్‌బుక్ ట్యాబ్")}<select id="abp-tab">${abpTabs.map((entry) => `<option value="${entry.id}" ${entry.id === tab.id ? "selected" : ""}>${esc(abpTabTitle(entry, lang))}</option>`).join("")}</select></label><label>${t("Subsection", "ఉపవిభాగం")}<select id="abp-part">${tab.sections.map((part) => `<option value="${part.id}" ${part === section ? "selected" : ""}>${esc(abpSectionTitle(tab, part, lang))}</option>`).join("")}</select></label></div>
   <p class="reader-language-note">${section.kind === "guide" ? t("Procedure instructions are retained in the workbook’s English. These are source-specific customs, not medical advice. Follow your Guruswamy and appropriate health and fire-safety precautions.", "విధాన సూచనలు మూలంలోని Englishలోనే ఉన్నాయి. ఇవి మూలంలోని ఆచారాలు; వైద్య సలహా కాదు. గురుస్వామి సూచనలు, ఆరోగ్య, అగ్ని జాగ్రత్తలు పాటించండి.") : t(`${sourcePronunciation ? "English pronunciation is supplied by the workbook." : "English pronunciation is generated from the workbook’s Telugu."} This is pronunciation, not translated meaning. aa, ee, oo mark long vowels. Source spellings are retained; confirm pronunciation with your Guruswamy.`, "English పఠనం ఉచ్చారణ మాత్రమే; అర్థానువాదం కాదు. మూలంలోని తెలుగు అలాగే ఉంది. ఉచ్చారణను గురుస్వామితో నిర్ధారించుకోండి.")}</p>
   ${tab.id === "sharanaghosha" || (tab.id === "ashtottaram" && section.id.startsWith("ayyappa-type")) ? `<p class="reader-notice">${t("This source supplies 107 invocations in this list. It is preserved as supplied, without inventing a missing 108th entry.", "ఈ మూల జాబితాలో 107 నామాలు ఉన్నాయి. లేని 108వ అంశాన్ని కల్పించకుండా మూలాన్ని అలాగే ఉంచాం.")}</p>` : ""}
   ${isSahasraNames ? `<p class="reader-notice">${t("Sahasra means 1000: all 1000 names are numbered below in 100 groups of ten. Invocation and completion prayers remain separate.", "సహస్రం అంటే 1000: మొత్తం 1000 నామాలను పది చొప్పున 100 సమూహాలుగా సంఖ్యలతో ఉంచాం. ప్రారంభ, ముగింపు ప్రార్థనలు వేరుగా ఉన్నాయి.")}</p>` : ""}
-  ${stepper}<article class="abp-reading ${section.kind === "prayer" ? "abp-prayer" : ""}" aria-label="${esc(section.title)}">${reading}</article>${stepper}<p class="book-source"><a href="${abpSource.url}" target="_blank" rel="noopener noreferrer">${t("Original Source 1 workbook", "అసలు Source 1 వర్క్‌బుక్")} · ${esc(abpTabTitle(tab, lang))}${icon("external")}</a></p>`;
+  ${stepper}<article class="abp-reading ${section.kind === "prayer" ? "abp-prayer" : ""}" aria-label="${esc(abpSectionTitle(tab, section, lang))}">${reading}</article>${stepper}<p class="book-source"><a href="${abpSource.url}" target="_blank" rel="noopener noreferrer">${t("Original Source 1 workbook", "అసలు Source 1 వర్క్‌బుక్")} · ${esc(abpTabTitle(tab, lang))}${icon("external")}</a></p>`;
 }
 
 function bookRange(chapter) {
@@ -30880,7 +30944,7 @@ function calendarNavigation() {
 
 function guideNavigation() {
   const current = (matches) => matches && !state.query ? 'aria-current="page"' : "";
-  const tabs = abpTabs.map((tab) => navigationBranch(`tab-${tab.id}`, abpTabTitle(tab, lang), route("abp", { tab: tab.id }), tab.sections.map((section) => `<li><a href="${route("abp", { tab: tab.id, part: section.id })}" ${current(active === "abp" && state.abpTab === tab.id && state.abpPart === section.id)}>${esc(section.title)}</a></li>`).join(""), current(active === "abp" && state.abpTab === tab.id && !state.abpPart))).join("");
+  const tabs = abpTabs.map((tab) => navigationBranch(`tab-${tab.id}`, abpTabTitle(tab, lang), route("abp", { tab: tab.id }), tab.sections.map((section) => `<li><a href="${route("abp", { tab: tab.id, part: section.id })}" ${current(active === "abp" && state.abpTab === tab.id && state.abpPart === section.id)}>${esc(abpSectionTitle(tab, section, lang))}</a></li>`).join(""), current(active === "abp" && state.abpTab === tab.id && !state.abpPart))).join("");
   const chapters = bookChapters.map((chapter) => `<li><a href="${route("book", { chapter: chapter.id })}" ${current(active === "book" && state.bookChapter === chapter.id)}>${esc(text(chapter.title))}</a></li>`).join("");
   return navigationBranch("source-one", sourceOneTitle, route("abp"), tabs, current(active === "abp" && !state.abpTab))
     + navigationBranch("source-two", sourceTwoTitle, route("book"), chapters, current(active === "book" && !state.bookChapter));
@@ -30901,7 +30965,7 @@ function readingLibraries() {
 
 function render() {
   document.documentElement.lang = lang;
-  document.title = `${active === "bhajans" ? resolveBhajan(state.bhajanSong, state.bhajanPage)?.song.title || t("Complete bhajan book", "పూర్తి భజన పుస్తకం") : active === "abp" ? resolveAbp(state.abpTab, state.abpPart)?.section?.title || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
+  document.title = `${active === "bhajans" ? resolveBhajan(state.bhajanSong, state.bhajanPage)?.song.title || t("Complete bhajan book", "పూర్తి భజన పుస్తకం") : active === "abp" ? (resolveAbp(state.abpTab, state.abpPart)?.section ? abpSectionTitle(resolveAbp(state.abpTab).tab, resolveAbp(state.abpTab, state.abpPart).section, lang) : "") || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
   app.innerHTML = `<div class="app-layout">
     <aside class="sidebar">
       <a class="brand" href="${route(state.guide)}" aria-label="${t("Ayyappa companion home", "అయ్యప్ప మార్గదర్శి మొదటి పేజీ")}"><span class="brand-symbol">${icon("lamp")}</span><span>Ayyappa<span class="brand-subtitle">${t("Daily puja · your guides", "నిత్యపూజ · మీ మార్గదర్శులు")}</span></span></a>
@@ -31002,7 +31066,7 @@ function chantOutline(entry) {
   }
   if (entry.abpReference) {
     const tab = resolveAbp(entry.abpReference[0]).tab;
-    return `<ol class="outline-links">${tab.sections.map((part) => `<li><a href="${route("abp", { tab: tab.id, part: part.id })}">${esc(part.title)}${icon("arrow")}</a></li>`).join("")}</ol>`;
+    return `<ol class="outline-links">${tab.sections.map((part) => `<li><a href="${route("abp", { tab: tab.id, part: part.id })}">${esc(abpSectionTitle(tab, part, lang))}${icon("arrow")}</a></li>`).join("")}</ol>`;
   }
   if (entry.bhajanQuery) return `<ol class="outline-links">${searchBhajans(entry.bhajanQuery).map((song) => `<li><span>${esc(song.title)}</span>${pageChildren(song.start, song.end, (page) => route("bhajans", { song: song.id, bhajanPage: page }), (page) => `${t("Page", "పేజీ")} ${page}`)}</li>`).join("")}</ol>`;
   return chantLink(entry.id, t("Open source reference", "మూల సూచన తెరవండి"), "outline-reading-link");

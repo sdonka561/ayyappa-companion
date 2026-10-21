@@ -135,6 +135,30 @@ test("all nine workbook tab names use Telugu-script pronunciation consistently",
   }
 });
 
+test("all 54 subsection names have Telugu-script pronunciation without changing English source labels", async () => {
+  const names = abp.abpTabs.flatMap(tab => tab.sections.map(section => ({ tab, section, label: abp.abpSectionTitle(tab, section, "te") })));
+  assert.equal(names.length, 54);
+  for (const { tab, section, label } of names) {
+    assert.match(label, /[\u0c00-\u0c7f]/);
+    assert.doesNotMatch(label, /[A-Za-z]/);
+    assert.equal(abp.abpSectionTitle(tab, section, "en"), section.title);
+    assert.ok(abp.searchAbp(label).some(result => result.tab.id === tab.id && result.section.id === section.id));
+  }
+  for (const portable of [false, true]) {
+    const app = await reader(portable);
+    const nav = app.navigation("#topic=abp&lang=te");
+    const contents = app.render("#topic=abp&lang=te");
+    for (const { tab, section, label } of names) {
+      assert.ok(nav.includes(label));
+      assert.ok(contents.includes(label));
+      const reading = app.render(`#topic=abp&lang=te&tab=${tab.id}&part=${section.id}`);
+      assert.ok(reading.includes(`<h1 id="page-title">${label}</h1>`));
+      assert.ok(reading.includes(`>${label}</option>`));
+      assert.ok(app.render(`#topic=abp&lang=en&tab=${tab.id}&part=${section.id}`).includes(`<h1 id="page-title">${escapeHtml(section.title)}</h1>`));
+    }
+  }
+});
+
 test("ABP short readings are complete inline; long lists have bounded previews and valid reader links", async () => {
   const app = await reader();
   for (const lang of ["en", "te"]) {
