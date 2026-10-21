@@ -113,7 +113,7 @@ test("a fresh page starts the saved-location calendar without requiring hash nav
 });
 
 test("all nine workbook tab names use Telugu-script pronunciation consistently", async () => {
-  const labels = ["మాలధారణ మరియు పీఠం సెటప్", "పూజ వరుస", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
+  const labels = ["మాలధారణ మరియు పీఠం ఏర్పాటు", "పూజ వరుస", "అథ అంగపూజ", "అష్టోత్తరం", "శరణుఘోష", "పంచరత్న స్తోత్రం", "హారతి-క్షమాపణ", "సహస్రనామావళి", "సుప్రభాతం"];
   for (const [index, tab] of abp.abpTabs.entries()) {
     assert.equal(abp.abpTabTitle(tab, "te"), labels[index]);
     assert.equal(abp.abpTabTitle(tab, "en"), tab.title);
@@ -135,15 +135,17 @@ test("all nine workbook tab names use Telugu-script pronunciation consistently",
   }
 });
 
-test("all 54 subsection names have Telugu-script pronunciation without changing English source labels", async () => {
+test("all 54 subsection names use Telugu labels without changing English source labels", async () => {
   const names = abp.abpTabs.flatMap(tab => tab.sections.map(section => ({ tab, section, label: abp.abpSectionTitle(tab, section, "te") })));
   assert.equal(names.length, 54);
   for (const { tab, section, label } of names) {
     assert.match(label, /[\u0c00-\u0c7f]/);
     assert.doesNotMatch(label, /[A-Za-z]/);
+    assert.doesNotMatch(label, /ఇంట్రడక్షన్|ప్రిపరేషన్|కంప్లీషన్|ఇన్వొకేషన్|సాల్యుటేషన్|గైడ్‌లైన్స్|ఆఫరింగ్స్|సెటప్|టైప్|వర్స్/);
     assert.equal(abp.abpSectionTitle(tab, section, "en"), section.title);
     assert.ok(abp.searchAbp(label).some(result => result.tab.id === tab.id && result.section.id === section.id));
   }
+  assert.equal(abp.abpSectionTitle(abp.resolveAbp("maladharana").tab, abp.resolveAbp("maladharana", "introduction").section, "te"), "మాలధారణ పరిచయం");
   for (const portable of [false, true]) {
     const app = await reader(portable);
     const nav = app.navigation("#topic=abp&lang=te");
