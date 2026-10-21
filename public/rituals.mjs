@@ -15,13 +15,11 @@ export const chantCategories = [
 export const chantDefinitions = [
   {
     id: "ganesha", title: bilingual("Ganesha prarthana", "గణేశ ప్రార్థన"), category: "opening",
-    englishMeaning: "I meditate on the white-clad, all-pervading one, moon-hued and four-armed, with a serene face, for the calming of all obstacles.",
     purpose: bilingual("Begin with remembrance of Ganapati and a prayer for the removal of obstacles.", "గణపతిని స్మరించి విఘ్నాలు తొలగాలని ప్రార్థించండి."),
     source: { id: "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0", pages: [2], label: "Ayyappa-Pooja-Niyamavali" },
   },
   {
     id: "guru", title: bilingual("Guru prarthana", "గురు ప్రార్థన"), category: "opening",
-    englishMeaning: "The Guru is Brahma, Vishnu, and Maheshwara; the Guru is the supreme reality itself. To that revered Guru, I bow.",
     purpose: bilingual("A traditional salutation to the Guru, included in the supplied Telugu puja text.", "అందించిన తెలుగు పూజా పాఠ్యంలో ఉన్న సంప్రదాయ గురు స్తుతి."),
     source: { id: "181vQYoHQXTWv-cQ0_V-3WNF9JWEeSW63", pages: [2], label: "శ్రీ అయ్యప్ప స్వామి పూజ విధానం" },
   },
@@ -38,13 +36,11 @@ export const chantDefinitions = [
   },
   {
     id: "sharanam-108", title: bilingual("108 sharanam repetitions", "108 శరణం పునరావృతాలు"), category: "core",
-    englishMeaning: "Lord Ayyappa, I seek refuge in you.",
     purpose: bilingual("A count-along reader for repeating the traditional sharanam refrain 108 times. This is not a fabricated 108-name litany.", "సంప్రదాయ శరణు పలుకును 108 సార్లు పలకడానికి లెక్కతో పఠనం. ఇది కల్పించిన 108 నామాల జాబితా కాదు."),
     source: { id: "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0", pages: [17], label: "Ayyappa-Pooja-Niyamavali" },
   },
   {
     id: "gayatri", title: bilingual("Ayyappa Gayatri", "అయ్యప్ప గాయత్రీ"), category: "core",
-    englishMeaning: "May we know the Lord of beings; we meditate on the son of Bhava (Shiva). May Shasta inspire and guide our understanding.",
     purpose: bilingual("The Ayyappa Gayatri present in the source. Other Shiva/Vishnu variants are not added without source verification; no scientific or medical effects are claimed.", "మూలంలో ఉన్న అయ్యప్ప గాయత్రీ. నిర్ధారించని శివ, విష్ణు గాయత్రీ రూపాలను జోడించలేదు. శాస్త్రీయ లేదా వైద్య ఫలితాల వాదనలు చేయలేదు."),
     source: { id: "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0", pages: [41], label: "Ayyappa-Pooja-Niyamavali" },
   },

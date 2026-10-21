@@ -38,18 +38,14 @@ test("each available reader has nonempty text; references are not fake playable 
   assert.ok(chantTexts.responses.length > 20);
 });
 
-test("English meanings are separate editorial translations, not transliterations", async () => {
-  const translated = chantDefinitions.filter((entry) => entry.englishMeaning);
-  assert.deepEqual(translated.map((entry) => entry.id), ["ganesha", "guru", "sharanam-108", "gayatri"]);
-  for (const entry of translated) {
-    assert.ok(chantTexts[entry.id]);
-    assert.ok(entry.englishMeaning.length > 25);
-  }
+test("English prayer reading is pronunciation only, not meaning translations", async () => {
+  assert.ok(chantDefinitions.every((entry) => !("englishMeaning" in entry)));
   const app = await readFile(new URL("../public/app.mjs", import.meta.url), "utf8");
   assert.doesNotMatch(app, /readerScript|reader-script|item\.roman/);
-  assert.match(app, /English meaning · editorial translation/);
-  assert.match(app, /English translation is not yet available/);
-  assert.match(app, /<span lang="te">/);
+  assert.doesNotMatch(app, /definition\.englishMeaning|English meaning · editorial translation/);
+  assert.match(app, /pronounceTelugu\(item\.te\)/);
+  assert.match(app, /pronounceTelugu\(section\.verse\.te\)/);
+  assert.match(app, /te-Latn/);
 });
 
 test("morning and evening essentials use local time", () => {

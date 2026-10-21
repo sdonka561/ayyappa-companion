@@ -22,7 +22,7 @@ The user additionally requested phone-readable chanting, a 108-name reader, shar
 
 Readable traditional chants must not be confused with modern song references or missing recordings. Preserve the supplied sharanaghosha's actual 107-entry count rather than fabricating a 108th invocation; the dedicated ashtottaram has all 108 source-numbered names.
 
-Keep prayer text in its supplied script: Telugu for current readers, and Tamil where present in linked books. The user does not want a Roman-script option. Add English translations where reliable, label editorial meanings separately, and retain Telugu without claiming a translation when none is available.
+User-directed update: for prayers and book text, English must show Telugu pronunciation in English letters, never translated meanings. Keep English section titles, navigation, and explanatory guide text. Preserve Telugu originals and use them in Telugu reading. Remove earlier editorial English prayer meanings. Book pronunciation inherits the unreviewed OCR's errors and must remain clearly marked as a draft requiring comparison and Guruswamy review. English-letter spelling is approximate, not an exact phonetic notation.
 
 The user-shared Sahasranamam puja-items spreadsheet (`1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk`) has its own preparation-checklist topic. Preserve all 49 source rows, quantities, qualifications, and original instruction links. Clearly distinguish the organizer's “provided” arrangements from supplies the reader needs to confirm or obtain.
 

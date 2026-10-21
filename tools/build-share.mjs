@@ -16,7 +16,7 @@ const [html, css, content, chantData, rituals, app, inventory, image, favicon, p
   readFile(new URL("book.mjs", root), "utf8"),
 ]);
 const importLine = /^import \{[^\n]+\} from "\.\/[\w-]+\.mjs";\r?\n/gm;
-if (!(app.match(importLine)?.length === 4)) throw new Error("App imports changed; update the standalone builder.");
+if (!(app.match(importLine)?.length === 5)) throw new Error("App imports changed; update the standalone builder.");
 let embeddedBook = bookData;
 const { bookPages } = await import("../public/book-data.mjs");
 for (const page of bookPages) {
@@ -24,6 +24,7 @@ for (const page of bookPages) {
   embeddedBook = embeddedBook.replace(JSON.stringify(page.image), JSON.stringify(`data:image/jpeg;base64,${bytes.toString("base64")}`));
 }
 const script = [
+  await readFile(new URL("pronunciation.mjs", root), "utf8"),
   content,
   chantData,
   embeddedBook,
