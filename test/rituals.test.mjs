@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { chantTexts, songCatalogue } from "../public/chant-data.mjs";
+import { chantTexts } from "../public/chant-data.mjs";
 import { chantDefinitions, pujaRoutine, ritualPhase, ritualDay } from "../public/rituals.mjs";
 import { topicById } from "../public/content.mjs";
 import { readFile } from "node:fs/promises";
@@ -101,14 +101,6 @@ test("daily routine and eighteen reminders have complete bilingual content", () 
   assert.equal(pujaRoutine.length, 12);
   for (const step of pujaRoutine) assert.ok(step.en && step.te);
   assert.equal(topicById("rules").sections[0].items.length, 18);
-});
-
-test("song catalogue has 43 distinct source cells and does not invent tempo", () => {
-  assert.equal(songCatalogue.length, 43);
-  assert.equal(new Set(songCatalogue.map((song) => song.cell)).size, 43);
-  assert.equal(songCatalogue.filter((song) => song.tempo === "slow").length, 2);
-  assert.equal(songCatalogue.filter((song) => song.tempo === "varied").length, 1);
-  assert.ok(songCatalogue.every((song) => !("audio" in song) && !("lyrics" in song)));
 });
 
 test("portable file includes traditional readers and no remaining module imports", async () => {

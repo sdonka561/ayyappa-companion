@@ -108,8 +108,8 @@ test("bhiksha serving guidance retains all four user-supplied customs with clear
 });
 
 test("unreadable and confirmation-required documents are not passed off as extracted", () => {
-  assert.equal(inventory.filter((entry) => entry.kind === "file").length, 53);
-  assert.equal(inventory.filter((entry) => entry.kind === "file" && entry.folder.startsWith("Ayyappa")).length, 52);
+  assert.equal(inventory.filter((entry) => entry.kind === "file").length, 52);
+  assert.equal(inventory.filter((entry) => entry.kind === "file" && entry.folder.startsWith("Ayyappa")).length, 51);
   const largePdf = inventory.find((entry) => entry.name === "chandramouli-ayyappa pooja.pdf");
   assert.equal(largePdf.status, "download-confirmation");
   assert.ok(inventory.some((entry) => entry.status === "needs-ocr"));

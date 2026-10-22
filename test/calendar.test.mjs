@@ -18,8 +18,11 @@ async function calendarHarness({ saved = null, solar, storageBlocked = false, ge
     constructor(...args) { super(...(args.length ? args : [now])); }
     static now() { return now; }
   }
+  const input = {};
+  const form = { querySelector: () => input };
+  const root = { querySelector: (selector) => selector === "#calendar-city-form" ? form : null };
   const api = runInNewContext(`${script}
-    ({ calendarContent, calendarSummary, calendarFormatTime, startCalendar, selectCalendarPlace, selectCalendarDate, updateCalendarSolar, locateCalendarVisitor,
+    ({ calendarContent, calendarSummary, calendarFormatTime, startCalendar, bindCalendar, selectCalendarPlace, selectCalendarDate, updateCalendarSolar, locateCalendarVisitor,
        state: calendarState })`, {
     ...panchang,
     Date: CalendarDate, URL, URLSearchParams,
@@ -29,7 +32,7 @@ async function calendarHarness({ saved = null, solar, storageBlocked = false, ge
       setItem(key, value) { if (storageBlocked) throw new Error("blocked"); store.set(key, value); },
       removeItem(key) { if (storageBlocked) throw new Error("blocked"); store.delete(key); },
     },
-    document: { querySelector: () => null, hidden: false, addEventListener: (event, callback) => { events[event] = callback; } },
+    document: { querySelector: (selector) => selector === "#calendar-page" ? root : null, hidden: false, addEventListener: (event, callback) => { events[event] = callback; } },
     window: { addEventListener: (event, callback) => { events[event] = callback; } },
     navigator: { geolocation },
     setInterval(callback, delay) { assert.equal(delay, 60000); events.tick = callback; },
@@ -40,26 +43,31 @@ async function calendarHarness({ saved = null, solar, storageBlocked = false, ge
       return { sunrise: result.sunrise, sunset: result.sunset, nextSunrise: result.nextSunrise, previousSunset: result.previousSunset };
     },
   });
-  return { ...api, calls, store, events, setNow: (iso) => { now = Date.parse(iso); } };
+  return { ...api, calls, store, events, root, setNow: (iso) => { now = Date.parse(iso); } };
 }
 
-test("calendar never assumes a city, requests geolocation, or fetches solar data before location selection", async () => {
+test("calendar defaults to Austin without requesting geolocation", async () => {
   let geolocationRequests = 0;
   const calendar = await calendarHarness({ geolocation: { getCurrentPosition() { geolocationRequests++; } } });
   calendar.startCalendar();
   await settle();
-  assert.equal(calendar.state.place, null);
-  assert.equal(calendar.calls.length, 0);
+  assert.equal(calendar.state.place.name, "Austin, TX");
+  assert.equal(calendar.state.place.latitude, 30.2672);
+  assert.equal(calendar.state.place.longitude, -97.7431);
+  assert.equal(calendar.state.place.timeZone, "America/Chicago");
+  assert.equal(calendar.calls.length, 1);
   assert.equal(geolocationRequests, 0);
   const en = calendar.calendarContent("en");
-  assert.match(en, /No city or timezone is assumed/);
+  assert.match(en, /Austin, TX is the default location/);
+  assert.match(en, /Reset to Austin, TX/);
   assert.match(en, /id="calendar-city"/);
   assert.match(en, /data-calendar-action="locate"/);
   assert.match(en, /Approximate calculated Panchang/);
   const te = calendar.calendarContent("te");
   assert.match(te, /తెలుగు క్యాలెండర్/);
+  assert.match(te, /ఆస్టిన్, టెక్సాస్ డిఫాల్ట్ ప్రదేశం/);
   assert.match(te, /0\.01°/);
-  assert.doesNotMatch(te, /class="calendar-grid"/);
+  assert.match(te, /class="calendar-grid"/);
 });
 
 test("selected city provides all daily values, complete month, source attribution and no location in shared URLs", async () => {
@@ -154,9 +162,22 @@ test("refresh uses selected-city midnight, runs every six hours, and preserves a
   assert.match(calendar.state.error, /valid date/);
 });
 
+test("saved city remains the visitor's local override and reset returns to Austin", async () => {
+  const calendar = await calendarHarness({ saved: JSON.stringify(dallas) });
+  calendar.startCalendar();
+  await settle();
+  assert.equal(calendar.state.place.name, "Dallas");
+  calendar.bindCalendar("en");
+  calendar.root.onclick({ target: { closest: () => ({ disabled: false, dataset: { calendarAction: "forget" } }) } });
+  await settle();
+  assert.equal(calendar.state.place.name, "Austin, TX");
+  assert.equal(calendar.store.has("ayyappa-calendar-place-v1"), false);
+});
+
 test("saved location failures and denied location permission provide visible recovery", async () => {
   const blocked = await calendarHarness({ storageBlocked: true });
   blocked.startCalendar();
+  assert.equal(blocked.state.place.name, "Austin, TX");
   assert.match(blocked.calendarContent("en"), /Saved location could not be read/);
   blocked.selectCalendarPlace(hyderabad);
   await settle();
@@ -164,8 +185,8 @@ test("saved location failures and denied location permission provide visible rec
   assert.equal(blocked.state.data.key, "2026-10-21");
   const corrupt = await calendarHarness({ saved: '{"latitude":999}' });
   corrupt.startCalendar();
-  assert.equal(corrupt.state.place, null);
-  assert.match(corrupt.calendarContent("en"), /Choose a city again/);
+  assert.equal(corrupt.state.place.name, "Austin, TX");
+  assert.match(corrupt.calendarContent("en"), /Saved location could not be read/);
   const denied = await calendarHarness({ geolocation: { getCurrentPosition(resolve, reject) { reject(new Error("denied")); } } });
   await denied.locateCalendarVisitor();
   assert.match(denied.calendarContent("en"), /search for your city/);

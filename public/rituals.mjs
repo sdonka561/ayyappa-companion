@@ -1,5 +1,4 @@
 import { bilingual } from "./content.mjs";
-import { songCatalogue } from "./chant-data.mjs";
 
 const abpId = "1oeRnnIt7VN2bI_ZjYu49dZqGRdkynvPx";
 const abpCitation = (sheet) => ({ id: abpId, pages: [], label: "Source 1: Ayyappa Process Guide", sheet });
@@ -13,67 +12,64 @@ export const chantCategories = [
   { id: "night", title: bilingual("Evening & bedtime", "సాయంత్రం, రాత్రి") },
 ];
 
-// Singer assignments and SPD references supplied by the user, in songbook order.
-const selectedSongDetails = [
-  ["Sandeep swamy/Venky Swamy", 10],
-  ["", 21],
-  ["Sandeep Swamy / Seshikiran swamy", 21],
-  ["Phani Swamy", null],
-  ["Harshini Sura", null],
-  ["Harshini Sura", null],
-  ["Venky Swamy", 16],
-  ["", 41],
-  ["Raghav swamy", null],
-  ["Venky Swamy", null],
-  ["Venky Swamy", null],
-  ["Phani Swamy", null],
-  ["Venky Swamy", 26],
-  ["Phani Swamy", null],
-  ["Naveen Swamy", null],
-  ["Raghav swamy", null],
-  ["Venky Swamy", 18],
-  ["Raghav swamy", null],
-  ["Rohini Swamy", null],
-  ["Raghav swamy", null],
-  ["Raghav swamy", null],
-  ["Venky Swamy/Kiran swamy/Sandeep swamy", 77],
-  ["Naveen Swamy", null],
-  ["Sandeep Swamy", null],
-  ["Venky Swamy", 53],
-  ["", 64],
-  ["Santosh Swamy", null],
-  ["Harsha Swamy/ Harshini Sura", null],
-  ["Sandeep Swamy", 68],
-  ["Venky Swamy/Phani Swamy", 82],
-  ["", 84],
-  ["Santosh Swamy", 55],
-  ["Venky Swamy", 80],
-  ["Hemanth Swamy", null],
-  ["Raghav swamy", null],
-  ["Raghav swamy", null],
-  ["Raghav swamy", null],
-  ["Harshini Sura/Seshikiran Swamy", null],
-  ["Harshini Sura", null],
-  ["Phani Swamy", null],
-  ["Seshikiran swamy", null],
-  ["Seshikiran swamy", null],
-  ["", null],
+const ayyappaTeluguSongs = [
+  ["గణనాథ ఏలుమయ", "నర్సింగి నర్సింగ్ రావు", "ganesha-elumaya-2"],
+  ["గురుస్వామి పాట", "గానం: పి.కేశవ గురుస్వామి", "gurusvami-pata-3"],
+  ["స్వామి కొండకు నేను వస్తా", "గంగపుత్ర నర్సింగ్ రావు గురుస్వామి", "svami-kondaku-nenu-vasta-4"],
+  ["శుక్లాం బరధరం విష్ణుం", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "shuklam-baradharam-vishnu-5"],
+  ["సుబ్రహ్మణయ్య స్వామి పాట", "గానం: పి.కేశవ గురుస్వామి", "subrahmanayya-svami-pata-6"],
+  ["బుజ్జి బుజ్జి గణపయ్య", "ఎ.జంగిరెడ్డి గురుస్వామి", "bujji-bujji-ganapayya-7"],
+  ["నాగరాజ నాగరాజ", "గానం: పి.కేశవ గురుస్వామి", "nagaraja-nagaraja-8"],
+  ["దిగు దిగు దిగునాగ", "గానం: పారుపల్లి రంగనాథ్", "digu-digu-digunaga-9"],
+  ["చుట్టూ ముట్టూ", "గానం: నార్సింగి నర్సింగ్ రావు", "cuttu-muttu-10"],
+  ["స్వామి రా రారారా", "గానం: పి.కేశవ గురుస్వామి", "svami-ra-rarara-11"],
+  ["జీవమున్నంత వరకూ", "గానం: నార్సింగి నర్సింగ్ రావు", "jeevamunnantha-varaku-12"],
+  ["నా చిన్న మణికంఠకు", "గానం: నార్సింగి నర్సింగ్ రావు", "naa-chinni-manikanta-13"],
+  ["ఆడా నీవే..ఈడా నీవే..", "నార్సింగి నర్సింగ్ రావు", "ade-neevu-ade-nenu-14"],
+  ["పడిమీద దీపాలు అయ్యప్పా", "నార్సింగి నర్సింగ్ రావు", "padimeeda-deepalu-ayyappa-15"],
+  ["నిన్నే నమ్మాను", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "ninne-namanu-16"],
+  ["పందళ రాజా పంచ గిరీశ", "నార్సింగి నార్సింగ్ రావు గురుస్వామి", "pandalaraja-panchagireesha-17"],
+  ["నాకు వచ్చిన ఘోష", "పెద్దపులి ఈశ్వర్", "naku-vachina-gosa-18"],
+  ["చల్లని ఓ చిరుగాలి", "మన్నె ప్రవీణ్ కుమార్", "challani-o-chirugali--19"],
+  ["పళ్ళి కట్టు - శబరి మళక్కు", "పి.కేశవ గురుస్వామి", "pallikattu-sabarimalaikku-20"],
+  ["రావా అయ్యప్ప స్వామి రవ్వల పందిళ్ళలోకి", "డప్పు శ్రీను గురుస్వామి", "rava-ayyappa-swamy-ravvala-pandillaloki--21"],
+  ["మల్లెపూల పల్లకి", "డప్పు శ్రీను గురుస్వామి", "mallepula-pallaki-22"],
+  ["ఓ కొండలారా ఓ కోనలారా", "గంగపుత్ర నర్సింగ్ రావు", "o-kondalara-o-konalara-23"],
+  ["నిను చూడగ నేనుండగలనా", "గంగపుత్ర నర్సింగ్ రావు", "ninnu-chudaka-nenundagalana-24"],
+  ["భూత నాథ సదా నందుడా", "గంగపుత్ర నర్సింగ్ రావు", "bhootha-natha-sadananda-25"],
+  ["ఊగే ఉయ్యాలకు అందమొచ్చెరా", "గంగపుత్ర నర్సింగ్ రావు", "ooge-uyyalaku-andam-ochhera-26"],
+  ["పుట్టెడు దుఃఖము", "గంగపుత్ర నర్సింగ్ రావు", "puttedu-dukham-27"],
+  ["కొండలన్ని దాటి దాటి", "గంగపుత్ర నర్సింగ్ రావు", "kondalanni-dhaati-dhaati-28"],
+  ["పచ్చా పచ్చని చెట్టురా", "గంగపుత్ర నర్సింగ్ రావు", "pacha-pachani-chettura-29"],
+  ["తండ్రి గొప్పతనము తెలుసుకో", "నార్సింగి నర్సింగ్ రావు", "tandri-goppathanam-telsuko-30"],
+  ["అమ్మా నాన్నలు ఇలలోన దైవమూ", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "amma-nannalu-ilalona-daivamu-31"],
+  ["జీవితమే నీటి బుడగరా జీవమా", "మన్నె ప్రవీణ్ కుమార్", "jeevitame-neeti-budaga-raa-jeevamaa-32"],
+  ["శబరి కొండ బంగరు కొండ", "ఎ.జంగిరెడ్డి", "shabari-konda-bangaru-konda-33"],
+  ["స్వామికిదే పూజ పాద పూజ", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "swami-kidhe-pooja-padi-pooja-34"],
+  ["మనసులో బాధ ఉంటే", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "manasulo-baadha-unte-36"],
+  ["ప్రాణమున్నంత వరకు అయ్యప్ప", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "pranamunnantha-varaku-ayyappa-37"],
+  ["నవ మాసాలు మోసిన తల్లి", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "nava-maasaalu-mosina-talli-38"],
+  ["భూతనాథ సదానందా", "నార్సింగి నర్సింగ్ రావు గురుస్వామి", "bhootanaada-sadaananda-ayyappa-39"],
+  ["శబరిగిరి వాసా స్వామీ", "కేశవ గురుస్వామి", "sabarigiri-vaasaa-swamy-40"],
 ];
 
-export const selectedBhajans = songCatalogue.map((song, index) => ({
-  ...song,
-  id: `selected-${String(index + 1).padStart(3, "0")}`,
-  title: song.title.replace(/ {2,}/g, " "),
-  singer: selectedSongDetails[index][0],
-  referencePage: selectedSongDetails[index][1],
+export const websiteBhajans = ayyappaTeluguSongs.map(([title, singer, slug], index) => ({
+  id: `site-${String(index + 1).padStart(3, "0")}`,
+  number: index + 1,
+  title,
+  singer,
+  externalSource: {
+    title,
+    singer,
+    url: `https://www.ayyappatelugu.com/bajanapatalu/${slug}`,
+  },
 }));
 
-export function searchSelectedBhajans(query) {
+export function searchWebsiteBhajans(query) {
   const words = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-  return selectedBhajans.filter(song => words.every(word =>
-    `${song.title} ${song.singer} ${song.deity}`.toLocaleLowerCase().includes(word)));
+  return websiteBhajans.filter(song => words.every(word =>
+    `${song.title} ${song.singer}`.toLocaleLowerCase().includes(word)));
 }
-
 export const chantDefinitions = [
   {
     id: "ganesha", title: bilingual("Ganesha prarthana", "గణేశ ప్రార్థన"), category: "opening",
@@ -136,12 +132,6 @@ export const chantDefinitions = [
     source: abpCitation("SUPRABHATAM"), referenceOnly: true,
   },
   {
-    id: "kavacham", title: bilingual("Ayyappa Kavacham", "అయ్యప్ప కవచం"), category: "core",
-    purpose: bilingual("Open the kavacham titles in the complete bhajan book and read their original pages. No recording is bundled.", "పూర్తి భజన పుస్తకంలోని కవచ శీర్షికలను తెరిచి అసలు పేజీలు చదవండి. ఆడియో జత చేయలేదు."),
-    bhajanQuery: "kavacham",
-    source: { id: "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_", pages: [29, 32], label: "Ayyappa bhajans collection" }, referenceOnly: true,
-  },
-  {
     id: "padayatra", title: bilingual("Sabarimala padayatra bhajans", "శబరిమల పాదయాత్ర నినాదాలు"), category: "bhajan",
     purpose: bilingual("The pilgrimage call-and-response chants on printed page 42 of your Nitya Puja book (PDF page 40). Read the first line as the call and the second as the group response.", "మీ నిత్యపూజ పుస్తకంలో ముద్రిత పేజీ 42లోని పాదయాత్ర నినాదాలు (PDF పేజీ 40). మొదటి పంక్తిని పిలుపుగా, రెండో పంక్తిని సమూహ ప్రతిస్పందనగా చదవండి."),
     source: { id: "1EDanwSJyooDryISf5TedJcoKyl_VjJ5Q", pages: [40], label: "Nitya Puja · printed p. 42 / ముద్రిత పేజీ 42" },
@@ -149,15 +139,8 @@ export const chantDefinitions = [
     notice: bilingual("Telugu-script transcription from the scan; some phrases represent Tamil sounds. Source spellings are retained, not standardized. Compare with the original page below and confirm pronunciation with your Guruswamy.", "స్కాన్ నుంచి తెలుగు లిపిలోకి తీసుకున్న పాఠ్యం; కొన్ని పలుకులు తమిళ ఉచ్చారణను సూచిస్తాయి. మూలంలోని వ్రాతను ప్రామాణీకరించకుండా ఉంచాం. కింద ఇచ్చిన అసలు పేజీతో పోల్చి, గురుస్వామితో ఉచ్చారణ నిర్ధారించుకోండి."),
   },
   {
-    id: "padi-puja", title: bilingual("Padi puja melodies & hills bhajans", "పడిపూజ గీతాలు, శబరిగిరి భజనలు"), category: "padi",
-    purpose: bilingual("Read Padi Pooja Kazhinju and Padi Pattu from their original pages in the complete bhajan book. The 18 holy steps and pilgrimage hills are not treated as the same thing; no recording is bundled.", "పూర్తి భజన పుస్తకంలో Padi Pooja Kazhinju, Padi Pattu అసలు పేజీలు చదవండి. 18 పవిత్ర మెట్లు, యాత్ర కొండలు ఒకటిగా చూపించలేదు; ఆడియో లేదు."),
-    bhajanQuery: "padi",
-    source: { id: "1L7CcFrHsZ_OLO7TAvQ2vziDSGvViDBT_", pages: [69, 76], label: "Ayyappa bhajans collection" }, referenceOnly: true,
-  },
-  {
     id: "harivarasanam", title: bilingual("Harivarasanam · night devotion", "హరివరాసనం · రాత్రి భక్తి"), category: "night",
-    purpose: bilingual("Read Harivarasanam in the complete bhajan book or the Nitya Puja PDF version. The niyamavali places it under night resting service; this is not treated as a universally mandatory household ritual. No recording is bundled.", "పూర్తి భజన పుస్తకం లేదా నిత్యపూజ PDFలో హరివరాసనం చదవండి. నియమావళిలో రాత్రి పవళింపు సేవలో ఉంది; ప్రతి ఇంటికీ తప్పనిసరి అని నిర్ణయించలేదు. ఆడియో లేదు."),
-    bhajanQuery: "Harivarasanam",
+    purpose: bilingual("Read Harivarasanam from the Nitya Puja book. The niyamavali places it under night resting service; this is not treated as a universally mandatory household ritual. No recording is bundled.", "నిత్యపూజ పుస్తకంలో హరివరాసనం చదవండి. నియమావళిలో రాత్రి పవళింపు సేవలో ఉంది; ప్రతి ఇంటికీ తప్పనిసరి అని నిర్ణయించలేదు. ఆడియో లేదు."),
     source: { id: "1Avgk8EKnyG0pSHdKNM3L6Km5Tj1aKBm0", pages: [68], label: "Ayyappa-Pooja-Niyamavali" }, referenceOnly: true,
   },
 ];

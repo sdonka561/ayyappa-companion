@@ -1,139 +1,74 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { open, readFile, stat } from "node:fs/promises";
-import { bhajanBook, resolveBhajan, searchBhajans } from "../public/bhajans.mjs";
-import { chantDefinitions, selectedBhajans, searchSelectedBhajans } from "../public/rituals.mjs";
-import { songCatalogue } from "../public/chant-data.mjs";
+import { readFile } from "node:fs/promises";
+import { websiteBhajans, searchWebsiteBhajans } from "../public/rituals.mjs";
 
-test("all 252 contents entries from all eight pages have unique title destinations", () => {
-  assert.equal(bhajanBook.songs.length, 252);
-  assert.equal(new Set(bhajanBook.songs.map((song) => song.id)).size, 252);
-  assert.deepEqual([...new Set(bhajanBook.songs.map((song) => song.tocPage))], [1, 2, 3, 4, 5, 6, 7, 8]);
-  assert.equal(bhajanBook.contentsPages, 8);
-  assert.equal(bhajanBook.songs[0].title, "Shaastha Pancharathnam");
-  assert.equal(bhajanBook.songs[0].start, 8);
-  assert.equal(bhajanBook.songs.at(-1).title, "Vanji paattu");
-  assert.equal(bhajanBook.songs.at(-1).end, 451);
-  const covered = new Set();
-  for (const song of bhajanBook.songs) {
-    assert.ok(song.title.trim().length > 0);
-    assert.ok(song.startY >= 0 && song.startY <= 1);
-    assert.ok(song.start >= 8 && song.end >= song.start && song.end <= 451);
-    assert.equal(resolveBhajan(song.id)?.page.page, song.start);
-    assert.equal(resolveBhajan(song.id, song.end)?.page.page, song.end);
-    for (let page = song.start; page <= song.end; page++) covered.add(page);
-  }
-  assert.deepEqual([...covered].sort((a, b) => a - b), Array.from({ length: 444 }, (_, i) => i + 8));
+const websiteTitles = [
+  "గణనాథ ఏలుమయ", "గురుస్వామి పాట", "స్వామి కొండకు నేను వస్తా", "శుక్లాం బరధరం విష్ణుం",
+  "సుబ్రహ్మణయ్య స్వామి పాట", "బుజ్జి బుజ్జి గణపయ్య", "నాగరాజ నాగరాజ", "దిగు దిగు దిగునాగ",
+  "చుట్టూ ముట్టూ", "స్వామి రా రారారా", "జీవమున్నంత వరకూ", "నా చిన్న మణికంఠకు",
+  "ఆడా నీవే..ఈడా నీవే..", "పడిమీద దీపాలు అయ్యప్పా", "నిన్నే నమ్మాను", "పందళ రాజా పంచ గిరీశ",
+  "నాకు వచ్చిన ఘోష", "చల్లని ఓ చిరుగాలి", "పళ్ళి కట్టు - శబరి మళక్కు", "రావా అయ్యప్ప స్వామి రవ్వల పందిళ్ళలోకి",
+  "మల్లెపూల పల్లకి", "ఓ కొండలారా ఓ కోనలారా", "నిను చూడగ నేనుండగలనా", "భూత నాథ సదా నందుడా",
+  "ఊగే ఉయ్యాలకు అందమొచ్చెరా", "పుట్టెడు దుఃఖము", "కొండలన్ని దాటి దాటి", "పచ్చా పచ్చని చెట్టురా",
+  "తండ్రి గొప్పతనము తెలుసుకో", "అమ్మా నాన్నలు ఇలలోన దైవమూ", "జీవితమే నీటి బుడగరా జీవమా", "శబరి కొండ బంగరు కొండ",
+  "స్వామికిదే పూజ పాద పూజ", "మనసులో బాధ ఉంటే", "ప్రాణమున్నంత వరకు అయ్యప్ప", "నవ మాసాలు మోసిన తల్లి",
+  "భూతనాథ సదానందా", "శబరిగిరి వాసా స్వామీ",
+];
+const websiteSlugs = [
+  "ganesha-elumaya-2", "gurusvami-pata-3", "svami-kondaku-nenu-vasta-4", "shuklam-baradharam-vishnu-5",
+  "subrahmanayya-svami-pata-6", "bujji-bujji-ganapayya-7", "nagaraja-nagaraja-8", "digu-digu-digunaga-9",
+  "cuttu-muttu-10", "svami-ra-rarara-11", "jeevamunnantha-varaku-12", "naa-chinni-manikanta-13",
+  "ade-neevu-ade-nenu-14", "padimeeda-deepalu-ayyappa-15", "ninne-namanu-16", "pandalaraja-panchagireesha-17",
+  "naku-vachina-gosa-18", "challani-o-chirugali--19", "pallikattu-sabarimalaikku-20", "rava-ayyappa-swamy-ravvala-pandillaloki--21",
+  "mallepula-pallaki-22", "o-kondalara-o-konalara-23", "ninnu-chudaka-nenundagalana-24", "bhootha-natha-sadananda-25",
+  "ooge-uyyalaku-andam-ochhera-26", "puttedu-dukham-27", "kondalanni-dhaati-dhaati-28", "pacha-pachani-chettura-29",
+  "tandri-goppathanam-telsuko-30", "amma-nannalu-ilalona-daivamu-31", "jeevitame-neeti-budaga-raa-jeevamaa-32",
+  "shabari-konda-bangaru-konda-33", "swami-kidhe-pooja-padi-pooja-34", "manasulo-baadha-unte-36",
+  "pranamunnantha-varaku-ayyappa-37", "nava-maasaalu-mosina-talli-38", "bhootanaada-sadaananda-ayyappa-39", "sabarigiri-vaasaa-swamy-40",
+];
+
+test("Bhajans contains only the 38 ordered songs from Ayyappa Telugu", () => {
+  assert.equal(websiteBhajans.length, 38);
+  assert.deepEqual(websiteBhajans.map(song => song.number), Array.from({ length: 38 }, (_, index) => index + 1));
+  assert.deepEqual(websiteBhajans.map(song => song.id), Array.from({ length: 38 }, (_, index) => `site-${String(index + 1).padStart(3, "0")}`));
+  assert.deepEqual(websiteBhajans.map(song => song.title), websiteTitles);
+  assert.deepEqual(websiteBhajans.map(song => song.externalSource.url.replace("https://www.ayyappatelugu.com/bajanapatalu/", "")), websiteSlugs);
+  assert.equal(new Set(websiteBhajans.map(song => song.externalSource.url)).size, 38);
+  assert.ok(websiteBhajans.every(song =>
+    song.singer && song.externalSource.singer === song.singer &&
+    song.externalSource.title === song.title &&
+    /^https:\/\/www\.ayyappatelugu\.com\/bajanapatalu\/[^/]+$/.test(song.externalSource.url) &&
+    !song.lyrics && !song.audio && !song.referencePage));
+  assert.equal(websiteBhajans[1].singer, "గానం: పి.కేశవ గురుస్వామి");
+  assert.equal(websiteBhajans[7].externalSource.url, "https://www.ayyappatelugu.com/bajanapatalu/digu-digu-digunaga-9");
+  assert.equal(websiteBhajans[37].externalSource.url, "https://www.ayyappatelugu.com/bajanapatalu/sabarigiri-vaasaa-swamy-40");
 });
 
-test("the selected 43 songs preserve the supplied order, singers, and SPD page references without guessed lyrics", () => {
-  assert.equal(selectedBhajans.length, 43);
-  assert.equal(new Set(selectedBhajans.map(song => song.id)).size, 43);
-  assert.deepEqual(selectedBhajans.map(song => song.title), songCatalogue.map(song => song.title.replace(/ {2,}/g, " ")));
-  assert.deepEqual(selectedBhajans.filter(song => song.referencePage).map(song => [Number(song.id.slice(-3)), song.referencePage]), [
-    [1, 10], [2, 21], [3, 21], [7, 16], [8, 41], [13, 26], [17, 18], [22, 77],
-    [25, 53], [26, 64], [29, 68], [30, 82], [31, 84], [32, 55], [33, 80],
+test("website song search matches Telugu titles and singer credits", () => {
+  assert.equal(searchWebsiteBhajans("").length, 38);
+  assert.deepEqual(searchWebsiteBhajans("దిగు").map(song => song.id), ["site-008"]);
+  assert.deepEqual(searchWebsiteBhajans("పారుపల్లి").map(song => song.id), ["site-008"]);
+  assert.deepEqual(searchWebsiteBhajans("నార్సింగి గురుస్వామి").map(song => song.id), [
+    "site-004", "site-015", "site-016", "site-030", "site-033", "site-034", "site-035", "site-036", "site-037",
   ]);
-  assert.deepEqual(selectedBhajans.filter(song => !song.singer).map(song => song.id), [
-    "selected-002", "selected-008", "selected-026", "selected-031", "selected-043",
-  ]);
-  assert.equal(selectedBhajans[0].singer, "Sandeep swamy/Venky Swamy");
-  assert.equal(selectedBhajans[21].singer, "Venky Swamy/Kiran swamy/Sandeep swamy");
-  assert.equal(selectedBhajans[37].singer, "Harshini Sura/Seshikiran Swamy");
-  for (const song of selectedBhajans) {
-    assert.equal(song.excerpts, undefined);
-    assert.equal(song.lyrics, undefined);
-    assert.equal(song.audio, undefined);
-  }
-  assert.equal(searchSelectedBhajans("").length, 43);
-  assert.deepEqual(searchSelectedBhajans("santosh").map(song => song.id), ["selected-027", "selected-032"]);
-  assert.deepEqual(searchSelectedBhajans("harshini vel").map(song => song.id), ["selected-005", "selected-006"]);
-  assert.equal(searchSelectedBhajans("unmatched_12345").length, 0);
+  assert.equal(searchWebsiteBhajans("unmatched_12345").length, 0);
 });
 
-test("titles missing from PDF bookmarks are included and shared-page songs keep distinct destinations", () => {
-  assert.equal(searchBhajans("Bhootha natha stotra dasakam")[0].start, 11);
-  assert.equal(searchBhajans("Padi Pooja Kazhinju")[0].start, 69);
-  assert.equal(searchBhajans("Pambayil Kuli Kazhinchu")[0].start, 70);
-  assert.equal(searchBhajans("Bhajanam shey manamey")[0].start, 370);
-  const shared = bhajanBook.songs.filter((song) => song.start === 69);
-  assert.equal(shared.length, 2);
-  assert.notEqual(shared[0].startY, shared[1].startY);
-  assert.equal(searchBhajans("nonexistent_12345").length, 0);
-  assert.equal(searchBhajans("").length, 252);
-});
-
-test("bhajan routes reject unknown titles, invalid pages, and pages outside the title's range", () => {
-  assert.equal(resolveBhajan("missing"), null);
-  for (const value of ["bad", "8.5", "-1", "0", "452", "9999999999999999999999999"]) {
-    assert.equal(resolveBhajan("song-001", value), null);
-  }
-  assert.equal(resolveBhajan("contents").page.page, 1);
-  assert.equal(resolveBhajan("contents", "8").page.page, 8);
-  assert.equal(resolveBhajan("contents", "9"), null);
-  assert.equal(resolveBhajan("song-001", "7"), null);
-});
-
-test("all 252 readings retain original PDF text with complete and nonoverlapping page fragments", () => {
-  const pages = new Set();
-  let lines = 0;
-  for (const song of bhajanBook.songs) {
-    assert.ok(song.excerpts.length > 0, song.id);
-    assert.equal(song.excerpts[0].page, song.start);
-    assert.equal(song.excerpts.at(-1).page, song.end);
-    assert.equal(new Set(song.excerpts.map(excerpt => excerpt.page)).size, song.excerpts.length);
-    for (const excerpt of song.excerpts) {
-      assert.ok(excerpt.text.trim().length > 0);
-      assert.doesNotMatch(excerpt.text, /\ufffd/);
-      assert.ok(excerpt.page >= song.start && excerpt.page <= song.end);
-      pages.add(excerpt.page);
-      lines += excerpt.text.split("\n").filter(line => line.trim()).length;
-    }
-  }
-  assert.deepEqual([...pages].sort((a, b) => a - b), Array.from({ length: 444 }, (_, i) => i + 8));
-  assert.equal(lines, 19543);
-  assert.equal(lines, bhajanBook.textExtraction.nonemptyLines);
-  assert.equal(bhajanBook.textExtraction.generatedTranslation, false);
-  assert.equal(bhajanBook.textExtraction.generatedPronunciation, false);
-  assert.match(bhajanBook.songs[0].excerpts[0].text, /Shaastha Pancharathnam/);
-  assert.match(bhajanBook.songs.flatMap(song => song.excerpts).find(excerpt => excerpt.page === 100).text, /[\u0b80-\u0bff]/);
-  // Page 176 has the previous song's last lines before the next title near the top.
-  assert.equal(bhajanBook.songs[81].end, 176);
-  assert.match(bhajanBook.songs[81].excerpts.at(-1).text, /I Surrender, I surrender/);
-  assert.doesNotMatch(bhajanBook.songs[81].excerpts.at(-1).text, /Saranam  Ayyappa SWamiye/);
-  assert.match(bhajanBook.songs[82].excerpts[0].text, /Saranam  Ayyappa SWamiye/);
-});
-
-test("all 451 lossless original page images exist, including the contents", async () => {
-  assert.equal(bhajanBook.pages.length, 451);
-  for (const [index, page] of bhajanBook.pages.entries()) {
-    assert.equal(page.page, index + 1);
-    const url = new URL(`../public/${page.image}`, import.meta.url);
-    assert.ok((await stat(url)).size > 1000, page.image);
-    const file = await open(url);
-    try {
-      const header = Buffer.alloc(16);
-      await file.read(header, 0, 16, 0);
-      assert.equal(header.toString("ascii", 0, 4), "RIFF");
-      assert.equal(header.toString("ascii", 8, 12), "WEBP");
-      assert.equal(header.toString("ascii", 12, 16), "VP8L", "original must be losslessly encoded");
-    } finally {
-      await file.close();
-    }
+test("the removed 43-song list and lyrics do not remain in the Bhajan modules", async () => {
+  for (const path of ["../public/app.mjs", "../public/rituals.mjs", "../public/chant-data.mjs"]) {
+    const contents = await readFile(new URL(path, import.meta.url), "utf8");
+    assert.doesNotMatch(contents, /Ganesha Saranam|Chinni chinni kavadi|Gurumaharaj Gurumaharaj|songCatalogue|selectedBhajanContent/);
   }
 });
 
-test("previously reference-only companion items link to real guide readings", () => {
-  for (const definition of chantDefinitions.filter((entry) => entry.bhajanQuery)) {
-    assert.ok(searchBhajans(definition.bhajanQuery).length > 0, definition.id);
+test("removed PDF archive is absent from the source inventory and frontend modules", async () => {
+  const inventory = JSON.parse(await readFile(new URL("../public/sources.json", import.meta.url), "utf8"));
+  assert.equal(inventory.some(source => source.name === "Ayyappa_bhajans3.pdf"), false);
+  for (const path of ["../public/app.mjs", "../public/rituals.mjs", "../public/sources.json"]) {
+    const contents = await readFile(new URL(path, import.meta.url), "utf8");
+    assert.doesNotMatch(contents, /Ayyappa_bhajans3|bhajan-pages|bhajan-data\.mjs/);
   }
-  assert.deepEqual(chantDefinitions.find((entry) => entry.id === "suprabhatam").abpReference, ["suprabhatam", "verse-1"]);
-});
-
-test("portable guide embeds the entire bhajan book without external image paths", async () => {
-  const html = await readFile(new URL("../public/ayyappa-companion.html", import.meta.url), "utf8");
-  assert.equal((html.match(/data:image\/webp;base64,/g) || []).length, 451);
-  assert.doesNotMatch(html, /"bhajan-pages\/page-\d+\.webp"/);
-  assert.match(html, /function bhajansContent/);
-  assert.match(html, /function resolveBhajan/);
+  const portable = await readFile(new URL("../public/ayyappa-companion.html", import.meta.url), "utf8");
+  assert.doesNotMatch(portable, /Ayyappa_bhajans3|bhajan-pages|function searchBhajans|data:image\/webp;base64,/);
 });
