@@ -175,7 +175,7 @@ test("saved location failures and denied location permission provide visible rec
   assert.match(unavailable.calendarContent("en"), /Location access is unavailable/);
 });
 
-test("portable build includes licensed astronomy, calendar calculations, UI, and eight application imports are bundled", async () => {
+test("portable build includes licensed astronomy, calendar calculations, schedule UI, and all application imports", async () => {
   const portable = await readFile(new URL("../public/ayyappa-companion.html", import.meta.url), "utf8");
   for (const marker of ["const PanchangAstronomy", "function calculatePanchang", "function startCalendar", "id=\"calendar-page\"", "https://api.open-meteo.com", "MIT License"]) assert.ok(portable.includes(marker), marker);
   assert.doesNotMatch(portable, /^import .* from "\.\/(?:astronomy|panchang|calendar)\.mjs"/m);

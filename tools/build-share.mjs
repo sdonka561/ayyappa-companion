@@ -16,7 +16,8 @@ const [html, css, content, chantData, rituals, app, inventory, image, favicon, p
   readFile(new URL("book.mjs", root), "utf8"),
 ]);
 const importLine = /^import \{[^\n]+\} from "\.\/[\w-]+\.mjs";\r?\n/gm;
-if (!(app.match(importLine)?.length === 8)) throw new Error("App imports changed; update the standalone builder.");
+if (!(app.match(importLine)?.length === 9)) throw new Error("App imports changed; update the standalone builder.");
+const scheduleCipher = JSON.stringify(JSON.parse(await readFile(new URL("swami-schedule.enc.json", root), "utf8"))).replaceAll("<", "\\u003c");
 let embeddedBook = bookData;
 const { bookPages } = await import("../public/book-data.mjs");
 for (const page of bookPages) {
@@ -27,6 +28,7 @@ const script = [
   await readFile(new URL("astronomy.mjs", root), "utf8"),
   (await readFile(new URL("panchang.mjs", root), "utf8")).replace(importLine, ""),
   (await readFile(new URL("calendar.mjs", root), "utf8")).replace(importLine, ""),
+  await readFile(new URL("schedule.mjs", root), "utf8"),
   await readFile(new URL("pronunciation.mjs", root), "utf8"),
   await readFile(new URL("abp-data.mjs", root), "utf8"),
   (await readFile(new URL("abp.mjs", root), "utf8")).replace(importLine, "").replace(/^export \{ abpTabs \};\r?\n/m, ""),
@@ -42,7 +44,7 @@ const script = [
 const output = html
   .replace('<link rel="icon" href="icon.svg" type="image/svg+xml">', `<link rel="icon" href="data:image/svg+xml;base64,${favicon.toString("base64")}">`)
   .replace('<link rel="stylesheet" href="style.css">', () => `<style>${css}</style>`)
-  .replace('<script type="module" src="app.mjs"></script>', () => `<script id="embedded-inventory" type="application/json">${inventory.replaceAll("<", "\\u003c")}</script><script type="module">${script}</script>`);
+  .replace('<script type="module" src="app.mjs"></script>', () => `<script id="swami-schedule-cipher" type="application/json">${scheduleCipher}</script><script id="embedded-inventory" type="application/json">${inventory.replaceAll("<", "\\u003c")}</script><script type="module">${script}</script>`);
 await writeFile(new URL("ayyappa-companion.html", root), output);
 console.log(`Built public\\ayyappa-companion.html (self-contained: ABP, Namavali, ${bookPages.length} Nitya Puja pages, and the complete bhajan book).`);
 

@@ -2,5 +2,6 @@ node_modules/
 *.log
 .env
 .env.*
+private-schedule-code*.txt
 __pycache__/
 *.pyc

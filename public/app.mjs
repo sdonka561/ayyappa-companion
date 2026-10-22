@@ -6,6 +6,7 @@ import { pronounceTelugu } from "./pronunciation.mjs";
 import { abpTabs, abpSource, abpTabTitle, abpSectionTitle, resolveAbp, searchAbp, sahasranamavaliGroups } from "./abp.mjs";
 import { bhajanBook, searchBhajans, resolveBhajan } from "./bhajans.mjs";
 import { calendarContent, calendarSummary, bindCalendar, startCalendar } from "./calendar.mjs";
+import { decryptSchedule, loadScheduleCipher, renderSchedule } from "./schedule.mjs";
 
 const app = document.querySelector("#app");
 const state = { inventory: null, inventoryError: null, checked: new Set(), query: "", fontSize: 18, chantId: "", category: "all", readerMode: "list", positions: {}, routine: new Set(), storageWarning: false, phaseOverride: null };
@@ -18,6 +19,10 @@ state.abpPart = "";
 state.bhajanSong = "";
 state.bhajanPage = "";
 state.bhajanCollection = "";
+state.scheduleRows = null;
+state.scheduleLoading = false;
+state.scheduleError = "";
+state.scheduleUnlockVersion = 0;
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 let lang = "en";
 let active = "abp";
@@ -56,6 +61,12 @@ function readRoute() {
   const params = new URLSearchParams(location.hash.slice(1));
   lang = params.get("lang") === "te" ? "te" : "en";
   active = params.get("topic") || "abp";
+  if (active !== "schedule") {
+    state.scheduleRows = null;
+    state.scheduleLoading = false;
+    state.scheduleError = "";
+    state.scheduleUnlockVersion++;
+  }
   if (active === "abp" || active === "book") state.guide = active;
   state.abpTab = params.get("tab") || "";
   state.abpPart = params.get("part") || "";
@@ -69,6 +80,12 @@ function readRoute() {
   state.bookChapter = params.get("chapter") || "";
   state.bookPage = params.get("page") || "";
   state.query = params.get("q") || "";
+  if (state.query.trim() && active === "schedule") {
+    state.scheduleRows = null;
+    state.scheduleLoading = false;
+    state.scheduleError = "";
+    state.scheduleUnlockVersion++;
+  }
   state.chantId = params.get("chant") || "";
   state.category = chantCategories.some((category) => category.id === params.get("category")) ? params.get("category") : "all";
   const path = [active, state.abpTab, state.abpPart, state.bookChapter, state.chantId].join("/");
@@ -78,7 +95,7 @@ function readRoute() {
       if (state.abpTab) navigationOpen.set(`tab-${state.abpTab}`, true);
     } else if (active === "book") navigationOpen.set("source-two", true);
     else if (active === "bhajans" || (active === "chanting" && ["ashtottaram", "sahasranamavali"].includes(state.chantId))) navigationOpen.set("library", true);
-    else if (active !== "calendar") navigationOpen.set("companion", true);
+    else if (active !== "calendar" && active !== "schedule") navigationOpen.set("companion", true);
     navigationPath = path;
   }
   return params.get("section") || suprabhatamSection;
@@ -329,12 +346,13 @@ function bookReader() {
 }
 
 function mainContent() {
-  if (active === "bhajans") return guideContent();
+  if (active === "bhajans" || active === "schedule") return guideContent();
   return `${active === "calendar" ? "" : calendarSummary(lang)}<div class="guide-picker"><label for="guide-version">${t("Guide source", "మార్గదర్శి మూలం")}</label><select id="guide-version"><option value="abp" ${state.guide === "abp" ? "selected" : ""}>${sourceOneTitle}</option><option value="book" ${state.guide === "book" ? "selected" : ""}>${sourceTwoTitle}</option></select></div>${guideContent()}`;
 }
 
 function guideContent() {
   if (state.query.trim()) return renderSearch();
+  if (active === "schedule") return renderSchedule(lang, state.scheduleRows, { loading: state.scheduleLoading, error: state.scheduleError });
   if (active === "calendar") return calendarContent(lang);
   if (active === "bhajans") return bhajansContent();
   if (active === "abp") return abpContent();
@@ -356,6 +374,10 @@ function navigationBranch(id, label, href, children, current = "") {
 
 function calendarNavigation() {
   return `<li><a class="nav-parent" href="${route("calendar")}" ${active === "calendar" && !state.query ? 'aria-current="page"' : ""}>${t("Today & Telugu calendar", "ఈరోజు, తెలుగు క్యాలెండర్")}</a></li>`;
+}
+
+function scheduleNavigation() {
+  return `<li><a class="nav-parent" href="${route("schedule")}" ${active === "schedule" && !state.query ? 'aria-current="page"' : ""}>${t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్")}<span class="nav-private">${t("Passphrase", "పాస్‌ఫ్రేజ్")}</span></a></li>`;
 }
 
 function guideNavigation() {
@@ -384,15 +406,15 @@ function readingLibraries() {
 function render() {
   document.documentElement.lang = lang;
   const bhajanTitle = selectedBhajans.find(song => song.id === state.bhajanSong)?.title || resolveBhajan(state.bhajanSong, state.bhajanPage)?.song.title || (state.bhajanCollection === "book" ? t("Complete bhajan book", "పూర్తి భజన పుస్తకం") : state.bhajanCollection === "prayers" ? t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు") : t("Our bhajan songbook", "మన భజనల పుస్తకం"));
-  document.title = `${active === "bhajans" ? bhajanTitle : active === "abp" ? (resolveAbp(state.abpTab, state.abpPart)?.section ? abpSectionTitle(resolveAbp(state.abpTab).tab, resolveAbp(state.abpTab, state.abpPart).section, lang) : "") || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
+  document.title = `${active === "schedule" ? t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్") : active === "bhajans" ? bhajanTitle : active === "abp" ? (resolveAbp(state.abpTab, state.abpPart)?.section ? abpSectionTitle(resolveAbp(state.abpTab).tab, resolveAbp(state.abpTab, state.abpPart).section, lang) : "") || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
   app.innerHTML = `<div class="app-layout">
     <aside class="sidebar">
       <a class="brand" href="${route(state.guide)}" aria-label="${t("Ayyappa companion home", "అయ్యప్ప మార్గదర్శి మొదటి పేజీ")}"><span class="brand-symbol">${icon("lamp")}</span><span>Ayyappa<span class="brand-subtitle">${t("Daily puja · your guides", "నిత్యపూజ · మీ మార్గదర్శులు")}</span></span></a>
-      <nav class="topic-nav book-nav" aria-label="${t("Guide sections", "మార్గదర్శి విభాగాలు")}"><ul class="nav-tree">${calendarNavigation()}${guideNavigation()}${readingLibraries()}</ul></nav>
+      <nav class="topic-nav book-nav" aria-label="${t("Guide sections", "మార్గదర్శి విభాగాలు")}"><ul class="nav-tree">${scheduleNavigation()}${calendarNavigation()}${guideNavigation()}${readingLibraries()}</ul></nav>
       <div class="sidebar-bottom"><p lang="te">స్వామియే శరణం అయ్యప్ప</p><p>${t("Choose the guide for your practice.", "మీ ఆచరణకు మార్గదర్శిని ఎంచుకోండి.")}</p><a href="${state.guide === "abp" ? abpSource.url : primaryBook.url}" target="_blank" rel="noopener noreferrer">${state.guide === "abp" ? t("Original Source 1 workbook", "అసలు Source 1 వర్క్‌బుక్") : t("Original Nitya Puja book", "అసలు నిత్యపూజ పుస్తకం")}${icon("external")}</a></div>
     </aside>
     <div class="workspace"><header class="toolbar"><form class="search-form" role="search"><label for="guide-search" class="sr-only">${t("Search the book and companion", "పుస్తకం, అదనపు విభాగాల్లో వెతకండి")}</label>${icon("search")}<input id="guide-search" type="search" placeholder="${t("Find a prayer, chapter, or item…", "ప్రార్థన, విభాగం, వస్తువు వెతకండి…")}" value="${esc(state.query)}" autocomplete="off"><button class="search-submit" type="submit">${t("Search", "వెతకండి")}</button></form><div class="toolbar-actions"><div class="language-switch" role="group" aria-label="${t("Interface language", "యాప్ భాష")}"><button data-lang="en" lang="en" aria-pressed="${lang === "en"}">English</button><button data-lang="te" lang="te" aria-pressed="${lang === "te"}">తెలుగు</button></div><button class="share-button" data-action="share">${icon("share")}<span>${t("Share", "పంచుకోండి")}</span></button></div></header>
-    <main id="main" tabindex="-1"><div class="reading-tools"><span>${["abp", "book"].includes(active) ? t("Your puja guide", "మీ పూజా మార్గదర్శి") : link("companion", t("← Companion sections", "← అదనపు విభాగాలు"))}</span><div role="group" aria-label="${t("Reading text size", "అక్షరాల పరిమాణం")}"><button data-size="-1" aria-label="${t("Decrease text size", "అక్షరాలు చిన్నవి చేయండి")}" ${state.fontSize <= 16 ? "disabled" : ""}>A−</button><button data-size="1" aria-label="${t("Increase text size", "అక్షరాలు పెద్దవి చేయండి")}" ${state.fontSize >= 24 ? "disabled" : ""}>A+</button></div></div><div id="page-content">${mainContent()}</div><footer class="footer"><p>${t("Choose between the Source 1 workbook and the Nitya Puja PDF. Their readings remain separate; other-source guides are in Companion sections. Not an official temple publication.", "Source 1 వర్క్‌బుక్ లేదా నిత్యపూజ PDF ఎంచుకోండి. వాటి పాఠ్యాలు వేర్వేరుగా ఉన్నాయి; ఇతర మూలాలు అదనపు విభాగాల్లో ఉన్నాయి. ఇది అధికారిక ఆలయ ప్రచురణ కాదు.")}</p><p>${t("Original documents are the reference. Pronunciation is not translated meaning. PDF text inherits OCR errors; follow your Guruswamy’s guidance and appropriate health precautions.", "అసలు పత్రాలనే ఆధారంగా తీసుకోండి. ఉచ్చారణ అర్థానువాదం కాదు. PDF పాఠ్యంలో OCR తప్పులు ఉండవచ్చు; గురుస్వామి సూచనలు, ఆరోగ్య జాగ్రత్తలు పాటించండి.")}</p></footer></main></div></div>
+    <main id="main" tabindex="-1"><div class="reading-tools"><span>${["abp", "book"].includes(active) ? t("Your puja guide", "మీ పూజా మార్గదర్శి") : active === "schedule" ? t("Shared schedule", "పంచుకున్న షెడ్యూల్") : link("companion", t("← Companion sections", "← అదనపు విభాగాలు"))}</span><div role="group" aria-label="${t("Reading text size", "అక్షరాల పరిమాణం")}"><button data-size="-1" aria-label="${t("Decrease text size", "అక్షరాలు చిన్నవి చేయండి")}" ${state.fontSize <= 16 ? "disabled" : ""}>A−</button><button data-size="1" aria-label="${t("Increase text size", "అక్షరాలు పెద్దవి చేయండి")}" ${state.fontSize >= 24 ? "disabled" : ""}>A+</button></div></div><div id="page-content">${mainContent()}</div><footer class="footer"><p>${t("Choose between the Source 1 workbook and the Nitya Puja PDF. Their readings remain separate; other-source guides are in Companion sections. Not an official temple publication.", "Source 1 వర్క్‌బుక్ లేదా నిత్యపూజ PDF ఎంచుకోండి. వాటి పాఠ్యాలు వేర్వేరుగా ఉన్నాయి; ఇతర మూలాలు అదనపు విభాగాల్లో ఉన్నాయి. ఇది అధికారిక ఆలయ ప్రచురణ కాదు.")}</p><p>${t("Original documents are the reference. Pronunciation is not translated meaning. PDF text inherits OCR errors; follow your Guruswamy’s guidance and appropriate health precautions.", "అసలు పత్రాలనే ఆధారంగా తీసుకోండి. ఉచ్చారణ అర్థానువాదం కాదు. PDF పాఠ్యంలో OCR తప్పులు ఉండవచ్చు; గురుస్వామి సూచనలు, ఆరోగ్య జాగ్రత్తలు పాటించండి.")}</p></footer></main></div></div>
     <dialog id="share-dialog" aria-labelledby="share-title"><form method="dialog"><button class="close-dialog" aria-label="${t("Close", "మూసివేయండి")}">×</button></form><h2 id="share-title">${t("Share this companion", "ఈ మార్గదర్శిని పంచుకోండి")}</h2><div id="share-content"></div></dialog>
     <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>`;
   document.documentElement.style.setProperty("--reading-size", `${state.fontSize}px`);
@@ -451,6 +473,58 @@ function bindEvents() {
   app.querySelectorAll('[data-action="retry"]').forEach((button) => button.addEventListener("click", loadInventory));
   app.querySelector('[data-action="share"]').addEventListener("click", showShare);
   bindRitualEvents();
+  bindScheduleEvents();
+}
+
+function bindScheduleEvents() {
+  app.querySelector("#schedule-unlock-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const passphrase = app.querySelector("#schedule-passphrase").value;
+    app.querySelector("#schedule-passphrase").value = "";
+    const requestVersion = ++state.scheduleUnlockVersion;
+    state.scheduleError = "";
+    state.scheduleLoading = true;
+    render();
+    try {
+      const payload = await loadScheduleCipher();
+      const rows = await decryptSchedule(passphrase, payload);
+      if (requestVersion !== state.scheduleUnlockVersion || active !== "schedule") return;
+      state.scheduleRows = rows;
+    } catch (error) {
+      if (requestVersion !== state.scheduleUnlockVersion || active !== "schedule") return;
+      if (["invalid-passphrase", "invalid-ciphertext", "schedule-unavailable"].includes(error.message)) {
+        state.scheduleError = error.message;
+      } else {
+        console.error("Swami schedule unlock failed:", error);
+        state.scheduleError = "schedule-unavailable";
+      }
+    } finally {
+      if (requestVersion === state.scheduleUnlockVersion && active === "schedule") {
+        state.scheduleLoading = false;
+        render();
+        if (state.scheduleRows) app.querySelector("#schedule-filter")?.focus();
+        else app.querySelector("#schedule-passphrase")?.focus();
+      }
+    }
+  });
+  app.querySelector("#schedule-lock")?.addEventListener("click", () => {
+    state.scheduleUnlockVersion++;
+    state.scheduleRows = null;
+    state.scheduleLoading = false;
+    state.scheduleError = "";
+    render();
+    app.querySelector("#schedule-passphrase")?.focus();
+  });
+  app.querySelector("#schedule-filter")?.addEventListener("input", (event) => {
+    const words = event.target.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    let count = 0;
+    app.querySelectorAll("[data-schedule-row]").forEach((row) => {
+      row.hidden = !words.every((word) => row.dataset.search.includes(word));
+      if (!row.hidden) count++;
+    });
+    app.querySelector("#schedule-row-count").textContent = `${count} ${t("matching entries", "సరిపోలిన వివరాలు")} · ${t("source order", "మూల క్రమం")}`;
+    app.querySelector("#schedule-empty").hidden = count !== 0;
+  });
 }
 
 function chantLink(id, label, className = "") {

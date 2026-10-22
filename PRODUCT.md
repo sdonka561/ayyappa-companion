@@ -14,7 +14,7 @@ The owner's friends, reading Ayyappa devotional and observance guidance.
 
 ## Product Purpose
 
-Offer the user-selected ABP Simplified process workbook and the Nitya Puja PDF as separate selectable guide versions. ABP opens by default, as explicitly selected by the user. Organize all nine workbook tabs and their internal sections, never combining parallel deity prayers or source variants. Preserve the PDF's chapter/page reader and old shared links. Keep mixed-source guides, chants, and preparation checklists in the separate Companion area.
+Offer the user-selected ABP Simplified process workbook and the Nitya Puja PDF as separate selectable guide versions. ABP opens by default, as explicitly selected by the user. Organize all nine workbook tabs and their internal sections, never combining parallel deity prayers or source variants. Preserve the PDF's chapter/page reader and old shared links. Keep mixed-source guides, chants, and preparation checklists in the separate Companion area. Provide the user-requested read-only Swami pooja schedule as a passphrase-gated encrypted snapshot before the calendar; never link to or expose the source spreadsheet, and preserve its dates without inferring a year.
 
 ## Capabilities and Constraints
 

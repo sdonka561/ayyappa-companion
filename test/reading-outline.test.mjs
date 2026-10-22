@@ -11,6 +11,7 @@ import * as abp from "../public/abp.mjs";
 import * as bhajans from "../public/bhajans.mjs";
 import * as panchang from "../public/panchang.mjs";
 import * as calendar from "../public/calendar.mjs";
+import * as schedule from "../public/schedule.mjs";
 
 const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 
@@ -21,14 +22,17 @@ async function reader(portable = false) {
   return runInNewContext(`${declarations}
     ({
       render(hash) { location.hash = hash; readRoute(); return guideContent(); },
-      navigation(hash) { location.hash = hash; readRoute(); return calendarNavigation() + guideNavigation() + readingLibraries(); },
+      navigation(hash) { location.hash = hash; readRoute(); return scheduleNavigation() + calendarNavigation() + guideNavigation() + readingLibraries(); },
       collapseNavigation(id) { navigationOpen.set(id, false); },
       main(hash) { location.hash = hash; readRoute(); return mainContent(); },
+      setScheduleRows(rows) { state.scheduleRows = rows; },
+      scheduleRows() { return state.scheduleRows; },
       abpOutline(tab) { return abpSectionOutline(resolveAbp(tab).tab); },
       chantOutline(id) { return chantOutline(chantDefinitions.find(entry => entry.id === id)); },
       dailyCalendar(key, place) { return calculatePanchang(key, place); }
     })`, {
-    ...content, ...chants, ...rituals, ...book, ...pronunciation, ...abp, ...bhajans, ...panchang, ...calendar,
+    ...content, ...chants, ...rituals, ...book, ...pronunciation, ...abp, ...bhajans, ...panchang, ...calendar, ...schedule,
+    TextEncoder, TextDecoder, crypto: globalThis.crypto, atob: globalThis.atob,
     URL, URLSearchParams,
     location: { hash: "" },
     document: { querySelector: () => ({}), body: { classList: { contains: () => false } } },
@@ -82,11 +86,22 @@ test("source names and nested navigation stay available in both sources and lang
   }
 });
 
-test("calendar is first and disclosure state follows reading routes without losing manual collapse", async () => {
+test("the passphrase schedule precedes the calendar and navigation state follows routes", async () => {
   for (const portable of [false, true]) {
     const app = await reader(portable);
     let nav = app.navigation("#topic=calendar&lang=en");
-    assert.match(nav, /^<li><a class="nav-parent" href="#topic=calendar/);
+    assert.match(nav, /^<li><a class="nav-parent" href="#topic=schedule[^"]*"[^>]*>Swami Pooja Schedule<span class="nav-private">Passphrase<\/span><\/a><\/li><li><a class="nav-parent" href="#topic=calendar/);
+    assert.ok(nav.indexOf('href="#topic=schedule') < nav.indexOf('href="#topic=calendar'));
+    const telugu = app.navigation("#topic=schedule&lang=te");
+    assert.match(telugu, /^<li><a class="nav-parent" href="#topic=schedule[^"]*"[^>]*>స్వామి పూజా షెడ్యూల్<span class="nav-private">పాస్‌ఫ్రేజ్<\/span><\/a>/);
+    app.setScheduleRows([{ name: "Example Swamy" }]);
+    app.navigation("#topic=schedule&lang=en&q=Example");
+    assert.equal(app.scheduleRows(), null);
+    app.setScheduleRows([{ name: "Example Swamy" }]);
+    app.navigation("#topic=schedule&lang=en");
+    assert.equal(app.scheduleRows()[0].name, "Example Swamy");
+    app.navigation("#topic=calendar&lang=en");
+    assert.equal(app.scheduleRows(), null);
     assert.equal((nav.match(/aria-expanded="true"/g) || []).length, 0);
     assert.equal((nav.match(/aria-expanded="false"/g) || []).length, 12);
     const controls = [...nav.matchAll(/aria-controls="([^"]+)"/g)].map(match => match[1]);

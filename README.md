@@ -47,6 +47,18 @@ The book reader defaults to **pronunciation in English letters** when English is
 
 This app is published on GitHub Pages from the `gh-pages` branch, containing only the website files. The `main` branch contains source and tools. The user-selected book's rendered page images are included for the requested rebuild; keep private extraction artifacts, OCR model/cache, and unrelated source books out of `public`. No recordings are bundled.
 
+### Passphrase-protected Swami schedule
+
+The navigation places **Swami Pooja Schedule** immediately before the calendar. The website contains only the read-only, AES-GCM-encrypted snapshot; it does not link to or embed the source spreadsheet. Swamies can unlock the bilingual table with the passphrase shared by the organizer. The browser clears the table when it is locked, when leaving the schedule, or when using global search. The source dates and weekdays are preserved as listed because the sheet does not specify a year.
+
+The generated access code is kept in the ignored local file `private-schedule-code.txt`; share it separately with the intended readers, never publish or commit it. To prepare a refreshed snapshot from a private CSV export, run:
+
+```powershell
+node tools\prepare-schedule.mjs --input .\private-schedule.csv --output public\swami-schedule.enc.json --secret-output .\private-schedule-code-next.txt
+```
+
+The command refuses to overwrite an existing secret file. For a new snapshot, choose a new private secret-file path and share its new passphrase out of band. Encryption protects this website copy only; access to the original spreadsheet remains controlled by its owner.
+
 To update the published site after editing and committing `main`:
 
 ```powershell

@@ -203,11 +203,57 @@ ol.inline-reading { padding-left: 24px; margin: 16px 0 0; }
 .songbook-lyrics-pending { padding: 28px 0; border-top: 1px solid var(--line); }
 .songbook-lyrics-pending h2 { font-size: 24px; margin-bottom: 16px; }
 .songbook-lyrics-pending p { max-width: 70ch; line-height: 1.9; margin-top: 12px; }
+.nav-private { display: block; margin-top: 4px; font-size: 10px; font-weight: 400; opacity: .78; }
+.schedule-page { max-width: 1200px; padding: 10px 0 48px; font-size: var(--reading-size); }
+.schedule-page h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.3; letter-spacing: -.03em; color: var(--heading); }
+.schedule-intro { max-width: 72ch; margin-top: 12px; color: var(--muted); line-height: 1.8; }
+.schedule-privacy { max-width: 72ch; margin-top: 18px; line-height: 1.8; font-size: 14px; }
+.schedule-unlock { max-width: 520px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
+.schedule-unlock > label, .schedule-search-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.schedule-unlock > div { display: flex; gap: 10px; align-items: stretch; }
+.schedule-unlock input, #schedule-filter { min-width: 0; width: 100%; min-height: 48px; border: 1px solid var(--muted); border-radius: 0; padding: 10px 12px; color: var(--ink); background: var(--white); }
+.schedule-unlock input::placeholder, #schedule-filter::placeholder { color: var(--muted); }
+.schedule-unlock button { min-height: 48px; flex: 0 0 auto; padding: 8px 18px; border: 1px solid var(--black); border-radius: 0; color: var(--white); background: var(--black); }
+.schedule-unlock button:hover { background: #333; }
+.schedule-unlock > p { max-width: 65ch; color: var(--muted); line-height: 1.7; font-size: 12px; margin-top: 12px; }
+.schedule-error { margin-top: 20px; max-width: 65ch; padding: 12px 0; border-top: 1px solid var(--black); border-bottom: 1px solid var(--black); line-height: 1.7; }
+.schedule-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.schedule-heading > button { min-height: 44px; padding: 8px 14px; border: 1px solid var(--muted); border-radius: 0; background: var(--white); }
+.schedule-heading > button:hover { background: #eeeeee; }
+.schedule-search-label { margin-top: 24px; }
+#schedule-filter { max-width: 600px; }
+#schedule-row-count { margin-top: 10px; color: var(--muted); font-size: 13px; }
+.schedule-table-scroll { margin-top: 20px; overflow-x: auto; overscroll-behavior-inline: contain; }
+.swami-schedule-table { width: 100%; min-width: 1050px; table-layout: fixed; border-collapse: collapse; line-height: 1.65; font-size: max(13px, calc(var(--reading-size) - 5px)); }
+.swami-schedule-table caption { text-align: left; padding: 0 0 12px; color: var(--muted); font-size: 12px; }
+.swami-schedule-table th, .swami-schedule-table td { padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+.swami-schedule-table thead { border-top: 1px solid var(--ink); }
+.swami-schedule-table th { font-size: 12px; font-weight: 650; color: var(--heading); }
+.swami-schedule-table td:first-child { font-weight: 600; }
+.swami-schedule-table td:nth-child(6) { font-weight: 600; }
+.swami-schedule-table tr[hidden] { display: none; }
+.swami-schedule-table a { text-underline-offset: 3px; }
+.schedule-empty { padding: 24px 0; color: var(--muted); }
+@media (max-width: 760px) {
+  .schedule-heading { flex-direction: column; gap: 16px; }
+  .schedule-heading > button { align-self: flex-start; }
+  .schedule-table-scroll { overflow: visible; }
+  .swami-schedule-table { display: block; min-width: 0; }
+  .swami-schedule-table caption { margin-bottom: 10px; }
+  .swami-schedule-table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .swami-schedule-table tbody { display: grid; gap: 18px; }
+  .swami-schedule-table tbody tr { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--ink); }
+  .swami-schedule-table td, .swami-schedule-table td:first-child, .swami-schedule-table td:nth-child(6) { display: grid; grid-template-columns: minmax(118px, 38%) minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
+  .swami-schedule-table td::before { content: attr(data-label); font-size: 12px; font-weight: 600; color: var(--muted); }
+  .swami-schedule-table td:first-child > *, .swami-schedule-table td:nth-child(6) > * { font-weight: 600; }
+}
 @media (max-width: 600px) {
   .selected-song-row { grid-template-columns: 24px minmax(0, 1fr) 18px; gap: 8px 12px; padding: 18px 0; }
   .songbook-reference { grid-column: 2; grid-row: 2; text-align: left; }
   .selected-song-row > svg { grid-column: 3; grid-row: 1; width: 18px; }
   .songbook-number { padding-top: 4px; }
+  .schedule-unlock > div { flex-direction: column; }
+  .schedule-unlock button { width: 100%; }
 }
 .bhajan-sheet { position: relative; }
 .bhajan-marker { position: absolute; left: 0; max-width: 100%; border-top: 1px solid var(--black); padding: 2px 6px; background: var(--white); color: var(--black); font-size: 12px; pointer-events: none; }
@@ -586,7 +632,7 @@ dialog p { font-size: 15px; line-height: 1.85; margin-top: 15px; }
   a { color: black; }
 }
 </style>
-  <script id="embedded-inventory" type="application/json">[
+  <script id="swami-schedule-cipher" type="application/json">{"version":1,"cipher":"AES-256-GCM","kdf":"PBKDF2-SHA-256","iterations":600000,"salt":"12b15b04c807ea548eb81204bd41d79c","iv":"4deb1ce8a1464a71e66bb4ff","ciphertext":"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"}</script><script id="embedded-inventory" type="application/json">[
   {
     "id": "1DWuu49bo5aVFMjJHkKpSlo1WjGlGEX8sybj8F1JqvMk",
     "name": "Sahasranamam - Pooja Items.xlsx",
@@ -11436,6 +11482,159 @@ function startCalendar() {
   setInterval(tick, 60000);
   document.addEventListener("visibilitychange", () => { if (!document.hidden) tick(); });
   window.addEventListener("online", () => { if (calendarState.place && calendarState.solarError) void updateCalendarSolar(true); });
+}
+
+const authenticatedContext = new TextEncoder().encode("ayyappa-schedule-v1");
+
+async function decryptSchedule(passphrase, payload) {
+  if (!passphrase || typeof passphrase !== "string") throw new Error("empty-passphrase");
+  if (
+    payload?.version !== 1 ||
+    payload.cipher !== "AES-256-GCM" ||
+    payload.kdf !== "PBKDF2-SHA-256" ||
+    payload.iterations !== 600000 ||
+    !/^[0-9a-f]{32}$/i.test(payload.salt || "") ||
+    !/^[0-9a-f]{24}$/i.test(payload.iv || "") ||
+    typeof payload.ciphertext !== "string"
+  ) throw new Error("invalid-ciphertext");
+
+  const salt = hexBytes(payload.salt);
+  const iv = hexBytes(payload.iv);
+  const material = await crypto.subtle.importKey("raw", new TextEncoder().encode(passphrase), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey(
+    { name: "PBKDF2", salt, iterations: payload.iterations, hash: "SHA-256" },
+    material,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["decrypt"],
+  );
+
+  let cleartext;
+  try {
+    cleartext = await crypto.subtle.decrypt({
+      name: "AES-GCM", iv, additionalData: authenticatedContext, tagLength: 128,
+    }, key, base64Bytes(payload.ciphertext));
+  } catch (error) {
+    if (error.name === "OperationError") throw new Error("invalid-passphrase");
+    throw error;
+  }
+
+  let rows;
+  try {
+    rows = JSON.parse(new TextDecoder("utf-8", { fatal: true }).decode(cleartext));
+  } catch {
+    throw new Error("invalid-ciphertext");
+  }
+  if (!Array.isArray(rows) || rows.some(row =>
+    !row || typeof row !== "object" ||
+    ["name", "address", "date", "day", "period", "time", "puja", "evite", "priest", "volunteers"]
+      .some(key => typeof row[key] !== "string")
+  )) throw new Error("invalid-ciphertext");
+  return rows;
+}
+
+async function loadScheduleCipher() {
+  const inline = document.querySelector("#swami-schedule-cipher");
+  if (inline) return parseCipher(inline.textContent);
+  let response;
+  try {
+    response = await fetch("./swami-schedule.enc.json", { cache: "no-store" });
+  } catch {
+    throw new Error("schedule-unavailable");
+  }
+  if (!response.ok) throw new Error("schedule-unavailable");
+  return parseCipher(await response.text());
+}
+
+function renderSchedule(language, rows, options = {}) {
+  const te = language === "te";
+  const t = (en, telugu) => te ? telugu : en;
+  const heading = rows ? t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్") : t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్");
+  const intro = t(
+    "A read-only schedule for Swamies and hosts. Dates are shown as listed in the source; the year is not specified.",
+    "స్వాములు, ఆతిథ్యుల కోసం చదవడానికి మాత్రమే షెడ్యూల్. మూలంలో ఉన్న తేదీలనే చూపిస్తున్నాం; సంవత్సరం ఇవ్వలేదు.",
+  );
+  if (options.loading) {
+    return `<section class="schedule-page"><h1 id="page-title">${heading}</h1><p>${escapeSchedule(intro)}</p><p role="status">${t("Unlocking the schedule…", "షెడ్యూల్ తెరుస్తున్నాం…")}</p></section>`;
+  }
+  if (!rows) {
+    const error = options.error
+      ? `<p class="schedule-error" id="schedule-error" role="alert">${options.error === "invalid-passphrase"
+        ? t("That passphrase did not unlock the schedule. Check it and try again.", "ఈ పాస్‌ఫ్రేజ్‌తో షెడ్యూల్ తెరవలేదు. సరిచూసి మళ్లీ ప్రయత్నించండి.")
+        : options.error === "schedule-unavailable"
+          ? t("The encrypted schedule could not be loaded. Check your connection and try again.", "గుప్తీకరించిన షెడ్యూల్ లోడ్ కాలేదు. ఇంటర్నెట్ తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.")
+          : t("The encrypted schedule could not be read. Contact the organizer for an updated copy.", "గుప్తీకరించిన షెడ్యూల్ చదవలేకపోయాం. కొత్త కాపీ కోసం నిర్వాహకుడిని సంప్రదించండి.")}</p>` : "";
+    return `<section class="schedule-page"><h1 id="page-title">${heading}</h1><p class="schedule-intro">${escapeSchedule(intro)}</p><p class="schedule-privacy">${t("Enter the shared passphrase to view the table. The schedule is encrypted in the public website files; the passphrase is not saved or put in the URL.", "పట్టిక చూడటానికి పంచుకున్న పాస్‌ఫ్రేజ్ నమోదు చేయండి. షెడ్యూల్ వెబ్‌సైట్ ఫైళ్లలో గుప్తీకరించి ఉంది; పాస్‌ఫ్రేజ్ నిల్వ చేయము లేదా URLలో చేర్చము.")}</p>${error}<form id="schedule-unlock-form" class="schedule-unlock"><label for="schedule-passphrase">${t("Shared passphrase", "పంచుకున్న పాస్‌ఫ్రేజ్")}</label><div><input id="schedule-passphrase" name="passphrase" type="password" autocomplete="current-password" required aria-describedby="schedule-unlock-help"${options.error ? ' aria-invalid="true" aria-describedby="schedule-error schedule-unlock-help"' : ""}><button type="submit">${t("Unlock schedule", "షెడ్యూల్ తెరవండి")}</button></div><p id="schedule-unlock-help">${t("Ask the organizer for the passphrase. This page contains no link back to the source spreadsheet.", "నిర్వాహకుడిని పాస్‌ఫ్రేజ్ అడగండి. ఈ పేజీలో మూల స్ప్రెడ్‌షీట్‌కు లింకు లేదు.")}</p></form></section>`;
+  }
+
+  const rowsMarkup = rows.map((row, index) => {
+    const name = row.name || t("Name not listed", "పేరు ఇవ్వలేదు");
+    const address = row.address || t("Not listed", "ఇవ్వలేదు");
+    const date = row.date || t("Not listed", "ఇవ్వలేదు");
+    const day = row.day || t("Not listed", "ఇవ్వలేదు");
+    const time = [row.period, row.time].filter(Boolean).join(" · ") || t("Not listed", "ఇవ్వలేదు");
+    const puja = row.puja || t("Not selected", "ఎంచుకోలేదు");
+    const evite = safeInvite(row.evite);
+    const priest = row.priest || t("Not assigned", "కేటాయించలేదు");
+    const volunteers = row.volunteers || t("Not listed", "ఇవ్వలేదు");
+    const values = [
+      ["Swami name", "స్వామి పేరు", name],
+      ["Address", "చిరునామా", address],
+      ["Date", "తేదీ", date],
+      ["Day", "వారం రోజు", day],
+      ["Time", "సమయం", time],
+      ["Host-selected puja", "ఆతిథ్యులు ఎంచుకున్న పూజ", puja],
+      ["Evite", "ఆహ్వానం", evite
+        ? `<a href="${escapeSchedule(evite)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeSchedule(t(`Open Evite for ${name}`, `${name} కోసం Evite తెరవండి`))}">${t("Open Evite", "Evite తెరవండి")}</a>`
+        : t("Not listed", "ఇవ్వలేదు"), Boolean(evite)],
+      ["Priest", "పూజారి", priest],
+      ["Volunteers", "సేవకులు", volunteers],
+    ];
+    const searchable = values.map(([, , value]) => value.replace(/<[^>]*>/g, " ")).join(" ").toLocaleLowerCase();
+    return `<tr data-schedule-row="${index + 1}" data-search="${escapeSchedule(searchable)}">${values.map(([label, teluguLabel, value, isLink = false]) => `<td data-label="${escapeSchedule(t(label, teluguLabel))}">${isLink ? value : escapeSchedule(value)}</td>`).join("")}</tr>`;
+  }).join("");
+  return `<section class="schedule-page"><div class="schedule-heading"><div><h1 id="page-title">${heading}</h1><p class="schedule-intro">${escapeSchedule(intro)}</p></div><button type="button" id="schedule-lock">${t("Lock schedule", "షెడ్యూల్ లాక్ చేయండి")}</button></div><label class="schedule-search-label" for="schedule-filter">${t("Find a Swami, address, puja, priest, or volunteer", "స్వామి, చిరునామా, పూజారి లేదా సేవకుడి కోసం వెతకండి")}</label><input id="schedule-filter" type="search" autocomplete="off" aria-controls="swami-schedule-table"><p id="schedule-row-count" role="status">${rows.length} ${t("schedule entries · source order", "షెడ్యూల్ వివరాలు · మూల క్రమంలో")}</p><div class="schedule-table-scroll" role="region" aria-label="${escapeSchedule(t("Swami pooja schedule table", "స్వామి పూజా షెడ్యూల్ పట్టిక"))}" tabindex="0"><table id="swami-schedule-table" class="swami-schedule-table"><caption>${escapeSchedule(t("Read-only schedule · times and spellings are preserved from the source", "చదవడానికి మాత్రమే · మూలంలోని సమయాలు, పేర్ల వ్రాత అలాగే ఉన్నాయి"))}</caption><thead><tr>${["Swami name", "Address", "Date", "Day", "Time", "Pooja option selected by host", "Evite", "Priest name", "Volunteers"].map((label, index) => `<th scope="col">${escapeSchedule(t(label, ["స్వామి పేరు", "చిరునామా", "తేదీ", "వారం రోజు", "సమయం", "ఆతిథ్యులు ఎంచుకున్న పూజ", "ఆహ్వానం", "పూజారి పేరు", "సేవకులు"][index]))}</th>`).join("")}</tr></thead><tbody>${rowsMarkup}</tbody></table></div><p id="schedule-empty" class="schedule-empty" hidden>${t("No entries match. Try a different search.", "సరిపోలే వివరాలు లేవు. మరో పదంతో వెతకండి.")}</p></section>`;
+}
+
+function parseCipher(source) {
+  let payload;
+  try {
+    payload = JSON.parse(source);
+  } catch {
+    throw new Error("invalid-ciphertext");
+  }
+  if (!payload || typeof payload !== "object") throw new Error("invalid-ciphertext");
+  return payload;
+}
+
+function safeInvite(value) {
+  if (!value) return "";
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" ? url.href : "";
+  } catch {
+    return "";
+  }
+}
+
+function hexBytes(value) {
+  return Uint8Array.from(value.match(/.{2}/g), byte => Number.parseInt(byte, 16));
+}
+
+function base64Bytes(value) {
+  let binary;
+  try {
+    binary = atob(value);
+  } catch {
+    throw new Error("invalid-ciphertext");
+  }
+  return Uint8Array.from(binary, character => character.charCodeAt(0));
+}
+
+function escapeSchedule(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+  })[character]);
 }
 
 const vowels = Object.fromEntries([..."అఆఇఈఉఊఋౠఌౡఎఏఐఒఓఔ"].map((letter, i) => [letter, ["a", "aa", "i", "ee", "u", "oo", "ru", "roo", "lu", "loo", "e", "ae", "ai", "o", "oa", "au"][i]]));
@@ -30753,6 +30952,10 @@ state.abpPart = "";
 state.bhajanSong = "";
 state.bhajanPage = "";
 state.bhajanCollection = "";
+state.scheduleRows = null;
+state.scheduleLoading = false;
+state.scheduleError = "";
+state.scheduleUnlockVersion = 0;
 const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 let lang = "en";
 let active = "abp";
@@ -30791,6 +30994,12 @@ function readRoute() {
   const params = new URLSearchParams(location.hash.slice(1));
   lang = params.get("lang") === "te" ? "te" : "en";
   active = params.get("topic") || "abp";
+  if (active !== "schedule") {
+    state.scheduleRows = null;
+    state.scheduleLoading = false;
+    state.scheduleError = "";
+    state.scheduleUnlockVersion++;
+  }
   if (active === "abp" || active === "book") state.guide = active;
   state.abpTab = params.get("tab") || "";
   state.abpPart = params.get("part") || "";
@@ -30804,6 +31013,12 @@ function readRoute() {
   state.bookChapter = params.get("chapter") || "";
   state.bookPage = params.get("page") || "";
   state.query = params.get("q") || "";
+  if (state.query.trim() && active === "schedule") {
+    state.scheduleRows = null;
+    state.scheduleLoading = false;
+    state.scheduleError = "";
+    state.scheduleUnlockVersion++;
+  }
   state.chantId = params.get("chant") || "";
   state.category = chantCategories.some((category) => category.id === params.get("category")) ? params.get("category") : "all";
   const path = [active, state.abpTab, state.abpPart, state.bookChapter, state.chantId].join("/");
@@ -30813,7 +31028,7 @@ function readRoute() {
       if (state.abpTab) navigationOpen.set(`tab-${state.abpTab}`, true);
     } else if (active === "book") navigationOpen.set("source-two", true);
     else if (active === "bhajans" || (active === "chanting" && ["ashtottaram", "sahasranamavali"].includes(state.chantId))) navigationOpen.set("library", true);
-    else if (active !== "calendar") navigationOpen.set("companion", true);
+    else if (active !== "calendar" && active !== "schedule") navigationOpen.set("companion", true);
     navigationPath = path;
   }
   return params.get("section") || suprabhatamSection;
@@ -31064,12 +31279,13 @@ function bookReader() {
 }
 
 function mainContent() {
-  if (active === "bhajans") return guideContent();
+  if (active === "bhajans" || active === "schedule") return guideContent();
   return `${active === "calendar" ? "" : calendarSummary(lang)}<div class="guide-picker"><label for="guide-version">${t("Guide source", "మార్గదర్శి మూలం")}</label><select id="guide-version"><option value="abp" ${state.guide === "abp" ? "selected" : ""}>${sourceOneTitle}</option><option value="book" ${state.guide === "book" ? "selected" : ""}>${sourceTwoTitle}</option></select></div>${guideContent()}`;
 }
 
 function guideContent() {
   if (state.query.trim()) return renderSearch();
+  if (active === "schedule") return renderSchedule(lang, state.scheduleRows, { loading: state.scheduleLoading, error: state.scheduleError });
   if (active === "calendar") return calendarContent(lang);
   if (active === "bhajans") return bhajansContent();
   if (active === "abp") return abpContent();
@@ -31091,6 +31307,10 @@ function navigationBranch(id, label, href, children, current = "") {
 
 function calendarNavigation() {
   return `<li><a class="nav-parent" href="${route("calendar")}" ${active === "calendar" && !state.query ? 'aria-current="page"' : ""}>${t("Today & Telugu calendar", "ఈరోజు, తెలుగు క్యాలెండర్")}</a></li>`;
+}
+
+function scheduleNavigation() {
+  return `<li><a class="nav-parent" href="${route("schedule")}" ${active === "schedule" && !state.query ? 'aria-current="page"' : ""}>${t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్")}<span class="nav-private">${t("Passphrase", "పాస్‌ఫ్రేజ్")}</span></a></li>`;
 }
 
 function guideNavigation() {
@@ -31119,15 +31339,15 @@ function readingLibraries() {
 function render() {
   document.documentElement.lang = lang;
   const bhajanTitle = selectedBhajans.find(song => song.id === state.bhajanSong)?.title || resolveBhajan(state.bhajanSong, state.bhajanPage)?.song.title || (state.bhajanCollection === "book" ? t("Complete bhajan book", "పూర్తి భజన పుస్తకం") : state.bhajanCollection === "prayers" ? t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు") : t("Our bhajan songbook", "మన భజనల పుస్తకం"));
-  document.title = `${active === "bhajans" ? bhajanTitle : active === "abp" ? (resolveAbp(state.abpTab, state.abpPart)?.section ? abpSectionTitle(resolveAbp(state.abpTab).tab, resolveAbp(state.abpTab, state.abpPart).section, lang) : "") || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
+  document.title = `${active === "schedule" ? t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్") : active === "bhajans" ? bhajanTitle : active === "abp" ? (resolveAbp(state.abpTab, state.abpPart)?.section ? abpSectionTitle(resolveAbp(state.abpTab).tab, resolveAbp(state.abpTab, state.abpPart).section, lang) : "") || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
   app.innerHTML = `<div class="app-layout">
     <aside class="sidebar">
       <a class="brand" href="${route(state.guide)}" aria-label="${t("Ayyappa companion home", "అయ్యప్ప మార్గదర్శి మొదటి పేజీ")}"><span class="brand-symbol">${icon("lamp")}</span><span>Ayyappa<span class="brand-subtitle">${t("Daily puja · your guides", "నిత్యపూజ · మీ మార్గదర్శులు")}</span></span></a>
-      <nav class="topic-nav book-nav" aria-label="${t("Guide sections", "మార్గదర్శి విభాగాలు")}"><ul class="nav-tree">${calendarNavigation()}${guideNavigation()}${readingLibraries()}</ul></nav>
+      <nav class="topic-nav book-nav" aria-label="${t("Guide sections", "మార్గదర్శి విభాగాలు")}"><ul class="nav-tree">${scheduleNavigation()}${calendarNavigation()}${guideNavigation()}${readingLibraries()}</ul></nav>
       <div class="sidebar-bottom"><p lang="te">స్వామియే శరణం అయ్యప్ప</p><p>${t("Choose the guide for your practice.", "మీ ఆచరణకు మార్గదర్శిని ఎంచుకోండి.")}</p><a href="${state.guide === "abp" ? abpSource.url : primaryBook.url}" target="_blank" rel="noopener noreferrer">${state.guide === "abp" ? t("Original Source 1 workbook", "అసలు Source 1 వర్క్‌బుక్") : t("Original Nitya Puja book", "అసలు నిత్యపూజ పుస్తకం")}${icon("external")}</a></div>
     </aside>
     <div class="workspace"><header class="toolbar"><form class="search-form" role="search"><label for="guide-search" class="sr-only">${t("Search the book and companion", "పుస్తకం, అదనపు విభాగాల్లో వెతకండి")}</label>${icon("search")}<input id="guide-search" type="search" placeholder="${t("Find a prayer, chapter, or item…", "ప్రార్థన, విభాగం, వస్తువు వెతకండి…")}" value="${esc(state.query)}" autocomplete="off"><button class="search-submit" type="submit">${t("Search", "వెతకండి")}</button></form><div class="toolbar-actions"><div class="language-switch" role="group" aria-label="${t("Interface language", "యాప్ భాష")}"><button data-lang="en" lang="en" aria-pressed="${lang === "en"}">English</button><button data-lang="te" lang="te" aria-pressed="${lang === "te"}">తెలుగు</button></div><button class="share-button" data-action="share">${icon("share")}<span>${t("Share", "పంచుకోండి")}</span></button></div></header>
-    <main id="main" tabindex="-1"><div class="reading-tools"><span>${["abp", "book"].includes(active) ? t("Your puja guide", "మీ పూజా మార్గదర్శి") : link("companion", t("← Companion sections", "← అదనపు విభాగాలు"))}</span><div role="group" aria-label="${t("Reading text size", "అక్షరాల పరిమాణం")}"><button data-size="-1" aria-label="${t("Decrease text size", "అక్షరాలు చిన్నవి చేయండి")}" ${state.fontSize <= 16 ? "disabled" : ""}>A−</button><button data-size="1" aria-label="${t("Increase text size", "అక్షరాలు పెద్దవి చేయండి")}" ${state.fontSize >= 24 ? "disabled" : ""}>A+</button></div></div><div id="page-content">${mainContent()}</div><footer class="footer"><p>${t("Choose between the Source 1 workbook and the Nitya Puja PDF. Their readings remain separate; other-source guides are in Companion sections. Not an official temple publication.", "Source 1 వర్క్‌బుక్ లేదా నిత్యపూజ PDF ఎంచుకోండి. వాటి పాఠ్యాలు వేర్వేరుగా ఉన్నాయి; ఇతర మూలాలు అదనపు విభాగాల్లో ఉన్నాయి. ఇది అధికారిక ఆలయ ప్రచురణ కాదు.")}</p><p>${t("Original documents are the reference. Pronunciation is not translated meaning. PDF text inherits OCR errors; follow your Guruswamy’s guidance and appropriate health precautions.", "అసలు పత్రాలనే ఆధారంగా తీసుకోండి. ఉచ్చారణ అర్థానువాదం కాదు. PDF పాఠ్యంలో OCR తప్పులు ఉండవచ్చు; గురుస్వామి సూచనలు, ఆరోగ్య జాగ్రత్తలు పాటించండి.")}</p></footer></main></div></div>
+    <main id="main" tabindex="-1"><div class="reading-tools"><span>${["abp", "book"].includes(active) ? t("Your puja guide", "మీ పూజా మార్గదర్శి") : active === "schedule" ? t("Shared schedule", "పంచుకున్న షెడ్యూల్") : link("companion", t("← Companion sections", "← అదనపు విభాగాలు"))}</span><div role="group" aria-label="${t("Reading text size", "అక్షరాల పరిమాణం")}"><button data-size="-1" aria-label="${t("Decrease text size", "అక్షరాలు చిన్నవి చేయండి")}" ${state.fontSize <= 16 ? "disabled" : ""}>A−</button><button data-size="1" aria-label="${t("Increase text size", "అక్షరాలు పెద్దవి చేయండి")}" ${state.fontSize >= 24 ? "disabled" : ""}>A+</button></div></div><div id="page-content">${mainContent()}</div><footer class="footer"><p>${t("Choose between the Source 1 workbook and the Nitya Puja PDF. Their readings remain separate; other-source guides are in Companion sections. Not an official temple publication.", "Source 1 వర్క్‌బుక్ లేదా నిత్యపూజ PDF ఎంచుకోండి. వాటి పాఠ్యాలు వేర్వేరుగా ఉన్నాయి; ఇతర మూలాలు అదనపు విభాగాల్లో ఉన్నాయి. ఇది అధికారిక ఆలయ ప్రచురణ కాదు.")}</p><p>${t("Original documents are the reference. Pronunciation is not translated meaning. PDF text inherits OCR errors; follow your Guruswamy’s guidance and appropriate health precautions.", "అసలు పత్రాలనే ఆధారంగా తీసుకోండి. ఉచ్చారణ అర్థానువాదం కాదు. PDF పాఠ్యంలో OCR తప్పులు ఉండవచ్చు; గురుస్వామి సూచనలు, ఆరోగ్య జాగ్రత్తలు పాటించండి.")}</p></footer></main></div></div>
     <dialog id="share-dialog" aria-labelledby="share-title"><form method="dialog"><button class="close-dialog" aria-label="${t("Close", "మూసివేయండి")}">×</button></form><h2 id="share-title">${t("Share this companion", "ఈ మార్గదర్శిని పంచుకోండి")}</h2><div id="share-content"></div></dialog>
     <div id="announcement" class="sr-only" role="status" aria-live="polite"></div>`;
   document.documentElement.style.setProperty("--reading-size", `${state.fontSize}px`);
@@ -31186,6 +31406,58 @@ function bindEvents() {
   app.querySelectorAll('[data-action="retry"]').forEach((button) => button.addEventListener("click", loadInventory));
   app.querySelector('[data-action="share"]').addEventListener("click", showShare);
   bindRitualEvents();
+  bindScheduleEvents();
+}
+
+function bindScheduleEvents() {
+  app.querySelector("#schedule-unlock-form")?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const passphrase = app.querySelector("#schedule-passphrase").value;
+    app.querySelector("#schedule-passphrase").value = "";
+    const requestVersion = ++state.scheduleUnlockVersion;
+    state.scheduleError = "";
+    state.scheduleLoading = true;
+    render();
+    try {
+      const payload = await loadScheduleCipher();
+      const rows = await decryptSchedule(passphrase, payload);
+      if (requestVersion !== state.scheduleUnlockVersion || active !== "schedule") return;
+      state.scheduleRows = rows;
+    } catch (error) {
+      if (requestVersion !== state.scheduleUnlockVersion || active !== "schedule") return;
+      if (["invalid-passphrase", "invalid-ciphertext", "schedule-unavailable"].includes(error.message)) {
+        state.scheduleError = error.message;
+      } else {
+        console.error("Swami schedule unlock failed:", error);
+        state.scheduleError = "schedule-unavailable";
+      }
+    } finally {
+      if (requestVersion === state.scheduleUnlockVersion && active === "schedule") {
+        state.scheduleLoading = false;
+        render();
+        if (state.scheduleRows) app.querySelector("#schedule-filter")?.focus();
+        else app.querySelector("#schedule-passphrase")?.focus();
+      }
+    }
+  });
+  app.querySelector("#schedule-lock")?.addEventListener("click", () => {
+    state.scheduleUnlockVersion++;
+    state.scheduleRows = null;
+    state.scheduleLoading = false;
+    state.scheduleError = "";
+    render();
+    app.querySelector("#schedule-passphrase")?.focus();
+  });
+  app.querySelector("#schedule-filter")?.addEventListener("input", (event) => {
+    const words = event.target.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
+    let count = 0;
+    app.querySelectorAll("[data-schedule-row]").forEach((row) => {
+      row.hidden = !words.every((word) => row.dataset.search.includes(word));
+      if (!row.hidden) count++;
+    });
+    app.querySelector("#schedule-row-count").textContent = `${count} ${t("matching entries", "సరిపోలిన వివరాలు")} · ${t("source order", "మూల క్రమం")}`;
+    app.querySelector("#schedule-empty").hidden = count !== 0;
+  });
 }
 
 function chantLink(id, label, className = "") {
