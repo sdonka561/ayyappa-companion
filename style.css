@@ -189,11 +189,57 @@ ol.inline-reading { padding-left: 24px; margin: 16px 0 0; }
 .songbook-lyrics-pending { padding: 28px 0; border-top: 1px solid var(--line); }
 .songbook-lyrics-pending h2 { font-size: 24px; margin-bottom: 16px; }
 .songbook-lyrics-pending p { max-width: 70ch; line-height: 1.9; margin-top: 12px; }
+.nav-private { display: block; margin-top: 4px; font-size: 10px; font-weight: 400; opacity: .78; }
+.schedule-page { max-width: 1200px; padding: 10px 0 48px; font-size: var(--reading-size); }
+.schedule-page h1 { font-size: clamp(30px, 4vw, 48px); line-height: 1.3; letter-spacing: -.03em; color: var(--heading); }
+.schedule-intro { max-width: 72ch; margin-top: 12px; color: var(--muted); line-height: 1.8; }
+.schedule-privacy { max-width: 72ch; margin-top: 18px; line-height: 1.8; font-size: 14px; }
+.schedule-unlock { max-width: 520px; margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--line); }
+.schedule-unlock > label, .schedule-search-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.schedule-unlock > div { display: flex; gap: 10px; align-items: stretch; }
+.schedule-unlock input, #schedule-filter { min-width: 0; width: 100%; min-height: 48px; border: 1px solid var(--muted); border-radius: 0; padding: 10px 12px; color: var(--ink); background: var(--white); }
+.schedule-unlock input::placeholder, #schedule-filter::placeholder { color: var(--muted); }
+.schedule-unlock button { min-height: 48px; flex: 0 0 auto; padding: 8px 18px; border: 1px solid var(--black); border-radius: 0; color: var(--white); background: var(--black); }
+.schedule-unlock button:hover { background: #333; }
+.schedule-unlock > p { max-width: 65ch; color: var(--muted); line-height: 1.7; font-size: 12px; margin-top: 12px; }
+.schedule-error { margin-top: 20px; max-width: 65ch; padding: 12px 0; border-top: 1px solid var(--black); border-bottom: 1px solid var(--black); line-height: 1.7; }
+.schedule-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.schedule-heading > button { min-height: 44px; padding: 8px 14px; border: 1px solid var(--muted); border-radius: 0; background: var(--white); }
+.schedule-heading > button:hover { background: #eeeeee; }
+.schedule-search-label { margin-top: 24px; }
+#schedule-filter { max-width: 600px; }
+#schedule-row-count { margin-top: 10px; color: var(--muted); font-size: 13px; }
+.schedule-table-scroll { margin-top: 20px; overflow-x: auto; overscroll-behavior-inline: contain; }
+.swami-schedule-table { width: 100%; min-width: 1050px; table-layout: fixed; border-collapse: collapse; line-height: 1.65; font-size: max(13px, calc(var(--reading-size) - 5px)); }
+.swami-schedule-table caption { text-align: left; padding: 0 0 12px; color: var(--muted); font-size: 12px; }
+.swami-schedule-table th, .swami-schedule-table td { padding: 12px 10px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; overflow-wrap: anywhere; }
+.swami-schedule-table thead { border-top: 1px solid var(--ink); }
+.swami-schedule-table th { font-size: 12px; font-weight: 650; color: var(--heading); }
+.swami-schedule-table td:first-child { font-weight: 600; }
+.swami-schedule-table td:nth-child(6) { font-weight: 600; }
+.swami-schedule-table tr[hidden] { display: none; }
+.swami-schedule-table a { text-underline-offset: 3px; }
+.schedule-empty { padding: 24px 0; color: var(--muted); }
+@media (max-width: 760px) {
+  .schedule-heading { flex-direction: column; gap: 16px; }
+  .schedule-heading > button { align-self: flex-start; }
+  .schedule-table-scroll { overflow: visible; }
+  .swami-schedule-table { display: block; min-width: 0; }
+  .swami-schedule-table caption { margin-bottom: 10px; }
+  .swami-schedule-table thead { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  .swami-schedule-table tbody { display: grid; gap: 18px; }
+  .swami-schedule-table tbody tr { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--ink); }
+  .swami-schedule-table td, .swami-schedule-table td:first-child, .swami-schedule-table td:nth-child(6) { display: grid; grid-template-columns: minmax(118px, 38%) minmax(0, 1fr); gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
+  .swami-schedule-table td::before { content: attr(data-label); font-size: 12px; font-weight: 600; color: var(--muted); }
+  .swami-schedule-table td:first-child > *, .swami-schedule-table td:nth-child(6) > * { font-weight: 600; }
+}
 @media (max-width: 600px) {
   .selected-song-row { grid-template-columns: 24px minmax(0, 1fr) 18px; gap: 8px 12px; padding: 18px 0; }
   .songbook-reference { grid-column: 2; grid-row: 2; text-align: left; }
   .selected-song-row > svg { grid-column: 3; grid-row: 1; width: 18px; }
   .songbook-number { padding-top: 4px; }
+  .schedule-unlock > div { flex-direction: column; }
+  .schedule-unlock button { width: 100%; }
 }
 .bhajan-sheet { position: relative; }
 .bhajan-marker { position: absolute; left: 0; max-width: 100%; border-top: 1px solid var(--black); padding: 2px 6px; background: var(--white); color: var(--black); font-size: 12px; pointer-events: none; }
