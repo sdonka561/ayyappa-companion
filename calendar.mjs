@@ -12,6 +12,12 @@ let calendarStarted = false;
 const calendarText = (en, te) => calendarLanguage === "te" ? te : en;
 const calendarName = (pair) => pair[calendarLanguage === "te" ? 1 : 0];
 const calendarLocationKey = "ayyappa-calendar-place-v1";
+const defaultCalendarPlace = {
+  name: "Austin, TX",
+  latitude: 30.2672,
+  longitude: -97.7431,
+  timeZone: "America/Chicago",
+};
 
 export function calendarFormatTime(instant, place, selectedKey) {
   if (!instant) return calendarText("Unavailable", "అందుబాటులో లేదు");
@@ -48,7 +54,20 @@ function calendarSourceLinks() {
 }
 
 function calendarLocationForm() {
-  return `<section class="calendar-location" aria-labelledby="calendar-location-title"><h2 id="calendar-location-title">${calendarText("Your location", "మీ ప్రదేశం")}</h2>${calendarState.place ? `<p><strong>${calendarEscape(calendarState.place.name)}</strong><br><span>${calendarEscape(calendarState.place.timeZone)} · ${calendarState.place.latitude.toFixed(2)}, ${calendarState.place.longitude.toFixed(2)}</span></p>` : `<p>${calendarText("Choose your city to see local timings. No city or timezone is assumed.", "స్థానిక సమయాల కోసం మీ నగరాన్ని ఎంచుకోండి. ఏ నగరాన్నీ, కాలమండలాన్నీ ముందుగా ఊహించము.")}</p>`}<button type="button" data-calendar-action="locate" ${calendarState.locating ? "disabled" : ""}>${calendarState.locating ? calendarText("Finding location…", "ప్రదేశం వెతుకుతున్నాం…") : calendarText("Use my location", "నా ప్రదేశం ఉపయోగించండి")}</button><form id="calendar-city-form" class="calendar-city-form"><label for="calendar-city">${calendarText("Or search for a city", "లేదా నగరాన్ని వెతకండి")}</label><div><input id="calendar-city" name="city" type="search" required minlength="2" maxlength="100" value="${calendarEscape(calendarState.query)}" placeholder="${calendarText("City, e.g. Hyderabad or Dallas", "నగరం, ఉదా. Hyderabad లేదా Dallas")}" autocomplete="off"><button type="submit" ${calendarState.searching ? "disabled" : ""}>${calendarState.searching ? calendarText("Searching…", "వెతుకుతున్నాం…") : calendarText("Search city", "నగరం వెతకండి")}</button></div></form>${calendarState.locationError ? `<p class="calendar-error" role="alert">${calendarEscape(calendarState.locationError)}</p>` : ""}${calendarState.cities.length ? `<ul class="calendar-city-results">${calendarState.cities.map((place, index) => `<li><button type="button" data-calendar-city="${index}">${calendarEscape(place.name)}<span>${calendarEscape(place.timeZone)}</span></button></li>`).join("")}</ul>` : ""}<p class="calendar-privacy">${calendarText("Only request location when you tap the button. Browser permission is optional. Coordinates are rounded to 0.01° before sending them to Open-Meteo for timezone and solar data; city searches send the typed name. Your chosen location is saved only in this browser, not in shared links. No account or tracking is added.", "మీరు బటన్ నొక్కినప్పుడే ప్రదేశ అనుమతి అడుగుతాం; అది తప్పనిసరి కాదు. కాలమండలం, సూర్య సమయాల కోసం అక్షాంశ/రేఖాంశాలను 0.01°కు గుండ్రంగా చేసి Open-Meteoకు పంపుతాం; నగర శోధనలో టైప్ చేసిన పేరు పంపుతాం. ఎంచుకున్న ప్రదేశం ఈ బ్రౌజర్‌లో మాత్రమే నిలుస్తుంది; పంచుకునే లింకులో ఉండదు. ఖాతా, ట్రాకింగ్ లేవు.")}</p>${calendarState.place ? `<button class="calendar-forget" type="button" data-calendar-action="forget">${calendarText("Forget this location", "ఈ ప్రదేశాన్ని తొలగించండి")}</button>` : ""}${calendarState.storageWarning ? `<p class="calendar-error" role="alert">${calendarEscape(calendarState.storageWarning)}</p>` : ""}</section>`;
+  return `<section class="calendar-location" aria-labelledby="calendar-location-title">
+    <h2 id="calendar-location-title">${calendarText("Your location", "మీ ప్రదేశం")}</h2>
+    ${calendarState.place ? `<p><strong>${calendarEscape(calendarState.place.name)}</strong><br><span>${calendarEscape(calendarState.place.timeZone)} · ${calendarState.place.latitude.toFixed(2)}, ${calendarState.place.longitude.toFixed(2)}</span></p>` : ""}
+    <button type="button" data-calendar-action="locate" ${calendarState.locating ? "disabled" : ""}>${calendarState.locating ? calendarText("Finding location…", "ప్రదేశం వెతుకుతున్నాం…") : calendarText("Use my location", "నా ప్రదేశం ఉపయోగించండి")}</button>
+    <form id="calendar-city-form" class="calendar-city-form">
+      <label for="calendar-city">${calendarText("Or search for a city", "లేదా నగరాన్ని వెతకండి")}</label>
+      <div><input id="calendar-city" name="city" type="search" required minlength="2" maxlength="100" value="${calendarEscape(calendarState.query)}" placeholder="${calendarText("City, e.g. Dallas or Hyderabad", "నగరం, ఉదా. Dallas లేదా Hyderabad")}" autocomplete="off"><button type="submit" ${calendarState.searching ? "disabled" : ""}>${calendarState.searching ? calendarText("Searching…", "వెతుకుతున్నాం…") : calendarText("Search city", "నగరం వెతకండి")}</button></div>
+    </form>
+    ${calendarState.locationError ? `<p class="calendar-error" role="alert">${calendarEscape(calendarState.locationError)}</p>` : ""}
+    ${calendarState.cities.length ? `<ul class="calendar-city-results">${calendarState.cities.map((place, index) => `<li><button type="button" data-calendar-city="${index}">${calendarEscape(place.name)}<span>${calendarEscape(place.timeZone)}</span></button></li>`).join("")}</ul>` : ""}
+    <p class="calendar-privacy">${calendarText("Austin, TX is the default. Use my location only if you choose; browser permission is optional. Coordinates are rounded to 0.01° before sending them to Open-Meteo for timezone and solar data; city searches send the typed name. Your chosen location is saved only in this browser, not in shared links. No account or tracking is added.", "ఆస్టిన్, టెక్సాస్ డిఫాల్ట్ ప్రదేశం. మీరు ఎంచుకుంటేనే నా ప్రదేశాన్ని ఉపయోగిస్తాం; బ్రౌజర్ అనుమతి ఐచ్ఛికం. కాలమండలం, సూర్య సమయాల కోసం అక్షాంశ/రేఖాంశాలను 0.01°కు గుండ్రంగా చేసి Open-Meteoకు పంపుతాం; నగర శోధనలో టైప్ చేసిన పేరు పంపుతాం. ఎంచుకున్న ప్రదేశం ఈ బ్రౌజర్‌లో మాత్రమే నిలుస్తుంది; పంచుకునే లింకులో ఉండదు. ఖాతా, ట్రాకింగ్ లేవు.")}</p>
+    ${calendarState.place ? `<button class="calendar-forget" type="button" data-calendar-action="forget">${calendarText("Reset to Austin, TX", "ఆస్టిన్, టెక్సాస్‌కు తిరిగి మార్చు")}</button>` : ""}
+    ${calendarState.storageWarning ? `<p class="calendar-error" role="alert">${calendarEscape(calendarState.storageWarning)}</p>` : ""}
+  </section>`;
 }
 
 function calendarMonthMarkup() {
@@ -92,7 +111,7 @@ function calendarDayMarkup() {
 
 function calendarPageMarkup() {
   const { place } = calendarState;
-  return `<div class="topic-intro"><h1 id="page-title">${calendarText("Today & Telugu calendar", "ఈరోజు, తెలుగు క్యాలెండర్")}</h1><p class="intro-copy">${calendarText("Local sunrise, sunset, tithi, nakshatram, and daily timing periods, with a Telugu month view.", "స్థానిక సూర్యోదయం, అస్తమయం, తిథి, నక్షత్రం, రోజువారీ సమయాలు, తెలుగు నెల క్యాలెండర్.")}</p></div><p class="reader-notice">${calendarText("Approximate calculated Panchang—not a live temple Panchang feed. Only sunrise/sunset are refreshed online. Verify religious dates and muhurthams with a published calendar or your Guruswamy.", "ఇది సుమారు గణించిన పంచాంగం; ఆలయ ప్రత్యక్ష పంచాంగ సమాచారం కాదు. సూర్యోదయం/అస్తమయం మాత్రమే ఆన్‌లైన్‌లో నవీకరిస్తాం. పూజ తేదీలు, ముహూర్తాలను ప్రచురిత క్యాలెండర్ లేదా గురుస్వామితో నిర్ధారించండి.")}</p>${calendarLocationForm()}${calendarState.error ? `<p class="calendar-error" role="alert">${calendarEscape(calendarState.error)}</p>` : ""}${place && calendarState.data ? `<div class="calendar-day-actions"><label for="calendar-date">${calendarText("Reading date", "చూసే తేదీ")}<input id="calendar-date" type="date" value="${calendarState.selected}" min="1901-01-01" max="2099-12-31"></label><button type="button" data-calendar-action="today">${calendarText("Today", "ఈరోజు")}</button><button type="button" data-calendar-action="refresh" ${calendarState.loading ? "disabled" : ""}>${calendarText("Refresh online solar data", "ఆన్‌లైన్ సూర్య సమాచారం నవీకరించండి")}</button></div>${calendarDayMarkup()}${calendarMonthMarkup()}` : ""}${calendarSourceLinks()}`;
+  return `<div class="topic-intro"><h1 id="page-title">${calendarText("Today & Telugu calendar", "ఈరోజు, తెలుగు క్యాలెండర్")}</h1><p class="intro-copy">${calendarText("Austin, TX is the default location. Choose another city or optionally use your device location for local sunrise, sunset, tithi, nakshatram, and daily timing periods.", "ఆస్టిన్, టెక్సాస్ డిఫాల్ట్ ప్రదేశం. స్థానిక సూర్యోదయం, అస్తమయం, తిథి, నక్షత్రం, రోజువారీ సమయాల కోసం మరో నగరాన్ని ఎంచుకోండి లేదా ఐచ్ఛికంగా మీ పరికర ప్రదేశాన్ని ఉపయోగించండి.")}</p></div><p class="reader-notice">${calendarText("Approximate calculated Panchang—not a live temple Panchang feed. Only sunrise/sunset are refreshed online. Verify religious dates and muhurthams with a published calendar or your Guruswamy.", "ఇది సుమారు గణించిన పంచాంగం; ఆలయ ప్రత్యక్ష పంచాంగ సమాచారం కాదు. సూర్యోదయం/అస్తమయం మాత్రమే ఆన్‌లైన్‌లో నవీకరిస్తాం. పూజ తేదీలు, ముహూర్తాలను ప్రచురిత క్యాలెండర్ లేదా గురుస్వామితో నిర్ధారించండి.")}</p>${calendarLocationForm()}${calendarState.error ? `<p class="calendar-error" role="alert">${calendarEscape(calendarState.error)}</p>` : ""}${place && calendarState.data ? `<div class="calendar-day-actions"><label for="calendar-date">${calendarText("Reading date", "చూసే తేదీ")}<input id="calendar-date" type="date" value="${calendarState.selected}" min="1901-01-01" max="2099-12-31"></label><button type="button" data-calendar-action="today">${calendarText("Today", "ఈరోజు")}</button><button type="button" data-calendar-action="refresh" ${calendarState.loading ? "disabled" : ""}>${calendarText("Refresh online solar data", "ఆన్‌లైన్ సూర్య సమాచారం నవీకరించండి")}</button></div>${calendarDayMarkup()}${calendarMonthMarkup()}` : ""}${calendarSourceLinks()}`;
 }
 
 export function calendarContent(language) {
@@ -302,8 +321,9 @@ export function bindCalendar(language) {
           calendarState.storageWarning = "";
         } catch (error) {
           console.warn("Could not forget saved calendar location:", error);
-          calendarState.storageWarning = calendarText("Could not remove the saved location. Clear this site’s browser data to forget it permanently.", "నిల్వ ప్రదేశం తొలగించలేకపోయాం. శాశ్వతంగా తొలగించడానికి ఈ సైట్ బ్రౌజర్ డేటాను తొలగించండి.");
+          calendarState.storageWarning = calendarText("Could not reset the saved city. Clear this site’s browser data to remove it.", "నిల్వ నగరాన్ని మార్చలేకపోయాం. తొలగించడానికి ఈ సైట్ బ్రౌజర్ డేటాను తొలగించండి.");
         }
+        selectCalendarPlace(defaultCalendarPlace, false);
         repaintCalendar();
       }
     }
@@ -345,11 +365,11 @@ export function startCalendar() {
   calendarStarted = true;
   try {
     const saved = localStorage.getItem(calendarLocationKey);
-    if (saved) selectCalendarPlace(validatePanchangPlace(JSON.parse(saved)), false);
+    selectCalendarPlace(saved ? validatePanchangPlace(JSON.parse(saved)) : defaultCalendarPlace, false);
   } catch (error) {
     console.warn("Could not read saved calendar location:", error);
-    calendarState.storageWarning = calendarText("Saved location could not be read. Choose a city again; location saving may be blocked.", "నిల్వ ప్రదేశం చదవలేకపోయాం. నగరాన్ని మళ్లీ ఎంచుకోండి; నిల్వ అనుమతి లేకపోవచ్చు.");
-    repaintCalendar();
+    calendarState.storageWarning = calendarText("Saved location could not be read. Austin, TX is being used; choose another city if needed.", "నిల్వ ప్రదేశం చదవలేకపోయాం. ఆస్టిన్, టెక్సాస్ ఉపయోగిస్తున్నాం; అవసరమైతే మరో నగరం ఎంచుకోండి.");
+    selectCalendarPlace(defaultCalendarPlace, false);
   }
   const tick = () => {
     if (!calendarState.place) return;

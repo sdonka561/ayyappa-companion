@@ -1,10 +1,9 @@
 import { topics, topicById, searchTopics, collectionUrl, reviewedDate, sourceUrl } from "./content.mjs";
-import { chantTexts, songCatalogue } from "./chant-data.mjs";
-import { chantCategories, chantDefinitions, pujaRoutine, ritualPhase, ritualDay, selectedBhajans, searchSelectedBhajans } from "./rituals.mjs";
+import { chantTexts } from "./chant-data.mjs";
+import { chantCategories, chantDefinitions, pujaRoutine, ritualPhase, ritualDay, websiteBhajans, searchWebsiteBhajans } from "./rituals.mjs";
 import { primaryBook, bookChapters, bookPages, resolveBookLocation, chapterForPage, searchBook } from "./book.mjs";
 import { pronounceTelugu } from "./pronunciation.mjs";
 import { abpTabs, abpSource, abpTabTitle, abpSectionTitle, resolveAbp, searchAbp, sahasranamavaliGroups } from "./abp.mjs";
-import { bhajanBook, searchBhajans, resolveBhajan } from "./bhajans.mjs";
 import { calendarContent, calendarSummary, bindCalendar, startCalendar } from "./calendar.mjs";
 import { decryptSchedule, loadScheduleCipher, renderSchedule } from "./schedule.mjs";
 
@@ -176,76 +175,57 @@ function inventoryMarkup() {
 function renderSearch() {
   const results = searchTopics(state.query);
   const abpResults = searchAbp(state.query);
-  const selectedMatches = searchSelectedBhajans(state.query);
-  const bhajanMatches = searchBhajans(state.query);
+  const bhajanMatches = searchWebsiteBhajans(state.query);
   const chapters = searchBook(state.query);
   const words = state.query.trim().toLocaleLowerCase().split(/\s+/);
   const chants = chantDefinitions.filter((entry) => words.every((word) => [entry.id, entry.title.en, entry.title.te, entry.purpose.en, entry.purpose.te].join(" ").toLocaleLowerCase().includes(word)));
-  return `<div class="topic-intro"><h1 id="page-title">${t("Find in your guides & bhajans", "మార్గదర్శులు, భజనల్లో వెతకండి")}</h1><p class="intro-copy">${results.length + chants.length + chapters.length + abpResults.length + bhajanMatches.length + selectedMatches.length} ${t("matches for", "ఫలితాలు")} “${esc(state.query)}”</p></div>
-  ${selectedMatches.length ? `<div class="search-results">${selectedMatches.map(song => `<a href="${route("bhajans", { song: song.id })}"><div><h2>${esc(song.title)}</h2><p>${t("Our songbook", "మన భజనల పుస్తకం")} · ${esc(selectedSinger(song))}</p></div>${icon("arrow")}</a>`).join("")}</div>` : ""}
-  ${abpResults.length || bhajanMatches.length ? `<div class="search-results">${abpResults.map(({ tab, section }) => `<a href="${route("abp", { tab: tab.id, part: section.id })}"><div><h2>${esc(abpSectionTitle(tab, section, lang))}</h2><p>Source 1 · ${esc(abpTabTitle(tab, lang))}</p></div>${icon("arrow")}</a>`).join("")}${bhajanMatches.map((song) => `<a href="${route("bhajans", { song: song.id })}"><div><h2>${esc(song.title)}</h2><p>${t("Bhajan book · p.", "భజనల పుస్తకం · పేజీ")} ${song.start}</p></div>${icon("arrow")}</a>`).join("")}</div>` : ""}
-  <p class="reader-language-note">${t("Book search includes chapter titles and unreviewed Telugu OCR. Recognition errors can cause missed or incorrect matches. Other results come from the companion’s separate sources.", "పుస్తక శోధనలో విభాగాల పేర్లు, సమీక్షించని తెలుగు OCR పాఠ్యం ఉన్నాయి. అక్షర గుర్తింపు తప్పుల వల్ల కొన్ని ఫలితాలు దొరకకపోవచ్చు లేదా తప్పుగా రావచ్చు. ఇతర ఫలితాలు అదనపు విభాగాల మూలాల నుంచి వస్తాయి.")}</p>
-  ${results.length || chants.length || chapters.length || abpResults.length || bhajanMatches.length || selectedMatches.length ? `<div class="search-results">${chapters.map((chapter) => `<a href="${route("book", { chapter: chapter.id, page: chapter.matchPage })}"><div><h2>${esc(text(chapter.title))}</h2><p>${t("Nitya Puja PDF", "నిత్యపూజ PDF")} · ${esc(bookRange(chapter))}</p></div>${icon("arrow")}</a>`).join("")}${chants.map((entry) => `<a href="${route("chanting", { chant: entry.id })}"><div><h2>${esc(text(entry.title))}</h2><p>${t("Companion chant", "అదనపు ప్రార్థన")} · ${esc(text(entry.purpose))}</p></div>${icon("arrow")}</a>`).join("")}${results.map((topic) => link(topic.id, `<div><h2>${esc(text(topic.title))}</h2><p>${t("Companion guide", "అదనపు మార్గదర్శి")} · ${esc(text(topic.description))}</p></div>${icon("arrow")}`)).join("")}</div>` : `<div class="empty-state"><h2>${t("No matching section", "సరిపోలే విభాగం లేదు")}</h2><p>${t("Try a tab, prayer, or chapter title. PDF OCR may not recognize every Telugu word.", "ట్యాబ్, ప్రార్థన, విభాగం పేరుతో ప్రయత్నించండి. PDF OCR ప్రతి తెలుగు పదాన్నీ గుర్తించకపోవచ్చు.")}</p><button data-action="clear-search">${t("Show guide contents", "విషయ సూచిక చూపించండి")}</button></div>`}`;
+  return `<div class="topic-intro"><h1 id="page-title">${t("Find in your guides & bhajans", "మార్గదర్శులు, భజనల్లో వెతకండి")}</h1><p class="intro-copy">${results.length + chants.length + chapters.length + abpResults.length + bhajanMatches.length} ${t("matches for", "ఫలితాలు")} “${esc(state.query)}”</p></div>
+  ${bhajanMatches.length ? `<div class="search-results">${bhajanMatches.map(song => `<a href="${route("bhajans", { song: song.id })}"><div><h2 lang="te">${esc(song.title)}</h2><p>${t("Ayyappa Telugu bhajans", "అయ్యప్ప తెలుగు భజనలు")}${song.singer ? ` · ${esc(song.singer)}` : ""}</p></div>${icon("arrow")}</a>`).join("")}</div>` : ""}
+  ${abpResults.length ? `<div class="search-results">${abpResults.map(({ tab, section }) => `<a href="${route("abp", { tab: tab.id, part: section.id })}"><div><h2>${esc(abpSectionTitle(tab, section, lang))}</h2><p>Source 1 · ${esc(abpTabTitle(tab, lang))}</p></div>${icon("arrow")}</a>`).join("")}</div>` : ""}
+  <p class="reader-language-note">${t("Search covers guide chapters, prayers, and the 38 Ayyappa Telugu songs.", "శోధనలో మార్గదర్శి విభాగాలు, ప్రార్థనలు, అయ్యప్ప తెలుగు పాటలు ఉన్నాయి.")}</p>
+  ${results.length || chants.length || chapters.length || abpResults.length || bhajanMatches.length ? `<div class="search-results">${chapters.map((chapter) => `<a href="${route("book", { chapter: chapter.id, page: chapter.matchPage })}"><div><h2>${esc(text(chapter.title))}</h2><p>${t("Nitya Puja PDF", "నిత్యపూజ PDF")} · ${esc(bookRange(chapter))}</p></div>${icon("arrow")}</a>`).join("")}${chants.map((entry) => `<a href="${route("chanting", { chant: entry.id })}"><div><h2>${esc(text(entry.title))}</h2><p>${t("Companion chant", "అదనపు ప్రార్థన")} · ${esc(text(entry.purpose))}</p></div>${icon("arrow")}</a>`).join("")}${results.map((topic) => link(topic.id, `<div><h2>${esc(text(topic.title))}</h2><p>${t("Companion guide", "అదనపు మార్గదర్శి")} · ${esc(text(topic.description))}</p></div>${icon("arrow")}`)).join("")}</div>` : `<div class="empty-state"><h2>${t("No matching section", "సరిపోలే విభాగం లేదు")}</h2><p>${t("Try a tab, prayer, or chapter title.", "ట్యాబ్, ప్రార్థన, విభాగం పేరుతో ప్రయత్నించండి.")}</p><button data-action="clear-search">${t("Show guide contents", "విషయ సూచిక చూపించండి")}</button></div>`}`;
 }
 
-function bhajanOutline() {
-  return `<ol class="reading-outline bhajan-index" role="list">${bhajanBook.songs.map((song, index) => `<li data-bhajan-title="${esc(song.title.toLocaleLowerCase())}"><section class="reading-section" id="reading-${song.id}"><h2><span class="outline-number" aria-hidden="true">${index + 1}.</span> ${esc(song.title)}</h2><div class="outline-children">${bhajanText(song)}<a class="outline-reading-link" href="${route("bhajans", { song: song.id })}">${t("Open this song separately", "ఈ పాటను ప్రత్యేకంగా తెరవండి")}${icon("arrow")}</a><p class="outline-note">${t("Check original pages", "అసలు పేజీలు చూడండి")}</p>${pageChildren(song.start, song.end, (page) => route("bhajans", { song: song.id, bhajanPage: page }), (page) => `${t("Page", "పేజీ")} ${page}${page === song.start ? ` · ${t("Start", "ప్రారంభం")}` : ""}`)}</div></section></li>`).join("")}</ol>`;
+function websiteBhajanList() {
+  return `<div class="songbook-intro"><h1 id="page-title">${t("Ayyappa Telugu bhajans", "అయ్యప్ప తెలుగు భజనలు")}</h1><p>${t("38 songs from the Ayyappa Telugu list. Open a title to reach its full song page.", "అయ్యప్ప తెలుగు జాబితాలోని 38 పాటలు. పూర్తి పాట పేజీకి వెళ్లడానికి శీర్షికను ఎంచుకోండి.")}</p><div class="songbook-sources"><a href="${route("bhajans", { collection: "prayers" })}">${t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు")}</a></div></div>
+  <div class="songbook-tools"><label for="website-song-filter">${t("Find a song or singer", "పాట లేదా గాయకుల పేరు వెతకండి")}</label><input id="website-song-filter" type="search" placeholder="${t("Song title or singer", "పాట పేరు లేదా గాయకుడు")}" autocomplete="off" aria-controls="website-song-list"><p id="website-song-status" role="status">${t("38 songs from Ayyappa Telugu", "అయ్యప్ప తెలుగు నుంచి 38 పాటలు")}</p></div>
+  <p class="songbook-notice">${t("Song titles and singer credits follow Ayyappa Telugu. Lyrics stay on that website.", "పాటల శీర్షికలు, గాయకుల వివరాలు అయ్యప్ప తెలుగు నుంచి తీసుకున్నాం. సాహిత్యం ఆ వెబ్‌సైట్‌లోనే ఉంటుంది.")}</p>
+  <div id="website-song-list" class="selected-song-list"><ol role="list">${websiteBhajans.map(song => {
+    const row = `<span class="songbook-number">${String(song.number).padStart(2, "0")}</span><span class="songbook-song"><span class="songbook-title" lang="te">${esc(song.title)}</span><span class="songbook-singer" lang="te">${esc(song.singer)}</span></span><span class="songbook-open">${t("Open song", "పాట తెరవండి")} ${icon("arrow")}</span>`;
+    return `<li data-website-song="${song.id}" value="${song.number}"><a class="selected-song-row" href="${route("bhajans", { song: song.id })}">${row}</a></li>`;
+  }).join("")}</ol></div>`;
 }
 
-function selectedSinger(song) {
-  return song.singer || t("Singer not assigned", "గాయకుల పేరు ఇవ్వలేదు");
+function websiteBhajanReader(song) {
+  return `<div class="reader-back"><a href="${route("bhajans")}">${t("← Back to the song list", "← పాటల జాబితాకు తిరిగి")}</a></div>
+  <article class="songbook-reader">
+    <header class="songbook-reader-heading"><h1 id="page-title" lang="te">${esc(song.title)}</h1><p lang="te">${esc(song.singer)}</p></header>
+    <p class="songbook-source-note">${t("This song and its lyrics are hosted on Ayyappa Telugu; they are not reproduced here.", "ఈ పాట, సాహిత్యం అయ్యప్ప తెలుగు వెబ్‌సైట్‌లో ఉన్నాయి; ఇక్కడ పునర్ముద్రించలేదు.")}</p>
+    <a class="songbook-source-link" href="${esc(song.externalSource.url)}" target="_blank" rel="noopener noreferrer">${t("Open full song on Ayyappa Telugu", "అయ్యప్ప తెలుగులో పూర్తి పాట తెరవండి")} ${icon("external")}</a>
+  </article>
+  <nav class="book-stepper" aria-label="${t("Song position", "పాటల స్థానం")}"><span>${song.number} / ${websiteBhajans.length}</span></nav>`;
 }
 
-function selectedReference(song) {
-  return song.referencePage ? `SPD bajana PDF · ${t("page", "పేజీ")} ${song.referencePage}` : t("Lyrics reference not supplied", "సాహిత్య మూలం ఇవ్వలేదు");
-}
-
-function selectedBhajanContent() {
-  const groups = [...new Set(selectedBhajans.map(song => song.deity))];
-  const groupNames = {
-    Ganesh: t("Ganesha", "గణేశుడు"), Subrahmanyam: t("Subrahmanyam", "సుబ్రహ్మణ్యుడు"),
-    Guru: t("Guru", "గురువు"), Vishnu: t("Rama & Krishna", "రాముడు, కృష్ణుడు"),
-    Siva: t("Shiva", "శివుడు"), Amma: t("Amma", "అమ్మవారు"), Ayyappa: t("Ayyappa", "అయ్యప్ప"),
-  };
-  return `<div class="songbook-intro"><h1 id="page-title">${t("Our bhajan songbook", "మన భజనల పుస్తకం")}</h1><p>${t("43 songs. Your singers. One shared bhajan session.", "43 పాటలు. మన గాయకులు. అందరం కలిసి భజన.")}</p><div class="songbook-sources"><a href="${route("bhajans", { collection: "book" })}">${t("Full 252-song library", "పూర్తి 252 పాటల సేకరణ")}${icon("arrow")}</a><a href="${route("bhajans", { collection: "prayers" })}">${t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు")}</a></div></div>
-  <div class="songbook-tools"><label for="selected-song-filter">${t("Find a song or singer", "పాట లేదా గాయకుల పేరు వెతకండి")}</label><input id="selected-song-filter" type="search" placeholder="${t("Song, singer, or deity", "పాట, గాయకులు లేదా దేవత పేరు")}" autocomplete="off" aria-controls="selected-song-list"><p id="selected-song-status" role="status">${t("43 songs in your order", "మీ క్రమంలో 43 పాటలు")}</p></div>
-  <p class="songbook-notice">${t("Lyrics await the SPD PDF or your source text. Page references below are yours, not links to the unrelated 252-song book. No lyrics, translation, or pronunciation have been invented.", "సాహిత్యం కోసం SPD PDF లేదా మీ మూల పాఠ్యం అవసరం. కింది పేజీ సూచనలు మీరు ఇచ్చినవే; వేరే 252 పాటల పుస్తకానికి లింకులు కావు. సాహిత్యం, అనువాదం లేదా ఉచ్చారణ కల్పించలేదు.")}</p>
-  <div id="selected-song-list" class="selected-song-list">${groups.map(group => `<section data-song-group="${group}" aria-labelledby="song-group-${group}"><h2 id="song-group-${group}">${groupNames[group]}</h2><ol role="list">${selectedBhajans.filter(song => song.deity === group).map(song => `<li data-selected-song="${song.id}" value="${selectedBhajans.indexOf(song) + 1}"><a class="selected-song-row" href="${route("bhajans", { song: song.id })}"><span class="songbook-number">${String(selectedBhajans.indexOf(song) + 1).padStart(2, "0")}</span><span class="songbook-song"><span class="songbook-title" lang="en">${esc(song.title)}</span><span class="songbook-singer">${esc(selectedSinger(song))}</span></span><span class="songbook-reference">${song.referencePage ? `SPD · ${t("p.", "పే.")} ${song.referencePage}` : t("Source needed", "మూలం అవసరం")}</span>${icon("arrow")}</a></li>`).join("")}</ol></section>`).join("")}</div>`;
-}
-
-function selectedBhajanReader() {
-  const song = selectedBhajans.find(entry => entry.id === state.bhajanSong);
-  if (!song || state.bhajanPage) return `<div class="empty-state"><h1 id="page-title">${t("Song not found", "పాట లభించలేదు")}</h1>${link("bhajans", t("Back to our songbook", "మన భజనల పుస్తకానికి తిరిగి"), "button")}</div>`;
-  const index = selectedBhajans.indexOf(song);
-  return `<div class="reader-back">${link("bhajans", t("← Our songbook", "← మన భజనల పుస్తకం"))}</div><div class="songbook-intro"><h1 id="page-title" lang="en">${esc(song.title)}</h1><p>${esc(selectedSinger(song))}</p></div><section class="songbook-lyrics-pending"><h2>${t("Lyrics source needed", "సాహిత్య మూలం అవసరం")}</h2><p>${esc(selectedReference(song))}</p><p>${t("The SPD PDF has not been supplied yet. This song's lyrics will be added from your source without translation or generated pronunciation. Similar titles from another book are not substituted.", "SPD PDF ఇంకా అందలేదు. మీ మూలం నుంచి ఈ పాట సాహిత్యాన్ని అనువాదం లేదా కొత్త ఉచ్చారణ లేకుండా చేర్చాలి. వేరే పుస్తకంలోని పోలిక ఉన్న పాటను బదులుగా పెట్టలేదు.")}</p></section><nav class="book-stepper" aria-label="${t("Song navigation", "పాటల మార్పు")}">${index > 0 ? `<a href="${route("bhajans", { song: selectedBhajans[index - 1].id })}">${t("← Previous song", "← ముందు పాట")}</a>` : `<span aria-disabled="true">${t("First song", "మొదటి పాట")}</span>`}<span>${index + 1} / 43</span>${index < selectedBhajans.length - 1 ? `<a href="${route("bhajans", { song: selectedBhajans[index + 1].id })}">${t("Next song →", "తర్వాతి పాట →")}</a>` : `<span aria-disabled="true">${t("Last song", "చివరి పాట")}</span>`}</nav>`;
-}
-
-function bhajanText(song) {
-  return `<div class="bhajan-original" lang="und">${song.excerpts.map(excerpt => `<div class="bhajan-excerpt" data-source-page="${excerpt.page}"><p class="outline-note">${t("Source page", "మూల పేజీ")} ${excerpt.page}</p><div class="bhajan-lyrics">${esc(excerpt.text)}</div></div>`).join("")}</div>`;
-}
-
-function processGuideReadings() {
-  const tabs = abpTabs.filter(tab => tab.sections.some(section => section.kind === "prayer"));
-  return `<section aria-labelledby="process-readings-title"><h2 id="process-readings-title">${sourceOneTitle}</h2><p class="reader-language-note">${t("These are the process guide's prayers, stotras, and Namavali—not the separate 252-song PDF. Short readings are complete below. Long Namavali lists show a preview with a link to their full typed reader, not the entire document. English mode uses pronunciation, not meanings.", "ఇవి ప్రక్రియ మార్గదర్శిలోని ప్రార్థనలు, స్తోత్రాలు, నామావళి; వేరే 252 పాటల PDF కాదు. చిన్న పఠనాలు పూర్తిగా కింద ఉన్నాయి. పెద్ద నామావళి జాబితాలకు నమూనా, పూర్తి పాఠ్య పఠన లింకు ఉన్నాయి; మొత్తం పత్రానికి కాదు. Englishలో ఉచ్చారణ మాత్రమే, అర్థాలు కావు.")}</p><nav class="outline-jumps" aria-label="${t("Prayer groups", "ప్రార్థనల సమూహాలు")}">${tabs.map(tab => `<a href="${route("bhajans", { section: `process-${tab.id}` })}">${esc(abpTabTitle(tab, lang))}</a>`).join("")}<a href="${route("bhajans", { section: "separate-bhajan-book" })}">${t("Separate 252-song PDF", "వేరే 252 పాటల PDF")}</a></nav>${tabs.map(tab => `<section class="reading-section" id="process-${tab.id}"><h2>${esc(abpTabTitle(tab, lang))}</h2>${abpSectionOutline(tab, 3)}</section>`).join("")}</section>`;
-}
-
-function bhajansContent() {
-  if (state.bhajanSong.startsWith("selected-")) return selectedBhajanReader();
-  if (!state.bhajanSong && !state.bhajanPage && !state.bhajanCollection) return selectedBhajanContent();
-  if (!state.bhajanSong && !state.bhajanPage && state.bhajanCollection === "prayers") return `<div class="reader-back">${link("bhajans", t("← Our songbook", "← మన భజనల పుస్తకం"))}</div><h1 id="page-title">${t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు")}</h1>${processGuideReadings()}`;
-  if (!state.bhajanSong && !state.bhajanPage) return `<div class="topic-intro"><h1 id="page-title">${t("Bhajans · the complete book", "భజనలు · పూర్తి పుస్తకం")}</h1><p class="intro-copy">${t("Read Source 1 prayers and stotras here, or browse the separate complete bhajan book below.", "Source 1 ప్రార్థనలు, స్తోత్రాలు ఇక్కడ చదవండి.")}</p></div>${processGuideReadings()}<section class="reading-section" id="separate-bhajan-book"><h2>${t("Separate source: Ayyappa_bhajans3.pdf - 252 songs", "వేరే మూలం: Ayyappa_bhajans3.pdf - 252 పాటలు")}</h2><p class="reader-language-note">${t("All 252 readings are extracted below from the original PDF text. No translation or pronunciation has been added. Scripts, explanations, and credits already in the source are retained. Extraction is not a proofread transcription; each song includes original page links for comparison.", "అసలు PDF నుంచి సేకరించిన మొత్తం 252 పఠనాలు కింద ఉన్నాయి. కొత్త అనువాదం లేదా ఉచ్చారణ జోడించలేదు. మూలంలోని లిపులు, వివరణలు, రచయిత వివరాలు అలాగే ఉన్నాయి. ఈ పాఠ్యానికి అక్షర దోషాల సమీక్ష జరగలేదు; పోల్చి చూడటానికి ప్రతి పాటకు అసలు పేజీల లింకులు ఉన్నాయి.")}</p><p><a href="${route("bhajans", { song: "contents" })}">${t("View the original contents · pages 1–8", "అసలు విషయ సూచిక · పేజీలు 1–8")}${icon("arrow")}</a></p><label class="bhajan-filter">${t("Find a bhajan by title", "శీర్షికతో భజన వెతకండి")}<input id="bhajan-filter" type="search" autocomplete="off" placeholder="${t("Try Harivarasanam, Padi, or Saranam…", "Harivarasanam, Padi, Saranam…")}"></label><p id="bhajan-filter-status" role="status">252 ${t("titles", "శీర్షికలు")}</p>${bhajanOutline()}<p class="book-source"><a href="${bhajanBook.url}" target="_blank" rel="noopener noreferrer">${t("Original bhajans PDF", "అసలు భజనల PDF")}${icon("external")}</a></p></section>`;
-  const resolved = resolveBhajan(state.bhajanSong, state.bhajanPage);
-  if (!resolved) return `<div class="empty-state"><h1 id="page-title">${t("Bhajan or page not found", "భజన లేదా పేజీ లభించలేదు")}</h1>${link("bhajans", t("Choose a bhajan title", "భజన శీర్షిక ఎంచుకోండి"), "button")}</div>`;
-  const { song, page } = resolved;
-  if (song.id !== "contents" && !state.bhajanPage) {
-    return `<div class="reader-back"><a href="${route("bhajans", { section: `reading-${song.id}` })}">${t("← All songs", "← అన్ని పాటలు")}</a><button data-action="focus">${document.body.classList.contains("focus-reading") ? t("Exit focus view", "సాధారణ వీక్షణ") : t("Focus view", "ఏకాగ్ర పఠనం")}</button></div><div class="topic-intro"><h1 id="page-title">${esc(song.title)}</h1><p class="reader-language-note">${t("Original PDF text only. No added translation or pronunciation. Existing source-language text, explanations, and credits are retained; check the original pages for layout or extraction errors.", "అసలు PDF పాఠ్యం మాత్రమే. కొత్త అనువాదం లేదా ఉచ్చారణ జోడించలేదు. మూలంలోని భాషలు, వివరణలు, రచయిత వివరాలు అలాగే ఉన్నాయి; అమరిక లేదా అక్షర దోషాల కోసం అసలు పేజీలు చూడండి.")}</p></div>${bhajanText(song)}<p class="outline-note">${t("Check original pages", "అసలు పేజీలు చూడండి")}</p>${pageChildren(song.start, song.end, (number) => route("bhajans", { song: song.id, bhajanPage: number }), (number) => `${t("Page", "పేజీ")} ${number}`)}`;
+  function processGuideReadings() {
+    const tabs = abpTabs.filter(tab => tab.sections.some(section => section.kind === "prayer"));
+    return `<section aria-labelledby="process-readings-title"><h2 id="process-readings-title">${sourceOneTitle}</h2><p class="reader-language-note">${t("These are the process guide's prayers, stotras, and Namavali. Short readings are complete below. Long Namavali lists show a preview with a link to their full typed reader. English mode uses pronunciation, not meanings.", "ఇవి ప్రక్రియ మార్గదర్శిలోని ప్రార్థనలు, స్తోత్రాలు, నామావళి. చిన్న పఠనాలు పూర్తిగా కింద ఉన్నాయి. పెద్ద నామావళి జాబితాలకు నమూనా, పూర్తి పఠన లింకు ఉన్నాయి. Englishలో ఉచ్చారణ మాత్రమే, అర్థాలు కావు.")}</p><nav class="outline-jumps" aria-label="${t("Prayer groups", "ప్రార్థనల సమూహాలు")}">${tabs.map(tab => `<a href="${route("bhajans", { section: `process-${tab.id}` })}">${esc(abpTabTitle(tab, lang))}</a>`).join("")}</nav>${tabs.map(tab => `<section class="reading-section" id="process-${tab.id}"><h2>${esc(abpTabTitle(tab, lang))}</h2>${abpSectionOutline(tab, 3)}</section>`).join("")}</section>`;
   }
-  const pageLink = (number, label) => number >= song.start && number <= song.end ? `<a href="${route("bhajans", { song: song.id, bhajanPage: number })}">${label}</a>` : `<span aria-disabled="true">${label}</span>`;
-  const stepper = `<nav class="book-stepper" aria-label="${t("Bhajan page navigation", "భజన పేజీల మార్పు")}">${pageLink(page.page - 1, t("← Previous page", "← ముందు పేజీ"))}<span>${page.page} / ${bhajanBook.pages.length}</span>${pageLink(page.page + 1, t("Next page →", "తర్వాతి పేజీ →"))}</nav>`;
-  return `<div class="reader-back"><a href="${route("bhajans", { collection: "book", section: "separate-bhajan-book" })}">${t("← All 252 titles", "← మొత్తం 252 శీర్షికలు")}</a><button data-action="focus">${document.body.classList.contains("focus-reading") ? t("Exit focus view", "సాధారణ వీక్షణ") : t("Focus view", "ఏకాగ్ర పఠనం")}</button></div><div class="topic-intro"><h1 id="page-title">${esc(song.title)}</h1><p class="reader-language-note">${t("Original book pages", "అసలు పుస్తక పేజీలు")} ${song.start}${song.end !== song.start ? `–${song.end}` : ""}. ${t("A page can contain more than one title; all original page content is preserved. Tap the page for full-size zoom.", "ఒక పేజీలో ఒకటి కంటే ఎక్కువ శీర్షికలు ఉండవచ్చు; పేజీని పూర్తిగా ఉంచాం. పెద్దగా చూడటానికి పేజీని నొక్కండి.")}</p></div>
-  <div class="book-controls"><label>${t("Bhajan title", "భజన శీర్షిక")}<select id="bhajan-title"><option value="contents" ${song.id === "contents" ? "selected" : ""}>${t("Original contents · pages 1–8", "అసలు విషయ సూచిక · పేజీలు 1–8")}</option>${bhajanBook.songs.map((entry) => `<option value="${entry.id}" ${entry.id === song.id ? "selected" : ""}>${esc(entry.title)}</option>`).join("")}</select></label><label>${t("Page for this title", "ఈ శీర్షికకు పేజీ")}<select id="bhajan-page">${Array.from({ length: song.end - song.start + 1 }, (_, index) => song.start + index).map((number) => `<option value="${number}" ${number === page.page ? "selected" : ""}>${number}</option>`).join("")}</select></label>${page.page === song.start && song.id !== "contents" ? `<button data-action="jump-bhajan">${t("Jump to title on page", "పేజీలో శీర్షిక దగ్గరకు వెళ్లండి")}</button>` : ""}</div>${stepper}
-  <figure class="book-page"><figcaption id="bhajan-page-label">${t("Original PDF page", "అసలు PDF పేజీ")} ${page.page} / ${bhajanBook.pages.length}</figcaption><div class="bhajan-sheet"><a href="${esc(page.image)}" target="_blank" rel="noopener noreferrer"><img id="bhajan-page-image" src="${esc(page.image)}" alt="${esc(song.title)} — ${t("original page", "అసలు పేజీ")} ${page.page}" aria-describedby="bhajan-page-label"></a>${page.page === song.start && song.id !== "contents" ? `<span id="bhajan-start" class="bhajan-marker" style="top:${song.startY * 100}%">${t("Selected title starts here", "ఎంచుకున్న శీర్షిక ఇక్కడ మొదలు")}</span>` : ""}</div><p id="bhajan-image-error" role="alert" hidden>${t("This page image could not load. Reload or open the original PDF below.", "పేజీ చిత్రం తెరవలేకపోయాం. మళ్లీ లోడ్ చేయండి లేదా కింద అసలు PDF తెరవండి.")}</p></figure>${stepper}<p class="book-source"><a href="${bhajanBook.url}#page=${page.page}" target="_blank" rel="noopener noreferrer">${t("Original bhajans PDF", "అసలు భజనల PDF")}${icon("external")}</a></p>`;
-}
+
+  function bhajansContent() {
+    if (state.bhajanSong) {
+      if (state.bhajanSong.startsWith("site-")) {
+        const song = websiteBhajans.find(entry => entry.id === state.bhajanSong);
+        return song
+          ? websiteBhajanReader(song)
+          : `<div class="empty-state"><h1 id="page-title">${t("Song not found", "పాట లభించలేదు")}</h1>${link("bhajans", t("Back to the song list", "పాటల జాబితాకు తిరిగి"), "button")}</div>`;
+      }
+      return `<div class="empty-state"><h1 id="page-title">${t("This older song entry is no longer included", "ఈ పాత పాట నమోదు ఇక ఇక్కడ లేదు")}</h1><p>${t("The current list contains the 38 songs from Ayyappa Telugu.", "ప్రస్తుత జాబితాలో అయ్యప్ప తెలుగు నుంచి 38 పాటలు ఉన్నాయి.")}</p>${link("bhajans", t("Back to the song list", "పాటల జాబితాకు తిరిగి"), "button")}</div>`;
+    }
+    if (state.bhajanPage) return `<div class="empty-state"><h1 id="page-title">${t("This bhajan archive is no longer included", "ఈ భజనల సేకరణ ఇక ఇక్కడ లేదు")}</h1>${link("bhajans", t("Back to our songbook", "మన భజనల పుస్తకానికి తిరిగి"), "button")}</div>`;
+    if (state.bhajanCollection === "prayers") return `<div class="reader-back">${link("bhajans", t("← Our songbook", "← మన భజనల పుస్తకం"))}</div><h1 id="page-title">${t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు")}</h1>${processGuideReadings()}`;
+    if (state.bhajanCollection === "book") return `<div class="empty-state"><h1 id="page-title">${t("This bhajan archive is no longer included", "ఈ భజనల సేకరణ ఇక ఇక్కడ లేదు")}</h1><p>${t("The old archive link has been removed. The Ayyappa Telugu song list remains available.", "పాత సేకరణ లింకును తొలగించాం. అయ్యప్ప తెలుగు పాటల జాబితా అందుబాటులో ఉంది.")}</p>${link("bhajans", t("Back to the song list", "పాటల జాబితాకు తిరిగి"), "button")}</div>`;
+    return websiteBhajanList();
+  }
 
 function renderAbpLine(line, number = line.number) {
   const sourceIsTelugu = /[ఀ-౿]/.test(line.text);
@@ -397,7 +377,7 @@ function readingLibraries() {
     ...topics,
     { id: "sources", title: { en: "Source library", te: "మూలాల సేకరణ" } },
   ];
-  const library = `<li><a href="${route("bhajans")}" ${active === "bhajans" && !state.query ? 'aria-current="page"' : ""}>${t("Our bhajans · 43 songs", "మన భజనలు · 43 పాటలు")}</a></li>${["ashtottaram", "sahasranamavali"].map((id) => `<li><a href="${route("chanting", { chant: id })}" ${active === "chanting" && state.chantId === id && !state.query ? 'aria-current="page"' : ""}>${esc(text(chantDefinitions.find((entry) => entry.id === id).title))}</a></li>`).join("")}`;
+  const library = `<li><a href="${route("bhajans")}" ${active === "bhajans" && !state.query ? 'aria-current="page"' : ""}>${t("Ayyappa Telugu bhajans · 38 songs", "అయ్యప్ప తెలుగు భజనలు · 38 పాటలు")}</a></li>${["ashtottaram", "sahasranamavali"].map((id) => `<li><a href="${route("chanting", { chant: id })}" ${active === "chanting" && state.chantId === id && !state.query ? 'aria-current="page"' : ""}>${esc(text(chantDefinitions.find((entry) => entry.id === id).title))}</a></li>`).join("")}`;
   const companion = companionEntries.map((entry) => `<li><a href="${route(entry.id)}" ${active === entry.id && !state.chantId && !state.query ? 'aria-current="page"' : ""}>${esc(text(entry.title))}</a></li>`).join("");
   return navigationBranch("library", t("Bhajans & Namavali", "భజనలు, నామావళి"), "", library)
     + navigationBranch("companion", t("Companion sections", "అదనపు విభాగాలు"), route("companion"), companion, active === "companion" && !state.query ? 'aria-current="page"' : "");
@@ -405,7 +385,12 @@ function readingLibraries() {
 
 function render() {
   document.documentElement.lang = lang;
-  const bhajanTitle = selectedBhajans.find(song => song.id === state.bhajanSong)?.title || resolveBhajan(state.bhajanSong, state.bhajanPage)?.song.title || (state.bhajanCollection === "book" ? t("Complete bhajan book", "పూర్తి భజన పుస్తకం") : state.bhajanCollection === "prayers" ? t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు") : t("Our bhajan songbook", "మన భజనల పుస్తకం"));
+  const selectedSong = websiteBhajans.find(song => song.id === state.bhajanSong);
+  const bhajanTitle = selectedSong
+    ? selectedSong.title
+    : (state.bhajanSong || state.bhajanPage) ? t("Bhajan entry unavailable", "భజన నమోదు అందుబాటులో లేదు")
+      : state.bhajanCollection === "prayers" ? t("Source 1 prayers & stotras", "Source 1 ప్రార్థనలు, స్తోత్రాలు")
+        : t("Ayyappa Telugu bhajans", "అయ్యప్ప తెలుగు భజనలు");
   document.title = `${active === "schedule" ? t("Swami Pooja Schedule", "స్వామి పూజా షెడ్యూల్") : active === "bhajans" ? bhajanTitle : active === "abp" ? (resolveAbp(state.abpTab, state.abpPart)?.section ? abpSectionTitle(resolveAbp(state.abpTab).tab, resolveAbp(state.abpTab, state.abpPart).section, lang) : "") || (resolveAbp(state.abpTab) ? abpTabTitle(resolveAbp(state.abpTab).tab, lang) : sourceOneTitle) : active === "book" ? text(bookChapters.find((chapter) => chapter.id === state.bookChapter)?.title || { en: sourceTwoTitle, te: sourceTwoTitle }) : active === "companion" ? t("Companion sections", "అదనపు విభాగాలు") : active === "sources" ? t("Source library", "మూలాల సేకరణ") : active === "chanting" ? t("Chant & sing", "జపం, భజన") : active === "routine" ? t("Daily puja checklist", "నిత్యపూజ జాబితా") : text(topicById(active)?.title) || t("Guide", "మార్గదర్శి")} · Ayyappa companion`;
   app.innerHTML = `<div class="app-layout">
     <aside class="sidebar">
@@ -542,7 +527,7 @@ function chantingLibrary() {
   return `<div class="topic-intro"><h1 id="page-title">${t("Chant & sing", "జపం, భజన")}</h1><p class="intro-copy">${t("Open the words, set a comfortable text size, and chant from your phone. Readers preserve Telugu prayer text; the collection also includes Tamil material. English reading gives Telugu pronunciation in English letters, not translated meanings.", "English = Telugu pronunciation, not translated meaning.")}</p></div><nav class="category-tabs" aria-label="${t("Chant categories", "ప్రార్థనా విభాగాలు")}">${chantCategories.map((category) => `<a href="${route("chanting", { category: category.id })}" ${state.category === category.id ? 'aria-current="page"' : ""}>${esc(text(category.title))}</a>`).join("")}</nav>
   <p class="reader-language-note">${t("Short prayers are shown in full. Long readings show the first three entries with a link to the complete reader. Supplied workbook pronunciation is retained; other English-letter readings are approximate, not translations. Confirm pronunciation with your Guruswamy.", "చిన్న ప్రార్థనలు పూర్తిగా ఇక్కడే ఉన్నాయి. పెద్ద పఠనాలకు మొదటి మూడు అంశాలు, పూర్తి పఠన లింకు ఉన్నాయి. మూలంలోని ఉచ్చారణను ఉంచాం; ఇతర English ఉచ్చారణలు అంచనా మాత్రమే, అర్థానువాదం కాదు. గురుస్వామితో నిర్ధారించండి.")}</p>
   <ol class="reading-outline chant-library" role="list">${definitions.map((entry, index) => `<li><section><h2><span class="outline-number" aria-hidden="true">${index + 1}.</span> ${esc(text(entry.title))}</h2><div class="outline-children"><p>${esc(text(entry.purpose))}</p>${entry.notice ? `<p class="reader-notice">${esc(text(entry.notice))}</p>` : ""}${chantOutline(entry)}${citations([entry.source])}</div></section></li>`).join("")}</ol>
-  ${["all", "bhajan", "opening"].includes(state.category) ? songCatalogueMarkup() : ""}
+  ${["all", "bhajan"].includes(state.category) ? websiteBhajanLink() : ""}
   <p class="editorial-note audio-note">${t("Audio status: no verified matching recordings are bundled. Reader controls advance text; they are not audio playback. Modern song lyrics are not reproduced without verified reuse permission.", "ఆడియో స్థితి: నిర్ధారించిన సంబంధిత రికార్డింగ్‌లు జత చేయలేదు. పఠన నియంత్రణలు పాఠ్యాన్ని మారుస్తాయి; ఆడియో ప్లే చేయవు. అనుమతి నిర్ధారణ లేకుండా ఆధునిక పాటల సాహిత్యం పునర్ముద్రించలేదు.")}</p>`;
 }
 
@@ -562,13 +547,11 @@ function chantOutline(entry) {
     if (tab.id === "suprabhatam") return `<a class="outline-reading-link" href="${route("abp", { tab: tab.id })}">${t("Read the complete Suprabhatam", "పూర్తి సుప్రభాతం చదవండి")}${icon("arrow")}</a>`;
     return `<ol class="outline-links">${tab.sections.map((part) => `<li><a href="${route("abp", { tab: tab.id, part: part.id })}">${esc(abpSectionTitle(tab, part, lang))}${icon("arrow")}</a></li>`).join("")}</ol>`;
   }
-  if (entry.bhajanQuery) return `<ol class="outline-links">${searchBhajans(entry.bhajanQuery).map((song) => `<li><span>${esc(song.title)}</span>${pageChildren(song.start, song.end, (page) => route("bhajans", { song: song.id, bhajanPage: page }), (page) => `${t("Page", "పేజీ")} ${page}`)}</li>`).join("")}</ol>`;
   return chantLink(entry.id, t("Open source reference", "మూల సూచన తెరవండి"), "outline-reading-link");
 }
 
-function songCatalogueMarkup() {
-  const selected = state.category === "opening" ? songCatalogue.filter((song) => ["Ganesh", "Guru"].includes(song.deity)) : songCatalogue;
-  return `<section class="song-catalogue"><h2>${t("Bhajanas & keertanalu · collection index", "భజనలు, కీర్తనలు · సేకరణ సూచిక")}</h2><p>${t("43 song titles from your reference workbook. Deity and tempo are shown only where recorded. These are reference entries, not unverified lyrics or playable tracks.", "మీ సూచన వర్క్‌బుక్‌లోని 43 పాటల పేర్లు. నమోదైన దేవత, లయ వివరాలనే చూపించాం. ఇవి మూల సూచనలు మాత్రమే; నిర్ధారించని సాహిత్యం లేదా ఆడియో ట్రాక్‌లు కావు.")}</p><label class="song-filter">${t("Filter by deity", "దేవత ఆధారంగా వడపోత")}<select id="song-deity"><option value="">${t("All deities", "అన్ని దేవతలు")}</option>${[...new Set(selected.map((song) => song.deity))].map((deity) => `<option value="${esc(deity)}">${esc(deity)}</option>`).join("")}</select></label><ol class="song-list" role="list">${selected.map((song) => `<li data-deity="${esc(song.deity)}"><strong><span class="outline-number" aria-hidden="true">${songCatalogue.indexOf(song) + 1}.</span> ${esc(song.title)}</strong><div class="outline-children"><p>${esc(song.deity)} · ${song.tempo === "slow" ? t("Slow", "నెమ్మదిగా") : song.tempo === "varied" ? t("Slow & fast", "నెమ్మది, వేగం") : t("Tempo / language not verified", "లయ / భాష నిర్ధారణ కాలేదు")}</p><a href="https://drive.google.com/file/d/1HI2h4qhQ-5l4a6M-AbsBayYW4GgieKq1/view" target="_blank" rel="noopener noreferrer">${t("Reference sheet", "మూల షీట్")} · ${esc(song.cell)}${icon("external")}</a></div></li>`).join("")}</ol><p id="song-filter-status" role="status"></p></section>`;
+function websiteBhajanLink() {
+  return `<section class="song-catalogue"><h2>${t("Bhajanas & keertanalu", "భజనలు, కీర్తనలు")}</h2><p>${t("Browse the 38-song Ayyappa Telugu list; full lyrics remain on the source pages.", "అయ్యప్ప తెలుగు 38 పాటల జాబితాను చూడండి. పూర్తి సాహిత్యం మూల పేజీల్లోనే ఉంటుంది.")}</p>${link("bhajans", `${t("Open Ayyappa Telugu bhajans", "అయ్యప్ప తెలుగు భజనలు తెరవండి")}${icon("arrow")}`)}</section>`;
 }
 
 function chantReader() {
@@ -580,11 +563,11 @@ function chantReader() {
     sharanaghosha: ["sharanaghosha", 34], padayatra: ["padayatra", 40],
     pancharatna: ["night", 42], kshamapana: ["materials", 46], harivarasanam: ["night", 43],
   }[definition.id];
-  if (!lines && (definition.abpReference || definition.bhajanQuery)) {
+  if (!lines && (definition.abpReference || bookReference)) {
     const readings = definition.abpReference
       ? [{ title: definition.title.en, href: route("abp", { tab: definition.abpReference[0], part: definition.abpReference[1] }) }]
-      : searchBhajans(definition.bhajanQuery).map((song) => ({ title: song.title, href: route("bhajans", { song: song.id }) }));
-    return `<div class="reader-back">${link("chanting", t("← All chants & bhajans", "← అన్ని ప్రార్థనలు, భజనలు"))}</div><div class="topic-intro"><h1 id="page-title">${esc(text(definition.title))}</h1><p class="intro-copy">${esc(text(definition.purpose))}</p></div><div class="quick-links">${readings.map((reading) => `<a href="${reading.href}">${esc(reading.title)}${icon("arrow")}</a>`).join("")}</div>${bookReference ? `<p class="book-source"><a href="${route("book", { chapter: bookReference[0], page: bookReference[1] })}">${t("Read the Nitya Puja PDF version", "నిత్యపూజ PDF రూపం చదవండి")}${icon("arrow")}</a></p>` : ""}${citations([definition.source])}<p class="audio-note">${t("Reading pages only; no recording is attached.", "పఠన పేజీలు మాత్రమే; ఆడియో జత చేయలేదు.")}</p>`;
+      : [{ title: definition.title.en, href: route("book", { chapter: bookReference[0], page: bookReference[1] }) }];
+    return `<div class="reader-back">${link("chanting", t("← All chants & bhajans", "← అన్ని ప్రార్థనలు, భజనలు"))}</div><div class="topic-intro"><h1 id="page-title">${esc(text(definition.title))}</h1><p class="intro-copy">${esc(text(definition.purpose))}</p></div><div class="quick-links">${readings.map((reading) => `<a href="${reading.href}">${esc(reading.title)}${icon("arrow")}</a>`).join("")}</div>    ${bookReference && lines ? `<p class="book-source"><a href="${route("book", { chapter: bookReference[0], page: bookReference[1] })}">${t("Read the Nitya Puja PDF version", "నిత్యపూజ PDF రూపం చదవండి")}${icon("arrow")}</a></p>` : ""}${citations([definition.source])}<p class="audio-note">${t("Reading pages only; no recording is attached.", "పఠన పేజీలు మాత్రమే; ఆడియో జత చేయలేదు.")}</p>`;
   }
   const position = Math.max(0, Math.min((lines?.length || 1) - 1, state.positions[definition.id] || 0));
   const renderLine = (item, index) => `<button class="chant-line ${position === index ? "current-verse" : ""}" data-verse="${index}" ${position === index ? 'aria-current="step"' : ""}><span class="verse-number">${index + 1}</span><span class="verse-copy"><span lang="${lang === "en" ? "te-Latn" : "te"}">${esc(chantText(item)).replaceAll("\n", "<br>")}</span></span></button>`;
@@ -662,40 +645,15 @@ function bindRitualEvents() {
 
 function bindBookEvents() {
   bindCalendar(lang);
-  app.querySelector("#selected-song-filter")?.addEventListener("input", event => {
-    const matches = new Set(searchSelectedBhajans(event.target.value).map(song => song.id));
-    app.querySelectorAll("[data-selected-song]").forEach(row => { row.hidden = !matches.has(row.dataset.selectedSong); });
-    app.querySelectorAll("[data-song-group]").forEach(group => {
-      group.hidden = ![...group.querySelectorAll("[data-selected-song]")].some(row => !row.hidden);
-    });
-    app.querySelector("#selected-song-status").textContent = matches.size
+  const songFilter = app.querySelector("#website-song-filter");
+  songFilter?.addEventListener("input", event => {
+    const matches = new Set(searchWebsiteBhajans(event.target.value).map(song => song.id));
+    app.querySelectorAll("[data-website-song]").forEach(row => { row.hidden = !matches.has(row.dataset.websiteSong); });
+    app.querySelector("#website-song-status").textContent = matches.size
       ? `${matches.size} ${t("songs", "పాటలు")}`
-      : t("No songs found. Try another song or singer name.", "పాటలు లభించలేదు. మరో పాట లేదా గాయకుల పేరుతో ప్రయత్నించండి.");
+      : t("No songs found. Try another song or singer name.", "పాటలు లభించలేదు. మరో పాట లేదా గాయకుడి పేరుతో ప్రయత్నించండి.");
   });
-  app.querySelector("#bhajan-filter")?.addEventListener("input", (event) => {
-    const words = event.target.value.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
-    let count = 0;
-    app.querySelectorAll("[data-bhajan-title]").forEach((row) => {
-      row.hidden = !words.every((word) => row.dataset.bhajanTitle.includes(word));
-      if (!row.hidden) count++;
-    });
-    app.querySelector("#bhajan-filter-status").textContent = count ? `${count} ${t("titles", "శీర్షికలు")}` : t("No matching title. Try another spelling from the original contents.", "శీర్షిక లభించలేదు. అసలు సూచికలోని మరో వ్రాతతో ప్రయత్నించండి.");
-  });
-  app.querySelector("#bhajan-title")?.addEventListener("change", (event) => {
-    location.hash = route("bhajans", { song: event.target.value });
-  });
-  app.querySelector("#bhajan-page")?.addEventListener("change", (event) => {
-    location.hash = route("bhajans", { song: state.bhajanSong, bhajanPage: event.target.value });
-  });
-  app.querySelector('[data-action="jump-bhajan"]')?.addEventListener("click", () => {
-    app.querySelector("#bhajan-start").scrollIntoView({ block: "center", behavior: "instant" });
-  });
-  const bhajanImage = app.querySelector("#bhajan-page-image");
-  if (bhajanImage) {
-    const showError = () => { app.querySelector("#bhajan-image-error").hidden = false; };
-    bhajanImage.addEventListener("error", showError);
-    if (bhajanImage.complete && bhajanImage.naturalWidth === 0) showError();
-  }
+  if (songFilter?.value) songFilter.dispatchEvent(new Event("input"));
   app.querySelector("#guide-version")?.addEventListener("change", (event) => {
     document.body.classList.remove("focus-reading");
     location.hash = route(event.target.value);
@@ -800,7 +758,7 @@ window.addEventListener("hashchange", () => {
   const previousBhajanPage = state.bhajanPage;
   const previousBhajanCollection = state.bhajanCollection;
   const section = readRoute();
-  if (!((active === "chanting" && state.chantId) || (active === "book" && state.bookChapter) || (active === "abp" && (state.abpPart || state.abpTab === "suprabhatam")) || (active === "bhajans" && state.bhajanSong && !state.bhajanSong.startsWith("selected-")))) document.body.classList.remove("focus-reading");
+  if (!((active === "chanting" && state.chantId) || (active === "book" && state.bookChapter) || (active === "abp" && (state.abpPart || state.abpTab === "suprabhatam")) || (active === "bhajans" && state.bhajanSong?.startsWith("site-")))) document.body.classList.remove("focus-reading");
   render();
   if (section) {
     const element = document.getElementById(section);
